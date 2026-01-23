@@ -1,0 +1,4 @@
+com\authcompany\backend\config\SecurityConfig.class
+com\authcompany\backend\BackendApplication.class
+com\authcompany\backend\controller\HomeController.class
+com\authcompany\backend\BackendApplication$1.class
