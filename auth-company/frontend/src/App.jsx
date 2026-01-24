@@ -1,57 +1,32 @@
-import { useState, useEffect } from 'react'
-import axios from 'axios'
-import './App.css'
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import AuthPage from './components/AuthPage'; // 기존 컴포넌트
+import ResultPage from './components/ResultPage'; // 기존 컴포넌트
+import Navbar from './components/Navbar'; // 새로 생성된 Navbar
+import MainPage from './pages/MainPage'; // 새로 생성된 MainPage
+import AdminPage from './pages/AdminPage'; // 새로 생성된 AdminPage
+import MyPage from './pages/MyPage'; // 새로 생성된 MyPage
+import './index.css'; // App.css 대신 index.css 사용 (TailwindCSS 적용)
+// import './App.css'; // 기존 App.css는 더 이상 필요 없음
 
 function App() {
-  const [backendMessage, setBackendMessage] = useState('');
-  const [healthStatus, setHealthStatus] = useState('연결 중...');
-
-  useEffect(() => {
-    const fetchBackendData = async () => {
-      try {
-        // Fetch initial welcome message
-        const backendApiUrl = import.meta.env.VITE_BACKEND_API_URL || 'http://localhost:8080';
-        const healthResponse = await axios.get(`${backendApiUrl}/api/health`);
-        if (healthResponse.data.status === 'OK') {
-          setBackendMessage('Backend connected');
-          setHealthStatus('OK');
-        } else {
-          setBackendMessage('Failed to connect to backend.');
-          setHealthStatus('연결 실패');
-        }
-      } catch (error) {
-        console.error('Error fetching backend data:', error);
-        setBackendMessage('Failed to connect to backend.');
-        setHealthStatus('연결 실패');
-      }
-    };
-    fetchBackendData();
-  }, []);
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>금융사 본인인증 서비스 안내</h1>
-        <p>안전하고 편리한 본인인증 서비스를 경험하세요.</p>
-        <p>백엔드 메시지: {backendMessage}</p>
-        <p>백엔드 연결 상태: {healthStatus}</p>
-        <div className="service-details">
-          <h2>서비스 특징</h2>
-          <ul>
-            <li>강력한 보안: 최신 암호화 기술 적용</li>
-            <li>간편한 사용: 몇 번의 클릭으로 본인인증 완료</li>
-            <li>다양한 인증 수단: 휴대폰, 공동인증서 등 지원</li>
-            <li>24시간 365일 운영: 언제든 필요할 때 이용 가능</li>
-          </ul>
-        </div>
-        <div className="contact-info">
-          <h2>문의</h2>
-          <p>궁금한 점이 있으시면 언제든지 고객센터로 문의해주세요.</p>
-          <p>전화: 1588-1234 | 이메일: support@authcompany.com</p>
-        </div>
-      </header>
-    </div>
-  )
+    <BrowserRouter>
+      {/* Dark Mode 및 전체 레이아웃을 위한 Tailwind CSS 클래스 적용 */}
+      <div className="dark bg-gray-900 text-gray-100 min-h-screen">
+        <Navbar /> {/* 내비게이션 바 추가 */}
+        <main className="container mx-auto mt-4 p-4"> {/* 중앙 정렬 및 패딩 */}
+          <Routes>
+            <Route path="/" element={<MainPage />} />
+            <Route path="/auth" element={<AuthPage />} />
+            <Route path="/result" element={<ResultPage />} />
+            <Route path="/admin" element={<AdminPage />} />
+            <Route path="/mypage" element={<MyPage />} />
+          </Routes>
+        </main>
+      </div>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;

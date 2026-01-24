@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -65,4 +69,27 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+.status-ok {
+  color: #4CAF50; /* Green */
+  font-weight: bold;
+}
+
+.status-fail {
+  color: #F44336; /* Red */
+  font-weight: bold;
+}
+
+.backend-status-info {
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #333; /* Darker background for status info */
+}
+
+.backend-status-info h3 {
+  margin-top: 0;
+  color: #fff;
 }
