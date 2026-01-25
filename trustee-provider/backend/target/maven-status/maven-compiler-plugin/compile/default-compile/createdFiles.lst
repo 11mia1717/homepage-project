@@ -1,0 +1,11 @@
+com\trustee\backend\auth\dto\AuthConfirmRequest.class
+com\trustee\backend\auth\service\AuthService.class
+com\trustee\backend\auth\dto\AuthStatusResponse.class
+com\trustee\backend\auth\config\SecurityConfig.class
+com\trustee\backend\auth\dto\AuthInitRequest.class
+com\trustee\backend\auth\controller\AuthController.class
+com\trustee\backend\auth\entity\AuthStatus.class
+com\trustee\backend\BackendApplication.class
+com\trustee\backend\auth\dto\AuthInitResponse.class
+com\trustee\backend\auth\entity\AuthToken.class
+com\trustee\backend\auth\repository\AuthTokenRepository.class

@@ -273,3 +273,504 @@ This generated password is for development use only. Your security configuration
 2026-01-25T02:02:08.281+09:00  INFO 64464 --- [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2026-01-25T02:02:08.286+09:00  INFO 64464 --- [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2026-01-25T02:02:08.293+09:00  INFO 64464 --- [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.1)
+
+2026-01-25T02:02:11.220+09:00  INFO 56148 --- [           main] c.a.backend.BackendApplication           : Starting BackendApplication using Java 21.0.9 with PID 56148 (C:\homepage-backend\backend-0.0.1-SNAPSHOT.jar started by DESKTOP-3M6FEIA$ in C:\homepage-backend)
+2026-01-25T02:02:11.223+09:00  INFO 56148 --- [           main] c.a.backend.BackendApplication           : No active profile set, falling back to 1 default profile: "default"
+2026-01-25T02:02:12.328+09:00  INFO 56148 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-25T02:02:12.361+09:00  INFO 56148 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 21 ms. Found 0 JPA repository interfaces.
+2026-01-25T02:02:13.531+09:00  INFO 56148 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-01-25T02:02:13.577+09:00  INFO 56148 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-25T02:02:13.578+09:00  INFO 56148 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2026-01-25T02:02:13.697+09:00  INFO 56148 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-25T02:02:13.701+09:00  INFO 56148 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2373 ms
+2026-01-25T02:02:13.809+09:00  INFO 56148 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-25T02:02:14.399+09:00  INFO 56148 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:authdb user=SA
+2026-01-25T02:02:14.404+09:00  INFO 56148 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-25T02:02:14.436+09:00  INFO 56148 --- [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:authdb'
+2026-01-25T02:02:14.772+09:00  INFO 56148 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-25T02:02:14.917+09:00  INFO 56148 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
+2026-01-25T02:02:15.071+09:00  INFO 56148 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-25T02:02:15.727+09:00  INFO 56148 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-25T02:02:16.829+09:00  INFO 56148 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-25T02:02:16.846+09:00  INFO 56148 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-25T02:02:17.002+09:00  WARN 56148 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-01-25T02:02:17.055+09:00  WARN 56148 --- [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 8a622a7c-691e-4fc7-b46e-212e62535b90
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-01-25T02:02:17.665+09:00  INFO 56148 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@1d7f7962, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@32d1d6c5, org.springframework.security.web.context.SecurityContextHolderFilter@25ea068e, org.springframework.security.web.header.HeaderWriterFilter@154f8280, org.springframework.web.filter.CorsFilter@4a5b38e6, org.springframework.security.web.authentication.logout.LogoutFilter@335972a5, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@201a8ea7, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@ecf028c, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@58583a2d, org.springframework.security.web.access.ExceptionTranslationFilter@41ec4271, org.springframework.security.web.access.intercept.AuthorizationFilter@6b289535]
+2026-01-25T02:02:18.131+09:00  INFO 56148 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-01-25T02:02:18.175+09:00  INFO 56148 --- [           main] c.a.backend.BackendApplication           : Started BackendApplication in 7.612 seconds (process running for 8.526)
+2026-01-25T18:43:33.428+09:00  WARN 56148 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16h19m52s613ms725µs999ns).
+2026-01-25T19:29:32.595+09:00  INFO 56148 --- [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-25T19:29:32.603+09:00  INFO 56148 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-01-25T19:29:32.683+09:00  INFO 56148 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 77 ms
+2026-01-25T21:59:01.612+09:00  INFO 56148 --- [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-01-25T21:59:01.668+09:00  INFO 56148 --- [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-01-25T21:59:01.691+09:00  INFO 56148 --- [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.1)
+
+2026-01-25T23:10:14.414+09:00  INFO 5968 --- [           main] c.a.backend.BackendApplication           : Starting BackendApplication using Java 21.0.9 with PID 5968 (C:\homepage-backend\backend-0.0.1-SNAPSHOT.jar started by DESKTOP-3M6FEIA$ in C:\homepage-backend)
+2026-01-25T23:10:14.418+09:00  INFO 5968 --- [           main] c.a.backend.BackendApplication           : No active profile set, falling back to 1 default profile: "default"
+2026-01-25T23:10:15.733+09:00  INFO 5968 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-25T23:10:15.771+09:00  INFO 5968 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 22 ms. Found 0 JPA repository interfaces.
+2026-01-25T23:10:17.141+09:00  INFO 5968 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-01-25T23:10:17.169+09:00  INFO 5968 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-25T23:10:17.170+09:00  INFO 5968 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2026-01-25T23:10:17.236+09:00  INFO 5968 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-25T23:10:17.237+09:00  INFO 5968 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2723 ms
+2026-01-25T23:10:17.281+09:00  INFO 5968 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-25T23:10:17.642+09:00  INFO 5968 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:authdb user=SA
+2026-01-25T23:10:17.644+09:00  INFO 5968 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-25T23:10:17.661+09:00  INFO 5968 --- [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:authdb'
+2026-01-25T23:10:17.931+09:00  INFO 5968 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-25T23:10:18.113+09:00  INFO 5968 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
+2026-01-25T23:10:18.212+09:00  INFO 5968 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-25T23:10:18.869+09:00  INFO 5968 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-25T23:10:19.652+09:00  INFO 5968 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-25T23:10:19.660+09:00  INFO 5968 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-25T23:10:19.799+09:00  WARN 5968 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-01-25T23:10:19.888+09:00  WARN 5968 --- [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 936be008-134b-4189-9b1d-3e71cb14a454
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-01-25T23:10:20.374+09:00  INFO 5968 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@2d172c7, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@115ef673, org.springframework.security.web.context.SecurityContextHolderFilter@71eff6a3, org.springframework.security.web.header.HeaderWriterFilter@201a8ea7, org.springframework.web.filter.CorsFilter@8ce3f27, org.springframework.security.web.authentication.logout.LogoutFilter@309cf657, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@735988cf, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2d3eecda, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@614cd187, org.springframework.security.web.access.ExceptionTranslationFilter@25ea068e, org.springframework.security.web.access.intercept.AuthorizationFilter@4a5b38e6]
+2026-01-25T23:10:20.748+09:00  INFO 5968 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-01-25T23:10:20.779+09:00  INFO 5968 --- [           main] c.a.backend.BackendApplication           : Started BackendApplication in 7.147 seconds (process running for 8.124)
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.1)
+
+2026-01-25T23:40:36.234+09:00  INFO 20420 --- [           main] c.a.backend.BackendApplication           : Starting BackendApplication using Java 21.0.9 with PID 20420 (C:\homepage-backend\backend-0.0.1-SNAPSHOT.jar started by DESKTOP-3M6FEIA$ in C:\homepage-backend)
+2026-01-25T23:40:36.237+09:00  INFO 20420 --- [           main] c.a.backend.BackendApplication           : No active profile set, falling back to 1 default profile: "default"
+2026-01-25T23:40:37.170+09:00  INFO 20420 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-25T23:40:37.195+09:00  INFO 20420 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 17 ms. Found 0 JPA repository interfaces.
+2026-01-25T23:40:38.499+09:00  INFO 20420 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-01-25T23:40:38.538+09:00  INFO 20420 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-25T23:40:38.539+09:00  INFO 20420 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2026-01-25T23:40:38.659+09:00  INFO 20420 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-25T23:40:38.662+09:00  INFO 20420 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2333 ms
+2026-01-25T23:40:38.730+09:00  INFO 20420 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-25T23:40:39.328+09:00  INFO 20420 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:authdb user=SA
+2026-01-25T23:40:39.333+09:00  INFO 20420 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-25T23:40:39.364+09:00  INFO 20420 --- [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:authdb'
+2026-01-25T23:40:39.707+09:00  INFO 20420 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-25T23:40:39.895+09:00  INFO 20420 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
+2026-01-25T23:40:39.999+09:00  INFO 20420 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-25T23:40:40.775+09:00  INFO 20420 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-25T23:40:41.957+09:00  INFO 20420 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-25T23:40:41.966+09:00  INFO 20420 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-25T23:40:42.054+09:00  WARN 20420 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-01-25T23:40:42.089+09:00  WARN 20420 --- [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 2b42b7c5-8ddc-4098-90ad-c5c88f8b1dff
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-01-25T23:40:42.600+09:00  INFO 20420 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6b4fd7d, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7404aff2, org.springframework.security.web.context.SecurityContextHolderFilter@2b80497f, org.springframework.security.web.header.HeaderWriterFilter@6294e4a6, org.springframework.web.filter.CorsFilter@12723c5d, org.springframework.security.web.authentication.logout.LogoutFilter@74619273, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4c000cc4, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6c36051c, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@56a09a5c, org.springframework.security.web.access.ExceptionTranslationFilter@736788b, org.springframework.security.web.access.intercept.AuthorizationFilter@70805849]
+2026-01-25T23:40:42.974+09:00  INFO 20420 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-01-25T23:40:43.004+09:00  INFO 20420 --- [           main] c.a.backend.BackendApplication           : Started BackendApplication in 7.581 seconds (process running for 8.665)
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.1)
+
+2026-01-25T23:42:52.966+09:00  INFO 20944 --- [           main] c.a.backend.BackendApplication           : Starting BackendApplication using Java 21.0.9 with PID 20944 (C:\homepage-backend\backend-0.0.1-SNAPSHOT.jar started by DESKTOP-3M6FEIA$ in C:\homepage-backend)
+2026-01-25T23:42:52.969+09:00  INFO 20944 --- [           main] c.a.backend.BackendApplication           : No active profile set, falling back to 1 default profile: "default"
+2026-01-25T23:42:53.767+09:00  INFO 20944 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-25T23:42:53.794+09:00  INFO 20944 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 16 ms. Found 0 JPA repository interfaces.
+2026-01-25T23:42:54.516+09:00  INFO 20944 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-01-25T23:42:54.530+09:00  INFO 20944 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-25T23:42:54.530+09:00  INFO 20944 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2026-01-25T23:42:54.659+09:00  INFO 20944 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-25T23:42:54.661+09:00  INFO 20944 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1616 ms
+2026-01-25T23:42:54.792+09:00  INFO 20944 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-25T23:42:55.251+09:00  INFO 20944 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:authdb user=SA
+2026-01-25T23:42:55.253+09:00  INFO 20944 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-25T23:42:55.271+09:00  INFO 20944 --- [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:authdb'
+2026-01-25T23:42:55.474+09:00  INFO 20944 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-25T23:42:55.565+09:00  INFO 20944 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
+2026-01-25T23:42:55.626+09:00  INFO 20944 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-25T23:42:56.011+09:00  INFO 20944 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-25T23:42:56.854+09:00  INFO 20944 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-25T23:42:56.862+09:00  INFO 20944 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-25T23:42:57.058+09:00  WARN 20944 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-01-25T23:42:57.131+09:00  WARN 20944 --- [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 6be55d12-2b60-4b90-b813-3015af9b875b
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-01-25T23:42:57.965+09:00  INFO 20944 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@70805849, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@e7d0db2, org.springframework.security.web.context.SecurityContextHolderFilter@6294e4a6, org.springframework.security.web.header.HeaderWriterFilter@236a4d30, org.springframework.web.filter.CorsFilter@4a41caed, org.springframework.security.web.authentication.logout.LogoutFilter@1b5af65b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@27a0e6ce, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2b80497f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6b4fd7d, org.springframework.security.web.access.ExceptionTranslationFilter@735988cf, org.springframework.security.web.access.intercept.AuthorizationFilter@6802d023]
+2026-01-25T23:42:58.708+09:00  INFO 20944 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-01-25T23:42:58.746+09:00  INFO 20944 --- [           main] c.a.backend.BackendApplication           : Started BackendApplication in 6.303 seconds (process running for 6.933)
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.1)
+
+2026-01-25T23:51:32.897+09:00  INFO 15000 --- [           main] c.a.backend.BackendApplication           : Starting BackendApplication using Java 21.0.9 with PID 15000 (C:\homepage-backend\backend-0.0.1-SNAPSHOT.jar started by DESKTOP-3M6FEIA$ in C:\homepage-backend)
+2026-01-25T23:51:32.899+09:00  INFO 15000 --- [           main] c.a.backend.BackendApplication           : No active profile set, falling back to 1 default profile: "default"
+2026-01-25T23:51:33.932+09:00  INFO 15000 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-25T23:51:33.966+09:00  INFO 15000 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 19 ms. Found 0 JPA repository interfaces.
+2026-01-25T23:51:34.683+09:00  INFO 15000 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-01-25T23:51:34.701+09:00  INFO 15000 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-25T23:51:34.702+09:00  INFO 15000 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2026-01-25T23:51:34.755+09:00  INFO 15000 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-25T23:51:34.757+09:00  INFO 15000 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1773 ms
+2026-01-25T23:51:34.818+09:00  INFO 15000 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-25T23:51:35.133+09:00  INFO 15000 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:authdb user=SA
+2026-01-25T23:51:35.135+09:00  INFO 15000 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-25T23:51:35.149+09:00  INFO 15000 --- [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:authdb'
+2026-01-25T23:51:35.396+09:00  INFO 15000 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-25T23:51:35.515+09:00  INFO 15000 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
+2026-01-25T23:51:35.592+09:00  INFO 15000 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-25T23:51:36.089+09:00  INFO 15000 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-25T23:51:36.699+09:00  INFO 15000 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-25T23:51:36.709+09:00  INFO 15000 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-25T23:51:36.800+09:00  WARN 15000 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-01-25T23:51:36.843+09:00  WARN 15000 --- [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 7e80157e-a26f-44ab-9f8c-d73d1bfb9961
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-01-25T23:51:37.293+09:00  INFO 15000 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@70805849, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@e7d0db2, org.springframework.security.web.context.SecurityContextHolderFilter@6294e4a6, org.springframework.security.web.header.HeaderWriterFilter@236a4d30, org.springframework.web.filter.CorsFilter@4a41caed, org.springframework.security.web.authentication.logout.LogoutFilter@1b5af65b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@27a0e6ce, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2b80497f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6b4fd7d, org.springframework.security.web.access.ExceptionTranslationFilter@735988cf, org.springframework.security.web.access.intercept.AuthorizationFilter@6802d023]
+2026-01-25T23:51:37.697+09:00  INFO 15000 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-01-25T23:51:37.723+09:00  INFO 15000 --- [           main] c.a.backend.BackendApplication           : Started BackendApplication in 5.362 seconds (process running for 6.062)
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.1)
+
+2026-01-25T23:54:53.049+09:00  INFO 2952 --- [           main] c.a.backend.BackendApplication           : Starting BackendApplication using Java 21.0.9 with PID 2952 (C:\homepage-backend\backend-0.0.1-SNAPSHOT.jar started by DESKTOP-3M6FEIA$ in C:\homepage-backend)
+2026-01-25T23:54:53.052+09:00  INFO 2952 --- [           main] c.a.backend.BackendApplication           : No active profile set, falling back to 1 default profile: "default"
+2026-01-25T23:54:54.133+09:00  INFO 2952 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-25T23:54:54.170+09:00  INFO 2952 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 19 ms. Found 0 JPA repository interfaces.
+2026-01-25T23:54:55.203+09:00  INFO 2952 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-01-25T23:54:55.224+09:00  INFO 2952 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-25T23:54:55.225+09:00  INFO 2952 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2026-01-25T23:54:55.313+09:00  INFO 2952 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-25T23:54:55.314+09:00  INFO 2952 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2174 ms
+2026-01-25T23:54:55.409+09:00  INFO 2952 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-25T23:54:55.967+09:00  INFO 2952 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:authdb user=SA
+2026-01-25T23:54:55.971+09:00  INFO 2952 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-25T23:54:55.992+09:00  INFO 2952 --- [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:authdb'
+2026-01-25T23:54:56.496+09:00  INFO 2952 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-25T23:54:56.658+09:00  INFO 2952 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
+2026-01-25T23:54:56.738+09:00  INFO 2952 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-25T23:54:57.448+09:00  INFO 2952 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-25T23:54:58.426+09:00  INFO 2952 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-25T23:54:58.433+09:00  INFO 2952 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-25T23:54:58.534+09:00  WARN 2952 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-01-25T23:54:58.615+09:00  WARN 2952 --- [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 404c9df9-ec80-4c67-a7f2-422af637bf63
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-01-25T23:54:59.463+09:00  INFO 2952 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@614cd187, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6802d023, org.springframework.security.web.context.SecurityContextHolderFilter@2d3eecda, org.springframework.security.web.header.HeaderWriterFilter@71eff6a3, org.springframework.web.filter.CorsFilter@e895e3e, org.springframework.security.web.authentication.logout.LogoutFilter@11170228, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@736788b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@38968752, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@77476fcf, org.springframework.security.web.access.ExceptionTranslationFilter@ecf028c, org.springframework.security.web.access.intercept.AuthorizationFilter@2d172c7]
+2026-01-25T23:55:00.005+09:00  INFO 2952 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-01-25T23:55:00.083+09:00  INFO 2952 --- [           main] c.a.backend.BackendApplication           : Started BackendApplication in 7.628 seconds (process running for 8.348)
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.1)
+
+2026-01-25T23:57:58.837+09:00  INFO 14880 --- [           main] c.a.backend.BackendApplication           : Starting BackendApplication using Java 21.0.9 with PID 14880 (C:\homepage-backend\backend-0.0.1-SNAPSHOT.jar started by DESKTOP-3M6FEIA$ in C:\homepage-backend)
+2026-01-25T23:57:58.842+09:00  INFO 14880 --- [           main] c.a.backend.BackendApplication           : No active profile set, falling back to 1 default profile: "default"
+2026-01-25T23:57:59.849+09:00  INFO 14880 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-25T23:57:59.883+09:00  INFO 14880 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 20 ms. Found 0 JPA repository interfaces.
+2026-01-25T23:58:01.002+09:00  INFO 14880 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-01-25T23:58:01.044+09:00  INFO 14880 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-25T23:58:01.044+09:00  INFO 14880 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2026-01-25T23:58:01.198+09:00  INFO 14880 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-25T23:58:01.200+09:00  INFO 14880 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2253 ms
+2026-01-25T23:58:01.343+09:00  INFO 14880 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-25T23:58:02.329+09:00  INFO 14880 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:authdb user=SA
+2026-01-25T23:58:02.333+09:00  INFO 14880 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-25T23:58:02.366+09:00  INFO 14880 --- [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:authdb'
+2026-01-25T23:58:02.889+09:00  INFO 14880 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-25T23:58:03.049+09:00  INFO 14880 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
+2026-01-25T23:58:03.167+09:00  INFO 14880 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-25T23:58:04.441+09:00  INFO 14880 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-25T23:58:05.489+09:00  INFO 14880 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-25T23:58:05.497+09:00  INFO 14880 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-25T23:58:05.630+09:00  WARN 14880 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-01-25T23:58:05.703+09:00  WARN 14880 --- [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: c5536e49-8c3f-4d8d-85b8-bb67b27bfc79
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-01-25T23:58:06.353+09:00  INFO 14880 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4a5b38e6, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@58583a2d, org.springframework.security.web.context.SecurityContextHolderFilter@201a8ea7, org.springframework.security.web.header.HeaderWriterFilter@7252bdb, org.springframework.web.filter.CorsFilter@3e8afc2d, org.springframework.security.web.authentication.logout.LogoutFilter@49f2646, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7b64bbad, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@71eff6a3, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2d172c7, org.springframework.security.web.access.ExceptionTranslationFilter@154f8280, org.springframework.security.web.access.intercept.AuthorizationFilter@38c55a8a]
+2026-01-25T23:58:07.255+09:00  INFO 14880 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-01-25T23:58:07.321+09:00  INFO 14880 --- [           main] c.a.backend.BackendApplication           : Started BackendApplication in 9.17 seconds (process running for 9.823)
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.1)
+
+2026-01-26T00:22:29.996+09:00  INFO 21292 --- [           main] c.a.backend.BackendApplication           : Starting BackendApplication using Java 21.0.9 with PID 21292 (C:\homepage-backend\backend-0.0.1-SNAPSHOT.jar started by DESKTOP-3M6FEIA$ in C:\homepage-backend)
+2026-01-26T00:22:30.001+09:00  INFO 21292 --- [           main] c.a.backend.BackendApplication           : No active profile set, falling back to 1 default profile: "default"
+2026-01-26T00:22:31.197+09:00  INFO 21292 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-26T00:22:31.238+09:00  INFO 21292 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 25 ms. Found 0 JPA repository interfaces.
+2026-01-26T00:22:32.552+09:00  INFO 21292 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-01-26T00:22:32.601+09:00  INFO 21292 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-26T00:22:32.606+09:00  INFO 21292 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2026-01-26T00:22:32.690+09:00  INFO 21292 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-26T00:22:32.692+09:00  INFO 21292 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2557 ms
+2026-01-26T00:22:32.807+09:00  INFO 21292 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-26T00:22:33.792+09:00  INFO 21292 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:authdb user=SA
+2026-01-26T00:22:33.796+09:00  INFO 21292 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-26T00:22:33.893+09:00  INFO 21292 --- [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:authdb'
+2026-01-26T00:22:34.767+09:00  INFO 21292 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-26T00:22:35.215+09:00  INFO 21292 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
+2026-01-26T00:22:35.307+09:00  INFO 21292 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-26T00:22:36.291+09:00  INFO 21292 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-26T00:22:38.082+09:00  INFO 21292 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-26T00:22:38.109+09:00  INFO 21292 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-26T00:22:38.281+09:00  WARN 21292 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-01-26T00:22:38.355+09:00  WARN 21292 --- [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: cbf72766-622c-4741-a668-725fc7596fce
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-01-26T00:22:39.261+09:00  INFO 21292 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@32d1d6c5, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4a5b38e6, org.springframework.security.web.context.SecurityContextHolderFilter@4cd8db31, org.springframework.security.web.header.HeaderWriterFilter@24f90aff, org.springframework.web.filter.CorsFilter@58583a2d, org.springframework.security.web.authentication.logout.LogoutFilter@59a2bed1, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@ecf028c, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7b64bbad, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3e8afc2d, org.springframework.security.web.access.ExceptionTranslationFilter@70aa58e1, org.springframework.security.web.access.intercept.AuthorizationFilter@74619273]
+2026-01-26T00:22:40.155+09:00  INFO 21292 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-01-26T00:22:40.254+09:00  INFO 21292 --- [           main] c.a.backend.BackendApplication           : Started BackendApplication in 10.968 seconds (process running for 11.839)
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.1)
+
+2026-01-26T00:28:12.215+09:00  INFO 2528 --- [           main] c.a.backend.BackendApplication           : Starting BackendApplication using Java 21.0.9 with PID 2528 (C:\homepage-backend\backend-0.0.1-SNAPSHOT.jar started by DESKTOP-3M6FEIA$ in C:\homepage-backend)
+2026-01-26T00:28:12.219+09:00  INFO 2528 --- [           main] c.a.backend.BackendApplication           : No active profile set, falling back to 1 default profile: "default"
+2026-01-26T00:28:13.545+09:00  INFO 2528 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-26T00:28:13.604+09:00  INFO 2528 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 35 ms. Found 0 JPA repository interfaces.
+2026-01-26T00:28:15.134+09:00  INFO 2528 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-01-26T00:28:15.201+09:00  INFO 2528 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-26T00:28:15.208+09:00  INFO 2528 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2026-01-26T00:28:15.383+09:00  INFO 2528 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-26T00:28:15.384+09:00  INFO 2528 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3035 ms
+2026-01-26T00:28:15.473+09:00  INFO 2528 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-26T00:28:16.807+09:00  INFO 2528 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:authdb user=SA
+2026-01-26T00:28:16.812+09:00  INFO 2528 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-26T00:28:16.912+09:00  INFO 2528 --- [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:authdb'
+2026-01-26T00:28:17.506+09:00  INFO 2528 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-26T00:28:17.792+09:00  INFO 2528 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
+2026-01-26T00:28:17.978+09:00  INFO 2528 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-26T00:28:18.683+09:00  INFO 2528 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-26T00:28:19.828+09:00  INFO 2528 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-26T00:28:19.840+09:00  INFO 2528 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-26T00:28:19.995+09:00  WARN 2528 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-01-26T00:28:20.088+09:00  WARN 2528 --- [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 6ab5699d-2b84-41d4-8d29-ad2a1088953d
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-01-26T00:28:20.938+09:00  INFO 2528 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@7404aff2, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@12723c5d, org.springframework.security.web.context.SecurityContextHolderFilter@6ef4297d, org.springframework.security.web.header.HeaderWriterFilter@13662609, org.springframework.web.filter.CorsFilter@56a09a5c, org.springframework.security.web.authentication.logout.LogoutFilter@38c55a8a, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6c36051c, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@45d46254, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@775edae0, org.springframework.security.web.access.ExceptionTranslationFilter@38968752, org.springframework.security.web.access.intercept.AuthorizationFilter@e7d0db2]
+2026-01-26T00:28:21.777+09:00  INFO 2528 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-01-26T00:28:21.818+09:00  INFO 2528 --- [           main] c.a.backend.BackendApplication           : Started BackendApplication in 10.334 seconds (process running for 11.19)
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.1)
+
+2026-01-26T00:50:26.914+09:00  INFO 8176 --- [           main] c.a.backend.BackendApplication           : Starting BackendApplication using Java 21.0.9 with PID 8176 (C:\homepage-backend\backend-0.0.1-SNAPSHOT.jar started by DESKTOP-3M6FEIA$ in C:\homepage-backend)
+2026-01-26T00:50:26.918+09:00  INFO 8176 --- [           main] c.a.backend.BackendApplication           : No active profile set, falling back to 1 default profile: "default"
+2026-01-26T00:50:28.002+09:00  INFO 8176 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-26T00:50:28.039+09:00  INFO 8176 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 19 ms. Found 0 JPA repository interfaces.
+2026-01-26T00:50:29.192+09:00  INFO 8176 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-01-26T00:50:29.215+09:00  INFO 8176 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-26T00:50:29.216+09:00  INFO 8176 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2026-01-26T00:50:29.355+09:00  INFO 8176 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-26T00:50:29.366+09:00  INFO 8176 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2347 ms
+2026-01-26T00:50:29.492+09:00  INFO 8176 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-26T00:50:30.440+09:00  INFO 8176 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:authdb user=SA
+2026-01-26T00:50:30.442+09:00  INFO 8176 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-26T00:50:30.476+09:00  INFO 8176 --- [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:authdb'
+2026-01-26T00:50:31.027+09:00  INFO 8176 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-26T00:50:31.194+09:00  INFO 8176 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
+2026-01-26T00:50:31.288+09:00  INFO 8176 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-26T00:50:32.242+09:00  INFO 8176 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-26T00:50:33.241+09:00  INFO 8176 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-26T00:50:33.251+09:00  INFO 8176 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-26T00:50:33.422+09:00  WARN 8176 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-01-26T00:50:33.472+09:00  WARN 8176 --- [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 4bda0a4a-55df-4c90-bc14-33cfd521a757
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-01-26T00:50:34.188+09:00  INFO 8176 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@32d1d6c5, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4a5b38e6, org.springframework.security.web.context.SecurityContextHolderFilter@4cd8db31, org.springframework.security.web.header.HeaderWriterFilter@24f90aff, org.springframework.web.filter.CorsFilter@58583a2d, org.springframework.security.web.authentication.logout.LogoutFilter@59a2bed1, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@ecf028c, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7b64bbad, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3e8afc2d, org.springframework.security.web.access.ExceptionTranslationFilter@70aa58e1, org.springframework.security.web.access.intercept.AuthorizationFilter@74619273]
+2026-01-26T00:50:34.853+09:00  INFO 8176 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-01-26T00:50:34.918+09:00  INFO 8176 --- [           main] c.a.backend.BackendApplication           : Started BackendApplication in 8.782 seconds (process running for 9.623)
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.1)
+
+2026-01-26T00:51:13.212+09:00  INFO 19280 --- [           main] c.a.backend.BackendApplication           : Starting BackendApplication using Java 21.0.9 with PID 19280 (C:\homepage-backend\backend-0.0.1-SNAPSHOT.jar started by DESKTOP-3M6FEIA$ in C:\homepage-backend)
+2026-01-26T00:51:13.215+09:00  INFO 19280 --- [           main] c.a.backend.BackendApplication           : No active profile set, falling back to 1 default profile: "default"
+2026-01-26T00:51:14.297+09:00  INFO 19280 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-26T00:51:14.336+09:00  INFO 19280 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 22 ms. Found 0 JPA repository interfaces.
+2026-01-26T00:51:15.881+09:00  INFO 19280 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-01-26T00:51:15.958+09:00  INFO 19280 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-26T00:51:15.959+09:00  INFO 19280 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2026-01-26T00:51:16.140+09:00  INFO 19280 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-26T00:51:16.145+09:00  INFO 19280 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2835 ms
+2026-01-26T00:51:16.278+09:00  INFO 19280 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-26T00:51:17.192+09:00  INFO 19280 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:authdb user=SA
+2026-01-26T00:51:17.196+09:00  INFO 19280 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-26T00:51:17.228+09:00  INFO 19280 --- [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:authdb'
+2026-01-26T00:51:17.690+09:00  INFO 19280 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-26T00:51:17.999+09:00  INFO 19280 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
+2026-01-26T00:51:18.175+09:00  INFO 19280 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-26T00:51:19.450+09:00  INFO 19280 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-26T00:51:20.503+09:00  INFO 19280 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-26T00:51:20.514+09:00  INFO 19280 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-26T00:51:20.631+09:00  WARN 19280 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-01-26T00:51:20.674+09:00  WARN 19280 --- [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 67ca6e9f-08da-44fc-afab-59ec3af57e42
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-01-26T00:51:21.371+09:00  INFO 19280 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@70805849, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@e7d0db2, org.springframework.security.web.context.SecurityContextHolderFilter@6294e4a6, org.springframework.security.web.header.HeaderWriterFilter@236a4d30, org.springframework.web.filter.CorsFilter@4a41caed, org.springframework.security.web.authentication.logout.LogoutFilter@1b5af65b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@27a0e6ce, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2b80497f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6b4fd7d, org.springframework.security.web.access.ExceptionTranslationFilter@735988cf, org.springframework.security.web.access.intercept.AuthorizationFilter@6802d023]
+2026-01-26T00:51:22.187+09:00  INFO 19280 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-01-26T00:51:22.228+09:00  INFO 19280 --- [           main] c.a.backend.BackendApplication           : Started BackendApplication in 9.731 seconds (process running for 10.41)
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.1)
+
+2026-01-26T00:52:31.129+09:00  INFO 11680 --- [           main] c.a.backend.BackendApplication           : Starting BackendApplication using Java 21.0.9 with PID 11680 (C:\homepage-backend\backend-0.0.1-SNAPSHOT.jar started by DESKTOP-3M6FEIA$ in C:\homepage-backend)
+2026-01-26T00:52:31.133+09:00  INFO 11680 --- [           main] c.a.backend.BackendApplication           : No active profile set, falling back to 1 default profile: "default"
+2026-01-26T00:52:32.154+09:00  INFO 11680 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-26T00:52:32.202+09:00  INFO 11680 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 32 ms. Found 0 JPA repository interfaces.
+2026-01-26T00:52:33.278+09:00  INFO 11680 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-01-26T00:52:33.336+09:00  INFO 11680 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-26T00:52:33.337+09:00  INFO 11680 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2026-01-26T00:52:33.551+09:00  INFO 11680 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-26T00:52:33.559+09:00  INFO 11680 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2326 ms
+2026-01-26T00:52:33.678+09:00  INFO 11680 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-26T00:52:34.524+09:00  INFO 11680 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:authdb user=SA
+2026-01-26T00:52:34.537+09:00  INFO 11680 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-26T00:52:34.571+09:00  INFO 11680 --- [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:authdb'
+2026-01-26T00:52:34.932+09:00  INFO 11680 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-26T00:52:35.059+09:00  INFO 11680 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
+2026-01-26T00:52:35.131+09:00  INFO 11680 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-26T00:52:35.625+09:00  INFO 11680 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-26T00:52:36.321+09:00  INFO 11680 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-26T00:52:36.328+09:00  INFO 11680 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-26T00:52:36.420+09:00  WARN 11680 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-01-26T00:52:36.456+09:00  WARN 11680 --- [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 238d67bf-d4d9-46c8-a33c-7ef9605f6fbf
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-01-26T00:52:36.939+09:00  INFO 11680 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@49925d21, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@11170228, org.springframework.security.web.context.SecurityContextHolderFilter@56f84c9b, org.springframework.security.web.header.HeaderWriterFilter@31183ee2, org.springframework.web.filter.CorsFilter@46ee7013, org.springframework.security.web.authentication.logout.LogoutFilter@6c1bebca, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5cdda548, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4f2544b0, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@69d58731, org.springframework.security.web.access.ExceptionTranslationFilter@6807989e, org.springframework.security.web.access.intercept.AuthorizationFilter@7c048b30]
+2026-01-26T00:52:37.683+09:00  INFO 11680 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-01-26T00:52:37.758+09:00  INFO 11680 --- [           main] c.a.backend.BackendApplication           : Started BackendApplication in 7.275 seconds (process running for 7.964)
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.1)
+
+2026-01-26T00:58:52.491+09:00  INFO 9840 --- [           main] c.a.backend.BackendApplication           : Starting BackendApplication using Java 21.0.9 with PID 9840 (C:\homepage-backend\backend-0.0.1-SNAPSHOT.jar started by DESKTOP-3M6FEIA$ in C:\homepage-backend)
+2026-01-26T00:58:52.495+09:00  INFO 9840 --- [           main] c.a.backend.BackendApplication           : No active profile set, falling back to 1 default profile: "default"
+2026-01-26T00:58:53.400+09:00  INFO 9840 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-26T00:58:53.440+09:00  INFO 9840 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 25 ms. Found 0 JPA repository interfaces.
+2026-01-26T00:58:54.266+09:00  INFO 9840 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-01-26T00:58:54.289+09:00  INFO 9840 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-26T00:58:54.289+09:00  INFO 9840 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2026-01-26T00:58:54.349+09:00  INFO 9840 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-26T00:58:54.352+09:00  INFO 9840 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1768 ms
+2026-01-26T00:58:54.415+09:00  INFO 9840 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-26T00:58:54.915+09:00  INFO 9840 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:authdb user=SA
+2026-01-26T00:58:54.922+09:00  INFO 9840 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-26T00:58:55.022+09:00  INFO 9840 --- [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:authdb'
+2026-01-26T00:58:55.533+09:00  INFO 9840 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-26T00:58:55.665+09:00  INFO 9840 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
+2026-01-26T00:58:55.752+09:00  INFO 9840 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-26T00:58:56.488+09:00  INFO 9840 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-26T00:58:57.594+09:00  INFO 9840 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-26T00:58:57.607+09:00  INFO 9840 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-26T00:58:57.901+09:00  WARN 9840 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-01-26T00:58:57.965+09:00  WARN 9840 --- [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: fd337851-7a2f-478f-990a-c6cddb5624c1
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-01-26T00:58:58.770+09:00  INFO 9840 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@77476fcf, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@70805849, org.springframework.security.web.context.SecurityContextHolderFilter@38968752, org.springframework.security.web.header.HeaderWriterFilter@2d3eecda, org.springframework.web.filter.CorsFilter@e7d0db2, org.springframework.security.web.authentication.logout.LogoutFilter@3275a47f, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@13662609, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@27a0e6ce, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4a41caed, org.springframework.security.web.access.ExceptionTranslationFilter@574218f, org.springframework.security.web.access.intercept.AuthorizationFilter@614cd187]
+2026-01-26T00:58:59.548+09:00  INFO 9840 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-01-26T00:58:59.692+09:00  INFO 9840 --- [           main] c.a.backend.BackendApplication           : Started BackendApplication in 7.67 seconds (process running for 8.422)

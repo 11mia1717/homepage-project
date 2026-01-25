@@ -3,26 +3,22 @@ version: '3.8'
 services:
   backend:
     build:
-      context: ./auth-company/backend
+      context: ./entrusting-client/backend
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
-    # 개발 편의를 위해 볼륨 마운트. 프로덕션에서는 이미지에 포함하는 것이 일반적.
-    volumes:
-      - ./auth-company/backend:/app
 
   frontend:
     build:
-      context: ./auth-company/frontend
+      context: ./entrusting-client/frontend
       dockerfile: Dockerfile
     ports:
       - "80:80"
     depends_on:
       - backend
-    # 개발 편의를 위해 볼륨 마운트. 프로덕션에서는 이미지에 포함하는 것이 일반적.
-    volumes:
-      - ./auth-company/frontend:/app
-      - ./auth-company/frontend/nginx.conf:/etc/nginx/conf.d/default.conf # Nginx 설정 파일 마운트
+    # React 앱에서 백엔드 API URL을 /api로 사용하도록 .env 파일 설정
+    environment:
+      VITE_BACKEND_API_URL: /api
     # React 앱에서 백엔드 API URL을 /api로 사용하도록 .env 파일 설정
     environment:
       VITE_BACKEND_API_URL: /api

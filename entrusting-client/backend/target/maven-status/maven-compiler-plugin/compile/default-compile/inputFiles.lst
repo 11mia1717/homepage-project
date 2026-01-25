@@ -1,0 +1,13 @@
+C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\repository\AccountRepository.java
+C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\BackendApplication.java
+C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\entity\Account.java
+C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\controller\AccountController.java
+C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\dto\LoginRequest.java
+C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\service\AccountService.java
+C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\config\UserSecurityConfig.java
+C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\dto\RegisterRequest.java
+C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\entity\User.java
+C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\service\UserService.java
+C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\repository\UserRepository.java
+C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\controller\UserController.java
+C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\dto\AuthCallbackRequest.java
