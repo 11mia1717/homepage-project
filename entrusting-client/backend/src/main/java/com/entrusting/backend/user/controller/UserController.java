@@ -47,6 +47,8 @@ public class UserController {
                 throw new IllegalArgumentException("본인인증 성명과 가입 성명이 일치하지 않습니다.");
             }
 
+            // [수정] 본인인증이 완료되었으므로 isVerified=true 설정하여 가입
+            request.setVerified(true);
             userService.registerUser(request);
             return ResponseEntity.ok("User registered successfully");
         } catch (IllegalArgumentException e) {

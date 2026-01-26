@@ -1,24 +1,84 @@
 version: '3.8'
 
 services:
-  backend:
-    build:
-      context: ./entrusting-client/backend
-      dockerfile: Dockerfile
+  # Shared Database (MySQL)
+  mysql:
+    image: mysql:8.0
+    container_name: shared-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: entrusting_db # Creates this DB by default
     ports:
-      - "8080:8080"
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql # For creating the second DB (trustee_db)
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
 
-  frontend:
-    build:
-      context: ./entrusting-client/frontend
-      dockerfile: Dockerfile
+  # Entrusting Client (Banking System)
+  entrusting-backend:
+    build: ./entrusting-client/backend
+    container_name: entrusting-backend
+    restart: on-failure
     ports:
-      - "80:80"
+      - "8085:8085"
     depends_on:
-      - backend
-    # React 앱에서 백엔드 API URL을 /api로 사용하도록 .env 파일 설정
+      mysql:
+        condition: service_healthy
     environment:
-      VITE_BACKEND_API_URL: /api
-    # React 앱에서 백엔드 API URL을 /api로 사용하도록 .env 파일 설정
+      DB_URL: jdbc:mysql://mysql:3306/entrusting_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      DB_USER: root
+      DB_PASSWORD: password
+      TRUSTEE_API_URL: http://trustee-backend:8086
+      ALLOWED_ORIGINS: http://localhost:5175
+    networks:
+      - app-network
+
+  entrusting-frontend:
+    build: ./entrusting-client/frontend
+    container_name: entrusting-frontend
+    restart: on-failure
+    ports:
+      - "5175:80"
+    networks:
+      - app-network
+
+  # Trustee Provider (Identity System)
+  trustee-backend:
+    build: ./trustee-provider/backend
+    container_name: trustee-backend
+    restart: on-failure
+    ports:
+      - "8086:8086"
+    depends_on:
+      mysql:
+        condition: service_healthy
     environment:
-      VITE_BACKEND_API_URL: /api
+      DB_URL: jdbc:mysql://mysql:3306/trustee_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      DB_USER: root
+      DB_PASSWORD: password
+      ALLOWED_ORIGINS: http://localhost:5175,http://localhost:5176
+    networks:
+      - app-network
+
+  trustee-frontend:
+    build: ./trustee-provider/frontend
+    container_name: trustee-frontend
+    restart: on-failure
+    ports:
+      - "5176:80"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mysql-data:

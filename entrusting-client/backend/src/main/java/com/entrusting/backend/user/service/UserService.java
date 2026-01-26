@@ -37,7 +37,7 @@ public class UserService {
             throw new IllegalArgumentException("Phone number already exists");
         }
         User newUser = new User(request.getName(), request.getUsername(), passwordEncoder.encode(request.getPassword()),
-                phone, false);
+                phone, request.isVerified());
         return userRepository.save(newUser);
     }
 

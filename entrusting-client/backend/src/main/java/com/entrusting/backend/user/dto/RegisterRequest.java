@@ -6,6 +6,7 @@ public class RegisterRequest {
     private String password;
     private String phoneNumber;
     private String tokenId;
+    private boolean isVerified;
 
     public String getTokenId() {
         return tokenId;
@@ -13,6 +14,14 @@ public class RegisterRequest {
 
     public void setTokenId(String tokenId) {
         this.tokenId = tokenId;
+    }
+
+    public boolean isVerified() {
+        return isVerified;
+    }
+
+    public void setVerified(boolean verified) {
+        isVerified = verified;
     }
 
     public String getName() {
