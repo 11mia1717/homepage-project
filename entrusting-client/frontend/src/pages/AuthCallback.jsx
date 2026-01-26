@@ -51,7 +51,7 @@ const AuthCallback = () => {
             if (isRegistering) {
               const nameValue = (responseData && responseData.name) ? responseData.name : '인증완료';
               const nameParam = `&name=${encodeURIComponent(nameValue)}`;
-              setTimeout(() => navigate(`/register?verified=true&phoneNumber=${phoneNumber}${nameParam}`), 1200);
+              setTimeout(() => navigate(`/register?verified=true&phoneNumber=${phoneNumber}&tokenId=${tokenId}${nameParam}`), 1200);
             } else {
               setTimeout(() => navigate('/dashboard'), 1200);
             }
@@ -68,7 +68,7 @@ const AuthCallback = () => {
             type: error.name
           });
           setStatus('error');
-          setMessage('네트워크 연결 확인이 필요합니다 (8081)');
+          setMessage('네트워크 연결 확인이 필요합니다');
         });
     } else {
       setStatus('error');

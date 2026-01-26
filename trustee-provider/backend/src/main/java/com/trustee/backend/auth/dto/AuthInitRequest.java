@@ -3,6 +3,7 @@ package com.trustee.backend.auth.dto;
 public class AuthInitRequest {
     private String clientData;
     private String name;
+    private String carrier;
 
     public String getClientData() {
         return clientData;
@@ -18,5 +19,13 @@ public class AuthInitRequest {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCarrier() {
+        return carrier;
+    }
+
+    public void setCarrier(String carrier) {
+        this.carrier = carrier;
     }
 }

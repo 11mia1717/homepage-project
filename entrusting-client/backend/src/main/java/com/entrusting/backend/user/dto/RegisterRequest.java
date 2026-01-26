@@ -5,6 +5,15 @@ public class RegisterRequest {
     private String username;
     private String password;
     private String phoneNumber;
+    private String tokenId;
+
+    public String getTokenId() {
+        return tokenId;
+    }
+
+    public void setTokenId(String tokenId) {
+        this.tokenId = tokenId;
+    }
 
     public String getName() {
         return name;

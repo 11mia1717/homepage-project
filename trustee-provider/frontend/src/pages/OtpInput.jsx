@@ -9,6 +9,7 @@ const OtpInput = () => {
   const [message, setMessage] = useState('');
   const [timer, setTimer] = useState(180);
   const [isResendDisabled, setIsResendDisabled] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const inputRefs = useRef([]);
 
   const tokenId = searchParams.get('tokenId');
@@ -83,6 +84,7 @@ const OtpInput = () => {
       return;
     }
 
+    setIsSubmitting(true);
     try {
       const response = await fetch('/api/v1/auth/confirm', {
         method: 'PATCH',
@@ -103,6 +105,8 @@ const OtpInput = () => {
       }
     } catch (error) {
       setMessage('오류 발생: ' + error.message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -179,10 +183,10 @@ const OtpInput = () => {
       <div className="px-5 py-4 pb-8">
         <button
           onClick={handleConfirm}
-          disabled={!isOtpComplete}
+          disabled={!isOtpComplete || isSubmitting}
           className="btn-primary"
         >
-          확인
+          {isSubmitting ? '확인 중...' : '확인'}
         </button>
       </div>
     </div>

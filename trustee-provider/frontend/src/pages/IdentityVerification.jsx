@@ -15,6 +15,7 @@ const IdentityVerification = () => {
   const [message, setMessage] = useState('');
   const [tokenId, setTokenId] = useState(null);
   const [isDataLocked, setIsDataLocked] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
@@ -39,7 +40,11 @@ const IdentityVerification = () => {
     return `${numbers.slice(0, 3)}-${numbers.slice(3, 7)}-${numbers.slice(7, 11)}`;
   };
 
-  const isFormValid = name && residentFront.length === 6 && telecom && phoneNumber.length >= 10;
+  // 모든 필드가 채워졌는지 확인 (버튼 활성화 조건)
+  const isFormValid = name.trim().length > 0 &&
+    residentFront.length === 6 &&
+    telecom !== "" &&
+    phoneNumber.replace(/\D/g, '').length >= 10;
 
   const timerRef = useRef(null);
 
@@ -60,6 +65,7 @@ const IdentityVerification = () => {
       return;
     }
 
+    setIsSubmitting(true);
     try {
       const cleanPhoneNumber = phoneNumber.replace(/\D/g, '');
       // [보안 강화] 신규 세션을 생성하지 않고, 전달받은 TokenId로 정보 일치 여부 확인
@@ -70,7 +76,8 @@ const IdentityVerification = () => {
           tokenId: tokenId,
           name: name,
           phoneNumber: cleanPhoneNumber,
-          residentFront: residentFront
+          residentFront: residentFront,
+          carrier: telecom
         }),
       });
 
@@ -83,15 +90,18 @@ const IdentityVerification = () => {
       }
 
       if (response.ok && data.otp) {
-        setOtp(data.otp); // 테스트 편의를 위해 설정
+        // [복구] 테스트 편의를 위해 인증번호를 상태에 저장 (가이드 박스에 표시됨)
+        setOtp(data.otp); 
         setOtpSent(true);
         setTimer(180);
-        setMessage('✅ 인증번호가 발송되었습니다.');
+        setMessage('인증번호가 발송되었습니다.');
       } else {
         setMessage(`❌ ${data.message || '정보가 불일치하거나 요청에 실패했습니다.'}`);
       }
     } catch (error) {
       setMessage('⚠️ 오류 발생: ' + error.message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -101,6 +111,7 @@ const IdentityVerification = () => {
       return;
     }
 
+    setIsSubmitting(true);
     try {
       console.log('[DEBUG] Verification Request:', { tokenId, otp });
       const response = await fetch('/api/v1/auth/confirm', {
@@ -121,14 +132,21 @@ const IdentityVerification = () => {
           finalUrl.searchParams.set('name', name);
           window.location.href = finalUrl.toString();
         } else {
-          setMessage('✅ 본인인증이 성공적으로 완료되었습니다.');
+          setMessage('본인인증이 성공적으로 완료되었습니다.');
         }
       } else {
         const errorMsg = await response.text();
-        setMessage(`❌ 인증번호가 일치하지 않습니다.`);
+        let parsedError = errorMsg;
+        try {
+           const jsonError = JSON.parse(errorMsg);
+           parsedError = jsonError.message || errorMsg;
+        } catch(e) {}
+        setMessage(`❌ ${parsedError}`);
       }
     } catch (error) {
       setMessage('⚠️ 네트워크 오류: ' + error.message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -301,10 +319,10 @@ const IdentityVerification = () => {
       <div className="px-8 pb-12 max-w-[480px] mx-auto w-full">
         <button
           onClick={otpSent ? handleVerifyOtp : handleRequestOtp}
-          disabled={otpSent ? otp.length !== 6 : !isFormValid}
+          disabled={isSubmitting || (otpSent ? otp.length !== 6 : !isFormValid)}
           className="btn-primary !rounded-lg"
         >
-          {otpSent ? '인증번호 확인' : '인증번호발송'}
+          {isSubmitting ? (otpSent ? '확인 중...' : '발송 중...') : (otpSent ? '인증번호 확인' : '인증번호발송')}
         </button>
       </div>
     </div>

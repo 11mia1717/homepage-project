@@ -7,6 +7,7 @@ public class AuthOtpRequest {
     private String name;
     private String phoneNumber;
     private String residentFront;
+    private String carrier;
 
     public UUID getTokenId() {
         return tokenId;
@@ -38,5 +39,13 @@ public class AuthOtpRequest {
 
     public void setResidentFront(String residentFront) {
         this.residentFront = residentFront;
+    }
+
+    public String getCarrier() {
+        return carrier;
+    }
+
+    public void setCarrier(String carrier) {
+        this.carrier = carrier;
     }
 }

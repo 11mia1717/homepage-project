@@ -5,6 +5,7 @@ import com.entrusting.backend.user.dto.LoginRequest;
 import com.entrusting.backend.user.dto.RegisterRequest;
 import com.entrusting.backend.user.entity.User;
 import com.entrusting.backend.user.service.UserService;
+import com.entrusting.backend.user.service.S2SAuthService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,27 +14,58 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+    private final S2SAuthService s2sAuthService;
+    private final org.springframework.web.client.RestTemplate restTemplate;
 
-    public UserController(UserService userService) {
+    @org.springframework.beans.factory.annotation.Value("${trustee.api.base-url}")
+    private String trusteeApiBaseUrl;
+
+    public UserController(UserService userService, S2SAuthService s2sAuthService,
+            org.springframework.web.client.RestTemplate restTemplate) {
         this.userService = userService;
+        this.s2sAuthService = s2sAuthService;
+        this.restTemplate = restTemplate;
     }
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody RegisterRequest request) {
         try {
+            // [Server-to-Server 검증]
+            String tokenId = request.getTokenId();
+            if (tokenId == null || tokenId.isEmpty()) {
+                throw new IllegalArgumentException("본인인증 토큰이 누락되었습니다. 다시 시도해 주세요.");
+            }
+
+            java.util.Map<String, Object> verification = s2sAuthService.verifyTokenWithTrustee(tokenId);
+            if (verification == null || !"COMPLETED".equals(verification.get("status"))) {
+                throw new IllegalArgumentException("본인인증이 완료되지 않았거나 유효하지 않은 토큰입니다.");
+            }
+
+            // [보안 추가] 인증된 실명/번호와 가입 정보가 일치하는지 최종 확인
+            String verifiedName = (String) verification.get("name");
+            if (verifiedName != null && !verifiedName.equals(request.getName())) {
+                throw new IllegalArgumentException("본인인증 성명과 가입 성명이 일치하지 않습니다.");
+            }
+
             userService.registerUser(request);
             return ResponseEntity.ok("User registered successfully");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("서버 처리 중 오류가 발생했습니다: " + e.getMessage());
         }
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         try {
             User user = userService.loginUser(request);
-            // 실제 로그인 시 JWT 토큰 등을 반환해야 하지만, 여기서는 간단하게 성공 메시지 반환
-            return ResponseEntity.ok("Login successful for user: " + user.getUsername());
+            java.util.Map<String, String> response = new java.util.HashMap<>();
+            response.put("status", "success");
+            response.put("username", user.getUsername());
+            response.put("name", user.getName());
+            response.put("phoneNumber", user.getPhoneNumber());
+            return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -45,9 +77,8 @@ public class UserController {
                 + ", Token: " + request.getTokenId());
         java.util.Map<String, String> response = new java.util.HashMap<>();
         try {
-            // [보안 강화] 수탁사(8082) 서버에 직접 토큰 상태 확인
-            String trusteeUrl = "http://127.0.0.1:8082/api/v1/auth/status/" + request.getTokenId();
-            org.springframework.web.client.RestTemplate restTemplate = new org.springframework.web.client.RestTemplate();
+            // [보안 강화] 수탁사 서버에 직접 토큰 상태 확인 (중앙 설정값 사용)
+            String trusteeUrl = trusteeApiBaseUrl + "/api/v1/auth/status/" + request.getTokenId();
 
             java.util.Map statusResponse = null;
             try {
@@ -60,7 +91,7 @@ public class UserController {
                 }
             } catch (Exception e) {
                 System.err.println("[ENTRUSTING-DEBUG] Trustee Connection Error: " + e.getMessage());
-                throw new Exception("수탁사 인증 서버(8082) 연결 실패: " + e.getMessage());
+                throw new Exception("수탁사 인증 서버 연결 실패: " + e.getMessage());
             }
 
             userService.updateUserVerifiedStatus(request.getPhoneNumber(), true);

@@ -3,7 +3,10 @@ C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\
 C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\entity\Account.java
 C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\controller\AccountController.java
 C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\dto\LoginRequest.java
+C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\entity\Transaction.java
 C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\service\AccountService.java
+C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\repository\TransactionRepository.java
+C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\controller\DashboardController.java
 C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\config\UserSecurityConfig.java
 C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\dto\RegisterRequest.java
 C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\entity\User.java
@@ -11,3 +14,4 @@ C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\
 C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\repository\UserRepository.java
 C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\controller\UserController.java
 C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\dto\AuthCallbackRequest.java
+C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\service\S2SAuthService.java

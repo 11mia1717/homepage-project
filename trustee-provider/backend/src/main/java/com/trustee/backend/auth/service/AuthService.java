@@ -4,6 +4,7 @@ import com.trustee.backend.auth.dto.AuthConfirmRequest;
 import com.trustee.backend.auth.dto.AuthInitRequest;
 import com.trustee.backend.auth.dto.AuthInitResponse;
 import com.trustee.backend.auth.dto.AuthStatusResponse;
+import com.trustee.backend.auth.dto.AuthVerificationResponse;
 import com.trustee.backend.auth.entity.AuthStatus;
 import com.trustee.backend.auth.entity.AuthToken;
 import com.trustee.backend.auth.repository.AuthTokenRepository;
@@ -18,10 +19,12 @@ import java.util.UUID;
 public class AuthService {
 
     private final AuthTokenRepository authTokenRepository;
+    private final MockCarrierDatabase mockCarrierDatabase;
     private final Random random = new Random();
 
-    public AuthService(AuthTokenRepository authTokenRepository) {
+    public AuthService(AuthTokenRepository authTokenRepository, MockCarrierDatabase mockCarrierDatabase) {
         this.authTokenRepository = authTokenRepository;
+        this.mockCarrierDatabase = mockCarrierDatabase;
     }
 
     @Transactional
@@ -30,11 +33,30 @@ public class AuthService {
         // Generate a 6-digit OTP
         String otp = String.format("%06d", random.nextInt(1000000));
 
+        // [핵심] 가상 통신사 명의 원장 대조 추가
+        String cleanPhone = request.getClientData().replaceAll("\\D", "");
+        String receivedName = request.getName();
+        System.out.println(
+                "[TRUSTEE-DEBUG] initAuth - Received Name: [" + receivedName + "], Phone: [" + cleanPhone + "]");
+        if (receivedName != null) {
+            StringBuilder sb = new StringBuilder();
+            for (byte b : receivedName.getBytes(java.nio.charset.StandardCharsets.UTF_8)) {
+                sb.append(String.format("%02X ", b));
+            }
+            System.out.println("[TRUSTEE-DEBUG] initAuth - Received Name Bytes (UTF-8): " + sb.toString());
+        }
+
+        // [로직 변경] 여기서 바로 검증하지 않고, 일단 세션만 생성함 (요청 수용)
+        // 실제 명의인 대조는 인증번호 확인(confirmAuth) 또는 재발송(requestOtp) 시점에 수행
+        System.out.println(
+                "[TRUSTEE-DEBUG] initAuth - Session initialized for: " + receivedName + " (" + cleanPhone + ")");
+
         // In a real scenario, you'd send this OTP via SMS/Kakao to
         // request.getClientData()
         System.out.println("[TRUSTEE] Generated OTP for " + request.getClientData() + ": " + otp);
 
-        AuthToken authToken = new AuthToken(tokenId, request.getClientData(), request.getName(), otp,
+        AuthToken authToken = new AuthToken(tokenId, request.getClientData(), request.getName(), request.getCarrier(),
+                otp,
                 AuthStatus.PENDING,
                 LocalDateTime.now());
         authTokenRepository.save(authToken);
@@ -69,6 +91,13 @@ public class AuthService {
                             org.springframework.http.HttpStatus.NOT_FOUND, "인증 세션이 만료되었거나 존재하지 않습니다. 다시 시도해 주세요.");
                 });
 
+        // [추가] 유효 시간 검증 (3분)
+        if (java.time.LocalDateTime.now().isAfter(authToken.getCreatedAt().plusMinutes(3))) {
+            System.err.println("[TRUSTEE-ERROR] Token Expired: " + requestedTokenId);
+            throw new org.springframework.web.server.ResponseStatusException(
+                    org.springframework.http.HttpStatus.GONE, "인증 유효 시간이 만료되었습니다. 다시 시작해 주세요.");
+        }
+
         String storedOtp = authToken.getOtp().trim();
         String sentOtp = requestedOtp.trim();
 
@@ -78,6 +107,16 @@ public class AuthService {
             System.err.println("[TRUSTEE-DEBUG] MISMATH !! Stored: [" + storedOtp + "] != Received: [" + sentOtp + "]");
             throw new org.springframework.web.server.ResponseStatusException(
                     org.springframework.http.HttpStatus.BAD_REQUEST, "인증번호가 일치하지 않습니다. (입력값: " + sentOtp + ")");
+        }
+
+        // [핵심] 인증번호가 맞더라도, 실제 통신사 정보와 일치하는지 최종 단계에서 검증
+        String cleanPhone = authToken.getClientData().replaceAll("\\D", "");
+        if (!mockCarrierDatabase.verifyIdentity(cleanPhone, authToken.getName(), authToken.getCarrier())) {
+            System.err
+                    .println("[TRUSTEE-ERROR] Identity Disclosure Mismatch at FINAL step for: " + authToken.getName()
+                            + " (" + authToken.getCarrier() + ")");
+            throw new org.springframework.web.server.ResponseStatusException(
+                    org.springframework.http.HttpStatus.FORBIDDEN, "정보 불일치: 입력하신 정보와 통신사 명의 정보가 일치하지 않습니다.");
         }
 
         authToken.setStatus(AuthStatus.COMPLETED);
@@ -90,6 +129,11 @@ public class AuthService {
         AuthToken authToken = authTokenRepository.findById(request.getTokenId())
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 인증 세션입니다. (Token NOT FOUND)"));
 
+        // [추가] 유효 시간 검증 (3분 - 재발송 가능한 시간 제한)
+        if (java.time.LocalDateTime.now().isAfter(authToken.getCreatedAt().plusMinutes(3))) {
+            throw new IllegalArgumentException("인증 유효 시간이 만료되었습니다. 처음부터 다시 진행해 주세요.");
+        }
+
         // [핵심] 위탁사에서 등록한 정보와 현재 입력한 정보가 일치하는지 검증
         String expectedPhone = authToken.getClientData().replaceAll("\\D", "");
         String inputPhone = request.getPhoneNumber().replaceAll("\\D", "");
@@ -100,8 +144,16 @@ public class AuthService {
                 + "], Input: [" + inputName + ", " + inputPhone + "]");
 
         if (!expectedPhone.equals(inputPhone) || (expectedName != null && !expectedName.equals(inputName))) {
-            throw new IllegalArgumentException("정보 불일치: 회원정보와 입력하신 정보가 다릅니다.");
+            throw new IllegalArgumentException("정보 불일치: 본인인증 정보가 올바르지 않습니다.");
         }
+
+        // [핵심] 재전송 시에도 통신사 실명 대조
+        if (!mockCarrierDatabase.verifyIdentity(inputPhone, inputName, request.getCarrier())) {
+            throw new IllegalArgumentException("정보 불일치: 통신사 명의 정보와 일치하지 않습니다.");
+        }
+
+        // [추가] 선택한 통신사 정보를 세션에 업데이트 (최종 검증 시 사용됨)
+        authToken.setCarrier(request.getCarrier());
 
         // [실물 시뮬레이션] 주민번호 검증 (여기서는 생년월일이 6자인지만 체크)
         if (request.getResidentFront() == null || request.getResidentFront().length() != 6) {
@@ -116,5 +168,16 @@ public class AuthService {
         System.out.println(
                 "[TRUSTEE-SEC] OTP Regenerated for Security - Token: " + authToken.getTokenId() + ", OTP: " + newOtp);
         return new AuthInitResponse(authToken.getTokenId(), newOtp);
+    }
+
+    @Transactional(readOnly = true)
+    public AuthVerificationResponse verifyToken(UUID tokenId) {
+        AuthToken authToken = authTokenRepository.findById(tokenId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid token ID"));
+
+        return new AuthVerificationResponse(
+                authToken.getStatus(),
+                authToken.getName(),
+                authToken.getClientData());
     }
 }

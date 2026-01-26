@@ -21,9 +21,8 @@ import {
 const Dashboard = () => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState('고객');
-  const [accounts, setAccounts] = useState([]);
+  const [summary, setSummary] = useState({ totalBalance: 0, accounts: [], recentTransactions: [] });
   const [isLoading, setIsLoading] = useState(true);
-  const [showWelcomeOpen, setShowWelcomeOpen] = useState(false);
 
   const username = sessionStorage.getItem('logged_in_user');
   const isFirstLoginCheck = sessionStorage.getItem('is_first_login_check') === 'true';
@@ -38,26 +37,23 @@ const Dashboard = () => {
       } catch (e) { }
     }
 
-    // 2. 실제 계좌 목록 가져오기
+    // 2. 대시보드 요약 정보 가져오기
     if (username) {
-      const fetchAccounts = async () => {
+      const fetchDashboardData = async () => {
         try {
-          const response = await fetch(`/api/v1/accounts/list?username=${username}`);
-          const data = await response.json();
-          setAccounts(data);
+          const response = await fetch(`/api/v1/dashboard/summary?username=${username}`);
+          if (response.ok) {
+            const data = await response.json();
+            setSummary(data);
 
-          // 첫 로그인이고 계좌가 없는 경우 웰컴 추천 띄우기
-          if (isFirstLoginCheck && data.length === 0) {
-            setShowWelcomeOpen(true);
-            sessionStorage.removeItem('is_first_login_check');
           }
         } catch (err) {
-          console.error('Failed to fetch accounts:', err);
+          console.error('Failed to fetch dashboard data:', err);
         } finally {
           setIsLoading(false);
         }
       };
-      fetchAccounts();
+      fetchDashboardData();
     } else {
       navigate('/login');
     }
@@ -98,31 +94,6 @@ const Dashboard = () => {
           </h2>
         </section>
 
-        {showWelcomeOpen && (
-          <div className="bg-[#1A73E8] rounded-lg p-8 text-white relative overflow-hidden animate-in fade-in slide-in-from-bottom-5 duration-700 shadow-2xl shadow-blue-200">
-            <div className="relative z-10">
-              <h3 className="text-[20px] font-bold mb-2">처음 로그인하셨군요! 🎊</h3>
-              <p className="text-blue-100 text-sm mb-8 leading-relaxed">
-                본인인증 한 번으로 1,000원이 입금된<br />계좌를 바로 개설해 보시겠어요?
-              </p>
-              <div className="flex gap-3">
-                <button
-                  onClick={() => navigate('/create-account')}
-                  className="flex-1 h-12 bg-white text-[#1A73E8] rounded-xl font-bold text-sm hover:bg-gray-50 transition-colors"
-                >
-                  계좌 개설하기
-                </button>
-                <button
-                  onClick={() => setShowWelcomeOpen(false)}
-                  className="px-6 h-12 bg-white/20 text-white rounded-xl font-bold text-sm hover:bg-white/30 transition-colors"
-                >
-                  나중에
-                </button>
-              </div>
-            </div>
-            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-10 -mt-10 blur-2xl"></div>
-          </div>
-        )}
 
         <section className="space-y-6">
           <div className="flex justify-between items-center px-1">
@@ -142,25 +113,55 @@ const Dashboard = () => {
           </div>
 
           {isLoading ? (
-            <div className="py-20 flex justify-center">
-              <div className="w-8 h-8 border-4 border-[#1A73E8]/20 border-t-[#1A73E8] rounded-full animate-spin"></div>
+            <div className="space-y-4">
+              {[1, 2].map(i => (
+                <div key={i} className="bg-white rounded-[32px] p-7 border border-gray-50 animate-pulse">
+                  <div className="h-4 w-24 bg-gray-100 rounded mb-4"></div>
+                  <div className="h-10 w-48 bg-gray-100 rounded mb-6"></div>
+                  <div className="flex gap-3">
+                    <div className="flex-1 h-12 bg-gray-100 rounded-2xl"></div>
+                    <div className="flex-1 h-12 bg-gray-100 rounded-2xl"></div>
+                  </div>
+                </div>
+              ))}
             </div>
-          ) : accounts.length === 0 ? (
-            <div className="bg-white rounded-[32px] p-10 border border-dashed border-gray-200 flex flex-col items-center justify-center text-center">
-              <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center text-gray-300 mb-4">
-                <Wallet size={28} />
+          ) : summary.accounts.length === 0 ? (
+            <div className="space-y-6">
+              {/* [요청] 계좌가 없는 경우 상시 노출될 10,000원 혜택 배너 - 중앙 정렬 및 디자인 정교화 */}
+              <div className="bg-gradient-to-br from-[#1A73E8] to-[#0D47A1] rounded-[20px] p-8 text-white relative overflow-hidden shadow-xl shadow-blue-200 animate-in fade-in zoom-in duration-500">
+                <div className="relative z-10 flex flex-col items-center text-center">
+                  <div className="flex justify-center mb-4">
+                    <div className="bg-amber-400 text-blue-900 px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase shadow-sm">Limited Offer</div>
+                  </div>
+                  <h3 className="text-[24px] font-medium leading-tight mb-3">
+                    지금 첫 계좌를 개설하고<br />
+                    <span className="text-yellow-300 font-semibold">10,000원</span> 혜택을 받으세요! 💰
+                  </h3>
+                  <p className="text-blue-100 text-[14px] font-normal opacity-90 mb-8">
+                    신규 가입 고객님께만 드리는 특별한 선물,<br />
+                    본인인증 완료 즉시 잔액으로 지급됩니다.
+                  </p>
+                  <button
+                    onClick={() => navigate('/create-account')}
+                    className="w-full h-14 bg-white text-[#1A73E8] rounded-xl font-semibold text-[16px] hover:bg-gray-50 active:scale-[0.98] transition-all shadow-lg max-w-[320px]"
+                  >
+                    10,000원 받고 계좌 만들기
+                  </button>
+                </div>
+                {/* Decorative background circle */}
+                <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full -mr-16 -mt-16 blur-2xl"></div>
               </div>
-              <p className="text-gray-400 font-bold text-[15px] mb-6">아직 개설된 계좌가 없습니다.</p>
-              <button
-                onClick={() => navigate('/create-account')}
-                className="btn-primary !h-12 !text-[14px] !w-auto !px-8"
-              >
-                첫 계좌 개설하기
-              </button>
+
+              <div className="bg-white rounded-[32px] p-10 border border-dashed border-gray-200 flex flex-col items-center justify-center text-center opacity-60">
+                <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center text-gray-300 mb-4">
+                  <Wallet size={28} />
+                </div>
+                <p className="text-gray-400 font-bold text-[15px]">아직 개설된 계좌가 없습니다.</p>
+              </div>
             </div>
           ) : (
             <div className="space-y-4">
-              {accounts.map((acc, idx) => (
+              {summary.accounts.map((acc, idx) => (
                 <div key={idx} className="bg-white rounded-[32px] p-7 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-50 group hover:shadow-xl hover:shadow-blue-500/5 transition-all duration-500">
                   <div className="mb-7">
                     <div className="flex justify-between items-center mb-1">
@@ -169,9 +170,8 @@ const Dashboard = () => {
                     </div>
                     <div className="flex items-baseline gap-1">
                       <span className="text-[34px] font-medium text-[#1A73E8] tracking-tighter">
-                        {Number(acc.balance).toLocaleString()}
+                        ₩ {Number(acc.balance).toLocaleString()}
                       </span>
-                      <span className="text-[20px] font-semibold text-[#1A73E8] ml-0.5">원</span>
                     </div>
                   </div>
 
@@ -189,12 +189,22 @@ const Dashboard = () => {
           )}
         </section>
 
+        <section className="mt-14 mb-4">
+          <div className="flex justify-between items-center px-1">
+            <div className="flex items-center gap-3">
+              <div className="w-11 h-11 bg-pink-50 rounded-2xl flex items-center justify-center text-yellow-500 shadow-sm">
+                <Gift size={22} />
+              </div>
+              <span className="text-gray-900 font-bold text-[20px] tracking-tight">혜택보기</span>
+            </div>
+          </div>
+        </section>
+
         <div className="pt-4"></div>
 
         <section className="space-y-3">
           {[
-            { title: '신용점수 올리고 대출 한도 조회하기', desc: '내 신용점수는 몇 점일까?', tag: 'EVENT' },
-            { title: '매일 들어오는 이자 확인하기', desc: '지금까지 쌓인 이자 보러가기' }
+            { title: '신용점수 올리고 대출 한도 조회하기', desc: '내 신용점수는 몇 점일까?', tag: 'EVENT' }
           ].map((item, idx) => (
             <div key={idx} className="bg-white/60 px-5 py-4 rounded-[22px] flex justify-between items-center group cursor-pointer hover:bg-white hover:shadow-md transition-all border border-white/50">
               <div className="space-y-0.5">
@@ -209,7 +219,7 @@ const Dashboard = () => {
           ))}
         </section>
 
-        {/* [요청] Sky Blue Rectangular Banner Text Size Tweaks - Sharper corners */}
+        {/* [복구] 스페셜 이벤트 배너 */}
         <section className="bg-blue-50/50 border border-blue-100 rounded-lg p-6 text-[#1A73E8] flex justify-between items-center group cursor-pointer relative overflow-hidden transition-all hover:bg-blue-50">
           <div className="relative z-10">
             <p className="text-[#1A73E8]/50 text-[10px] font-bold mb-1 tracking-widest uppercase">Special Event</p>
@@ -221,7 +231,7 @@ const Dashboard = () => {
           </div>
         </section>
 
-        <div className="h-6"></div>
+        <div className="pt-8"></div>
       </main>
 
       <nav className="sticky bottom-4 mx-5 bg-white/95 backdrop-blur-lg border border-gray-100 h-[68px] rounded-[20px] flex items-center justify-around shadow-2xl px-2 mb-4">

@@ -12,6 +12,7 @@ public class AuthToken {
 
     private String clientData;
     private String name;
+    private String carrier;
     private String otp;
 
     @Enumerated(EnumType.STRING)
@@ -22,11 +23,12 @@ public class AuthToken {
     public AuthToken() {
     }
 
-    public AuthToken(UUID tokenId, String clientData, String name, String otp, AuthStatus status,
+    public AuthToken(UUID tokenId, String clientData, String name, String carrier, String otp, AuthStatus status,
             LocalDateTime createdAt) {
         this.tokenId = tokenId;
         this.clientData = clientData;
         this.name = name;
+        this.carrier = carrier;
         this.otp = otp;
         this.status = status;
         this.createdAt = createdAt;
@@ -54,6 +56,14 @@ public class AuthToken {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCarrier() {
+        return carrier;
+    }
+
+    public void setCarrier(String carrier) {
+        this.carrier = carrier;
     }
 
     public String getOtp() {

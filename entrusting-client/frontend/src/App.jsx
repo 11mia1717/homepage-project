@@ -7,6 +7,14 @@ import ForgotPassword from './pages/ForgotPassword';
 import FindId from './pages/FindId';
 import CreateAccount from './pages/CreateAccount';
 
+const ProtectedRoute = ({ children }) => {
+  const isLoggedIn = sessionStorage.getItem('logged_in_user');
+  if (!isLoggedIn) {
+    return <Navigate to="/login" replace />;
+  }
+  return children;
+};
+
 function App() {
   return (
     <div className="min-h-screen bg-[#F5F6F8] flex justify-center">
@@ -17,8 +25,22 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/find-id" element={<FindId />} />
           <Route path="/auth/callback" element={<AuthCallback />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/create-account" element={<CreateAccount />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/create-account"
+            element={
+              <ProtectedRoute>
+                <CreateAccount />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/" element={<Navigate to="/login" replace />} />
         </Routes>
       </div>

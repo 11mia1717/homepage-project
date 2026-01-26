@@ -3,7 +3,7 @@ package com.entrusting.backend.user.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "users")
+@Table(name = "site_users") // 'user', 'users'는 H2/SQL 예약어와 충돌할 가능성이 높음
 public class User {
 
     @Id

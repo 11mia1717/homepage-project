@@ -5,6 +5,7 @@ import com.trustee.backend.auth.dto.AuthInitRequest;
 import com.trustee.backend.auth.dto.AuthInitResponse;
 import com.trustee.backend.auth.dto.AuthOtpRequest;
 import com.trustee.backend.auth.dto.AuthStatusResponse;
+import com.trustee.backend.auth.dto.AuthVerificationResponse;
 import com.trustee.backend.auth.service.AuthService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -47,5 +48,11 @@ public class AuthController {
     public ResponseEntity<Void> confirmAuth(@RequestBody AuthConfirmRequest request) {
         authService.confirmAuth(request);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/verify/{tokenId}")
+    public ResponseEntity<AuthVerificationResponse> verifyToken(@PathVariable UUID tokenId) {
+        AuthVerificationResponse response = authService.verifyToken(tokenId);
+        return ResponseEntity.ok(response);
     }
 }

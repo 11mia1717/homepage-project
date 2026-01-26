@@ -25,16 +25,25 @@ public class Account {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    private String accountPin; // Hashed PIN
+    private String salt; // Unique salt for PIN
+    private String status; // ACTIVE, SUSPENDED
+    private int pinFailCount = 0;
+
     private LocalDateTime createdAt;
 
     public Account() {
     }
 
-    public Account(String accountNumber, String accountName, BigDecimal balance, User user) {
+    public Account(String accountNumber, String accountName, BigDecimal balance, User user, String accountPin,
+            String salt) {
         this.accountNumber = accountNumber;
         this.accountName = accountName;
         this.balance = balance;
         this.user = user;
+        this.accountPin = accountPin;
+        this.salt = salt;
+        this.status = "ACTIVE";
         this.createdAt = LocalDateTime.now();
     }
 
@@ -68,6 +77,38 @@ public class Account {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getAccountPin() {
+        return accountPin;
+    }
+
+    public void setAccountPin(String accountPin) {
+        this.accountPin = accountPin;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public int getPinFailCount() {
+        return pinFailCount;
+    }
+
+    public void setPinFailCount(int pinFailCount) {
+        this.pinFailCount = pinFailCount;
     }
 
     public LocalDateTime getCreatedAt() {

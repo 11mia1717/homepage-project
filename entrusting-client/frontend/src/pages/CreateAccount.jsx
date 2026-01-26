@@ -2,16 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import Logo from '../components/Logo';
 import { ChevronLeft, ShieldCheck, CheckCircle2, Wallet } from 'lucide-react';
+import AlertModal from '../components/AlertModal';
 
 const CreateAccount = () => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const [step, setStep] = useState(1);
     const [accountName, setAccountName] = useState('Continue 입출금 통장');
+    const [pin, setPin] = useState('');
     const [message, setMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [bonusApplied, setBonusApplied] = useState(false); // 기본값 false (응답에 따라 가변)
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalContent, setModalContent] = useState({ title: '', message: '' });
 
     const isVerified = searchParams.get('verified') === 'true';
+    const tokenId = searchParams.get('tokenId');
     const username = sessionStorage.getItem('logged_in_user');
 
     useEffect(() => {
@@ -22,23 +28,41 @@ const CreateAccount = () => {
 
     const handleAuthVerification = async () => {
         try {
+            // [수정] 세션에 저장된 실제 사용자 정보(프로필)를 최우선으로 가져옴
+            const profileData = sessionStorage.getItem('user_profile');
+            const registerData = sessionStorage.getItem('register_form_data');
+
+            let realName = '회원';
+            let realPhone = 'account-open';
+
+            if (profileData) {
+                const parsed = JSON.parse(profileData);
+                if (parsed.name) realName = parsed.name;
+                if (parsed.phoneNumber) realPhone = parsed.phoneNumber.replace(/\D/g, '');
+            } else if (registerData) {
+                const parsed = JSON.parse(registerData);
+                if (parsed.name) realName = parsed.name;
+                if (parsed.phoneNumber) realPhone = parsed.phoneNumber.replace(/\D/g, '');
+            }
+
             const initResponse = await fetch('/trustee-api/v1/auth/init', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ clientData: 'account-open', name: '계좌개설' }),
+                body: JSON.stringify({ clientData: realPhone, name: realName }),
             });
 
-            const rawText = await initResponse.text();
+            const contentType = initResponse.headers.get("content-type");
             let initData = {};
-            try {
-                initData = JSON.parse(rawText);
-            } catch (e) {
-                throw new Error(`서버 응답 오류 (JSON 아님): ${rawText.substring(0, 50)}`);
+            if (contentType && contentType.includes("application/json")) {
+                initData = await initResponse.json();
+            } else {
+                const errorText = await initResponse.text();
+                throw new Error(`서버 응답 오류: ${errorText.substring(0, 100)}`);
             }
 
             if (initResponse.ok && initData.tokenId) {
                 const currentHostname = window.location.hostname;
-                const trusteeAuthPageUrl = new URL(`http://${currentHostname}:5174/verify`);
+                const trusteeAuthPageUrl = new URL(`${import.meta.env.VITE_TRUSTEE_FRONTEND_URL}/verify`);
                 trusteeAuthPageUrl.searchParams.append('tokenId', initData.tokenId);
 
                 // 세션에 저장된 가입 정보를 활용하여 이름과 번호 전달
@@ -55,10 +79,12 @@ const CreateAccount = () => {
 
                 window.location.href = trusteeAuthPageUrl.toString();
             } else {
-                setMessage('본인인증 초기화 실패: ' + (initData.message || '로그를 확인하세요.'));
+                setModalContent({ title: '본인인증 실패', message: initData.message || '인증 정보를 다시 확인해 주세요.' });
+                setIsModalOpen(true);
             }
         } catch (error) {
-            setMessage('오류 발생: ' + error.message);
+            setModalContent({ title: '오류 발생', message: error.message });
+            setIsModalOpen(true);
         }
     };
 
@@ -69,21 +95,37 @@ const CreateAccount = () => {
         }
 
         setIsLoading(true);
+        console.log('[DEBUG] Finalizing Account Creation:', { username, accountName, pinLen: pin?.length });
         try {
             const response = await fetch('/api/v1/accounts/create', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, accountName }),
+                body: JSON.stringify({ username, accountName, pin, tokenId }),
             });
 
+            // [수정] 응답 본문을 단 한 번만 읽도록 보장하는 가장 확실한 방법
+            const rawBody = await response.text();
+            let parsedData = null;
+            try {
+                if (rawBody) parsedData = JSON.parse(rawBody);
+            } catch (e) {
+                // Not JSON
+            }
+
             if (response.ok) {
+                // 백엔드에서 전달한 축하금 지급 여부 저장
+                if (parsedData && parsedData.bonusApplied !== undefined) {
+                    setBonusApplied(parsedData.bonusApplied);
+                }
                 setStep(3);
             } else {
-                const errorText = await response.text();
-                setMessage('계좌 생성 실패: ' + errorText);
+                const errorMsg = parsedData?.message || rawBody || '알 수 없는 오류';
+                setModalContent({ title: '계좌 생성 실패', message: errorMsg });
+                setIsModalOpen(true);
             }
         } catch (error) {
-            setMessage('오류 발생: ' + error.message);
+            setModalContent({ title: '오류 발생', message: error.message });
+            setIsModalOpen(true);
         } finally {
             setIsLoading(false);
         }
@@ -139,11 +181,22 @@ const CreateAccount = () => {
                                     placeholder="계좌 이름을 입력하세요"
                                 />
                             </div>
+                            <div>
+                                <label className="input-label">계좌 비밀번호 (4자리)</label>
+                                <input
+                                    type="password"
+                                    maxLength={4}
+                                    value={pin}
+                                    onChange={(e) => setPin(e.target.value.replace(/\D/g, ''))}
+                                    className="input-field tracking-widest text-lg font-bold"
+                                    placeholder="숫자 4자리 입력"
+                                />
+                            </div>
                         </div>
                         <div className="mt-auto pb-10">
                             <button
                                 onClick={handleFinalizeCreation}
-                                disabled={isLoading || !accountName}
+                                disabled={isLoading || !accountName || pin.length !== 4}
                                 className="btn-primary"
                             >
                                 {isLoading ? '개설 중...' : '계좌 개설 완료'}
@@ -161,7 +214,12 @@ const CreateAccount = () => {
                             계좌 개설을<br />축하드립니다! 🎉
                         </h1>
                         <p className="text-gray-500 font-medium mb-12">
-                            가입 축하금 <span className="text-[#1A73E8] font-bold">1,000원</span>이 입금되었습니다.<br />
+                            {bonusApplied ? (
+                                <>가입 축하금 <span className="text-[#1A73E8] font-bold">10,000원</span>이 입금되었습니다.</>
+                            ) : (
+                                <>계좌 개설이 완료되었습니다.</>
+                            )}
+                            <br />
                             이제 Continue의 모든 서비스를 이용해 보세요.
                         </p>
                         <button onClick={() => navigate('/dashboard')} className="btn-primary w-full">
@@ -169,13 +227,14 @@ const CreateAccount = () => {
                         </button>
                     </div>
                 )}
-
-                {message && (
-                    <div className="mt-4 p-4 bg-red-50 text-red-500 text-sm font-bold rounded-xl text-center">
-                        ⚠️ {message}
-                    </div>
-                )}
             </main>
+
+            <AlertModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                title={modalContent.title}
+                message={modalContent.message}
+            />
         </div>
     );
 };

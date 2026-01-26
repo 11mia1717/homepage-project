@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import Logo from '../components/Logo';
 import { ChevronLeft, CheckCircle2 } from 'lucide-react';
+import AlertModal from '../components/AlertModal';
 
 const Register = () => {
   const [searchParams] = useSearchParams();
@@ -19,6 +20,10 @@ const Register = () => {
   const [phoneNumber, setPhoneNumber] = useState(urlPhoneNumber);
   const [message, setMessage] = useState('');
   const [showSuccess, setShowSuccess] = useState(false); // 가입 성공 오버레이 상태
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState({ title: '', message: '' });
+
+  const tokenId = searchParams.get('tokenId') || '';
 
   // 컴포넌트 마운트 시 저장된 데이터 복구
   React.useEffect(() => {
@@ -80,7 +85,7 @@ const Register = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, username, password, phoneNumber: cleanPhoneNumber }),
+        body: JSON.stringify({ name, username, password, phoneNumber: cleanPhoneNumber, tokenId }),
       });
       const data = await response.text();
       if (response.ok) {
@@ -88,10 +93,18 @@ const Register = () => {
         setShowSuccess(true); // 축하 오버레이 표시
         setTimeout(() => navigate('/login'), 2500); // 2.5초 후 이동
       } else {
-        setMessage('회원가입 실패: ' + data);
+        setModalContent({ 
+          title: '가입 실패', 
+          message: data || '회원가입 처리 중 오류가 발생했습니다.' 
+        });
+        setIsModalOpen(true);
       }
     } catch (error) {
-      setMessage('오류 발생: ' + error.message);
+      setModalContent({ 
+        title: '오류 발생', 
+        message: error.message 
+      });
+      setIsModalOpen(true);
     }
   };
 
@@ -102,15 +115,20 @@ const Register = () => {
     }
 
     try {
-      // 본인인증 전송 전 하이픈 완전 제거 (데이터 정규화)
+      const cleanName = name.trim();
       const cleanPhoneNumber = phoneNumber.replace(/\D/g, '');
+
+      if (!cleanName || !cleanPhoneNumber) {
+        setMessage('이름과 휴대폰 번호를 모두 입력해 주세요.');
+        return;
+      }
 
       const initResponse = await fetch('/trustee-api/v1/auth/init', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ clientData: cleanPhoneNumber }),
+        body: JSON.stringify({ clientData: cleanPhoneNumber, name: cleanName }),
       });
       const rawText = await initResponse.text();
       let initData = {};
@@ -121,8 +139,8 @@ const Register = () => {
       }
 
       if (initResponse.ok && initData.tokenId) {
-        // 수탁사 프론트엔드(5174)로 이동
-        const trusteeAuthPageUrl = new URL('http://127.0.0.1:5174/verify');
+        // 수탁사 프론트엔드로 이동 (환경 변수 사용)
+        const trusteeAuthPageUrl = new URL(`${import.meta.env.VITE_TRUSTEE_FRONTEND_URL}/verify`);
         trusteeAuthPageUrl.searchParams.append('tokenId', initData.tokenId);
         trusteeAuthPageUrl.searchParams.append('phoneNumber', cleanPhoneNumber);
         trusteeAuthPageUrl.searchParams.append('name', name);
@@ -131,10 +149,18 @@ const Register = () => {
 
         window.location.href = trusteeAuthPageUrl.toString();
       } else {
-        setMessage('본인인증 실패: ' + (initData.message || '알 수 없는 오류'));
+        setModalContent({ 
+          title: '본인인증 실패', 
+          message: initData.message || '인증 서버와 통신 중 오류가 발생했습니다.' 
+        });
+        setIsModalOpen(true);
       }
     } catch (error) {
-      setMessage('오류 발생: ' + error.message);
+      setModalContent({ 
+        title: '오류 발생', 
+        message: error.message 
+      });
+      setIsModalOpen(true);
     }
   };
 
@@ -150,7 +176,7 @@ const Register = () => {
             회원가입을<br />진심으로 축하드립니다! 🎉
           </h2>
           <p className="text-gray-500 text-lg font-bold text-center">
-            가입 축하금 <span className="text-[#1A73E8]">1,000원</span>이 입금되었습니다.<br />
+            첫 계좌 개설 시 <span className="text-[#1A73E8]">10,000원</span> 가입 축하금이 지급됩니다.<br />
             잠시 후 로그인 페이지로 이동합니다.
           </p>
         </div>
@@ -266,11 +292,9 @@ const Register = () => {
               <p className="error-text">비밀번호가 일치하지 않습니다.</p>
             )}
           </div>
-
-
         </form>
 
-        {/* Error Message */}
+        {/* Inline Error Message (Selective) */}
         {message && (
           <div className="mt-8 p-5 bg-red-50/50 rounded-2xl text-red-500 text-sm font-semibold text-center border border-red-100 flex items-center justify-center gap-2">
             <span>⚠️</span> {message}
@@ -280,7 +304,6 @@ const Register = () => {
 
       {/* Bottom Actions */}
       <div className="px-8 pb-12 space-y-5 max-w-[480px] mx-auto w-full">
-        {/* 본인인증 유도 문구 */}
         {!isVerified && (
           <div className="p-5 bg-blue-50/50 border border-blue-100 rounded-2xl flex items-center gap-4 animate-in fade-in slide-in-from-bottom-2 duration-500">
             <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg shadow-blue-100 flex-shrink-0">
@@ -302,6 +325,13 @@ const Register = () => {
           가입 완료
         </button>
       </div>
+
+      <AlertModal 
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title={modalContent.title}
+        message={modalContent.message}
+      />
     </div>
   );
 };

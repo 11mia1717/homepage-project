@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../components/Logo';
+import AlertModal from '../components/AlertModal';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState(''); // This state might become redundant if all messages go to modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState({ title: '', message: '' });
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -16,17 +19,24 @@ const Login = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
       });
-      const data = await response.text();
       if (response.ok) {
+        const data = await response.json();
         sessionStorage.setItem('logged_in_user', username);
-        sessionStorage.setItem('is_first_login_check', 'true'); // 대시보드에서 팝업 띄우기 위한 용도
-        setMessage('로그인 성공');
+        sessionStorage.setItem('user_profile', JSON.stringify({
+          name: data.name,
+          phoneNumber: data.phoneNumber
+        }));
+        sessionStorage.setItem('is_first_login_check', 'true');
+        setMessage('로그인 성공'); // This message is for successful login, not an error
         navigate('/dashboard');
       } else {
-        setMessage('로그인 실패: ' + data);
+        const errorText = await response.text();
+        setModalContent({ title: '로그인 실패', message: errorText || '아이디 또는 비밀번호를 확인해 주세요.' });
+        setIsModalOpen(true);
       }
     } catch (error) {
-      setMessage('오류 발생: ' + error.message);
+      setModalContent({ title: '오류 발생', message: error.message });
+      setIsModalOpen(true);
     }
   };
 
@@ -70,11 +80,12 @@ const Login = () => {
           </div>
         </form>
 
-        {message && (
+        {/* The original message div is removed as error messages are now handled by AlertModal */}
+        {/* {message && (
           <div className="mt-8 p-5 bg-red-50/50 rounded-2xl text-red-500 text-sm font-bold text-center border border-red-100">
             {message}
           </div>
-        )}
+        )} */}
 
         <div className="mt-12 flex items-center justify-between text-[16px] font-bold">
           <Link to="/register" className="text-[#1A73E8] hover:underline px-1">회원가입</Link>
@@ -96,6 +107,13 @@ const Login = () => {
           로그인
         </button>
       </div>
+
+      <AlertModal 
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title={modalContent.title}
+        message={modalContent.message}
+      />
     </div>
   );
 };

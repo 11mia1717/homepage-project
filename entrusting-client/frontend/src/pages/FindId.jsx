@@ -70,7 +70,7 @@ const FindId = () => {
 
             if (initResponse.ok && initData.tokenId) {
                 const currentHostname = window.location.hostname;
-                const trusteeAuthPageUrl = new URL(`http://${currentHostname}:5174/verify`);
+                const trusteeAuthPageUrl = new URL(`${import.meta.env.VITE_TRUSTEE_FRONTEND_URL}/verify`);
                 trusteeAuthPageUrl.searchParams.append('tokenId', initData.tokenId);
                 trusteeAuthPageUrl.searchParams.append('name', name);
                 trusteeAuthPageUrl.searchParams.append('phoneNumber', cleanPhoneNumber);
