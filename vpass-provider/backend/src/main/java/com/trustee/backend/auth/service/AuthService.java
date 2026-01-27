@@ -77,6 +77,9 @@ public class AuthService {
         AuthToken authToken = authTokenRepository.findById(tokenId)
                 .orElseThrow(() -> new IllegalArgumentException("AuthToken not found with id: " + tokenId));
         
+        // [Fix] 복호화된 이름을 사용하여 응답 (위탁사에서 실명 표시 가능하도록)
+        String decryptedName = com.trustee.backend.auth.util.EncryptionUtil.decrypt(authToken.getName());
+        
         String accessToken = null;
         if (authToken.getStatus() == AuthStatus.COMPLETED) {
             // [JWT] Generate JWT using jti=tokenId, authRequestId, and name
@@ -84,12 +87,12 @@ public class AuthService {
              accessToken = jwtProvider.generateToken(
                 authToken.getTokenId(), 
                 authToken.getAuthRequestId(), 
-                com.trustee.backend.auth.util.EncryptionUtil.decrypt(authToken.getName()),
+                decryptedName,
                 authToken.getCi()
             );
         }
 
-        return new AuthStatusResponse(authToken.getTokenId(), authToken.getStatus(), authToken.getName(), accessToken);
+        return new AuthStatusResponse(authToken.getTokenId(), authToken.getStatus(), decryptedName, accessToken);
     }
 
     @Transactional
@@ -209,9 +212,13 @@ public class AuthService {
         AuthToken authToken = authTokenRepository.findById(tokenId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid token ID"));
 
+        // [Fix] S2S 검증 시 복호화된 평문 반환 (위탁사에서 이름 비교 가능하도록)
+        String decryptedName = com.trustee.backend.auth.util.EncryptionUtil.decrypt(authToken.getName());
+        String decryptedPhone = com.trustee.backend.auth.util.EncryptionUtil.decrypt(authToken.getClientData());
+
         return new AuthVerificationResponse(
                 authToken.getStatus(),
-                authToken.getName(),
-                authToken.getClientData());
+                decryptedName,
+                decryptedPhone);
     }
 }
