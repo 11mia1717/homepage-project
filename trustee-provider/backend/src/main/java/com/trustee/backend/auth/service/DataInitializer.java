@@ -26,7 +26,7 @@ public class DataInitializer implements CommandLineRunner {
                 new CarrierUser("김중수", "01095119924", "SKT"),
                 new CarrierUser("방수진", "01087176882", "KT"),
                 new CarrierUser("김은수", "01051337437", "LGU+"),
-                new CarrierUser("이광진", "01030659593", "ALDDLE"),
+                new CarrierUser("이광진", "01030659693", "ALDDLE"),
                 new CarrierUser("임혜진", "01037315819", "SKT"),
                 new CarrierUser("전용준", "01050470664", "KT"),
                 new CarrierUser("김유진", "01092877379", "LGU+"),

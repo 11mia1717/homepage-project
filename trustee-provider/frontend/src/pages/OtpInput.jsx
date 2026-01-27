@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { ChevronLeft } from 'lucide-react';
+import Logo from '../components/Logo';
 
 const OtpInput = () => {
   const navigate = useNavigate();
@@ -13,15 +14,10 @@ const OtpInput = () => {
   const inputRefs = useRef([]);
 
   const tokenId = searchParams.get('tokenId');
-  const phoneNumber = searchParams.get('phoneNumber');
+  const phoneNumber = searchParams.get('phoneNumber') || '010-****-****';
   const redirectUrl = searchParams.get('redirectUrl');
 
   useEffect(() => {
-    if (!tokenId || !phoneNumber || !redirectUrl) {
-      setMessage('잘못된 접근입니다. 필요한 정보가 누락되었습니다.');
-      return;
-    }
-
     const countdown = setInterval(() => {
       setTimer((prev) => {
         if (prev <= 1) {
@@ -33,13 +29,12 @@ const OtpInput = () => {
       });
     }, 1000);
 
-    // Focus first input
     if (inputRefs.current[0]) {
       inputRefs.current[0].focus();
     }
 
     return () => clearInterval(countdown);
-  }, [tokenId, phoneNumber, redirectUrl]);
+  }, []);
 
   const handleOtpChange = (e, index) => {
     const value = e.target.value;
@@ -60,7 +55,9 @@ const OtpInput = () => {
 
     const newOtp = pasteData.split('').concat(Array(6 - pasteData.length).fill(''));
     setOtp(newOtp);
-    inputRefs.current[Math.min(pasteData.length, 5)].focus();
+    if (inputRefs.current[Math.min(pasteData.length, 5)]) {
+      inputRefs.current[Math.min(pasteData.length, 5)].focus();
+    }
     e.preventDefault();
   };
 
@@ -88,17 +85,19 @@ const OtpInput = () => {
     try {
       const response = await fetch('/api/v1/auth/confirm', {
         method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ tokenId: tokenId }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tokenId: tokenId, otp: otp.join('') }),
       });
 
       if (response.ok) {
-        const callbackUrl = new URL(redirectUrl);
-        callbackUrl.searchParams.append('tokenId', tokenId);
-        callbackUrl.searchParams.append('phoneNumber', phoneNumber);
-        window.location.href = callbackUrl.toString();
+        if (redirectUrl) {
+          const callbackUrl = new URL(redirectUrl);
+          callbackUrl.searchParams.append('tokenId', tokenId);
+          callbackUrl.searchParams.append('phoneNumber', phoneNumber.replace(/\D/g, ''));
+          window.location.href = callbackUrl.toString();
+        } else {
+          setMessage('본인인증 완료!');
+        }
       } else {
         const errorData = await response.text();
         setMessage('인증 실패: ' + errorData);
@@ -111,31 +110,34 @@ const OtpInput = () => {
   };
 
   const handleResendOtp = () => {
-    setMessage('인증번호를 재전송했습니다.');
+    setMessage('🛡️ 인증번호가 재전송되었습니다.');
     setTimer(180);
     setIsResendDisabled(true);
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-white">
       {/* Header */}
-      <header className="flex items-center h-14 px-4 border-b border-gray-100">
-        <button onClick={() => navigate(-1)} className="p-1 -ml-1">
-          <ChevronLeft size={24} className="text-gray-700" />
+      <header className="flex items-center h-20 px-6">
+        <button onClick={() => navigate(-1)} className="p-2 -ml-2 rounded-full hover:bg-gray-50 transition-colors">
+          <ChevronLeft size={28} className="text-gray-700" />
         </button>
+        <div className="flex-1 flex justify-center -ml-10">
+          <Logo />
+        </div>
       </header>
 
       {/* Content */}
-      <main className="flex-1 px-5 py-6">
-        <h1 className="text-[22px] font-bold text-gray-900 leading-tight mb-2">
-          인증번호를<br />입력해주세요
+      <main className="flex-1 px-8 py-12 max-w-[480px] mx-auto w-full">
+        <h1 className="text-[28px] font-black text-gray-900 leading-tight mb-3">
+          인증번호를<br />입력해 주세요
         </h1>
-        <p className="text-[15px] text-gray-500 mb-8">
-          {phoneNumber || '등록된 번호'}로 전송된 6자리 인증번호를 입력하세요
+        <p className="text-[16px] text-gray-500 font-bold mb-12">
+          <span className="text-[#E50914]">{phoneNumber}</span>로 발송되었습니다
         </p>
 
         {/* OTP Input */}
-        <div className="flex justify-center gap-2 mb-6">
+        <div className="flex justify-between gap-2 mb-10">
           {otp.map((digit, index) => (
             <input
               key={index}
@@ -147,46 +149,47 @@ const OtpInput = () => {
               onChange={(e) => handleOtpChange(e, index)}
               onKeyDown={(e) => handleKeyDown(e, index)}
               onPaste={handlePaste}
-              className="otp-input"
+              className="otp-input !w-[50px] !h-[64px]"
             />
           ))}
         </div>
 
-        {/* Timer */}
-        <div className="text-center mb-6">
-          {timer > 0 ? (
-            <span className="timer-text">{formatTime(timer)}</span>
-          ) : (
-            <span className="text-gray-500 text-[15px]">인증 시간이 만료되었습니다</span>
-          )}
-        </div>
+        {/* Footer Actions */}
+        <div className="flex flex-col items-center space-y-6">
+          <div className="px-4 py-2 bg-red-50 rounded-full">
+            {timer > 0 ? (
+              <span className="timer-text font-black text-lg">{formatTime(timer)}</span>
+            ) : (
+              <span className="text-red-500 font-bold">인증 시간이 만료되었습니다</span>
+            )}
+          </div>
 
-        {/* Resend Button */}
-        <div className="text-center">
           <button
             type="button"
             onClick={handleResendOtp}
             disabled={isResendDisabled}
-            className="link-button"
+            className="text-[15px] font-bold text-gray-400 hover:text-[#E50914] transition-colors"
           >
-            인증번호 재전송
+            인증번호 다시 받기
           </button>
         </div>
 
         {/* Error Message */}
         {message && (
-          <p className="error-text text-center mt-4">{message}</p>
+          <div className="mt-8 p-4 bg-red-50 border border-red-100 rounded-2xl text-center">
+            <p className="text-sm font-bold text-[#E50914]">{message}</p>
+          </div>
         )}
       </main>
 
       {/* Bottom Button */}
-      <div className="px-5 py-4 pb-8">
+      <div className="px-8 pb-12 max-w-[480px] mx-auto w-full">
         <button
           onClick={handleConfirm}
           disabled={!isOtpComplete || isSubmitting}
-          className="btn-primary"
+          className="btn-primary !rounded-2xl"
         >
-          {isSubmitting ? '확인 중...' : '확인'}
+          {isSubmitting ? '보안 인증 확인 중...' : '인증 완료'}
         </button>
       </div>
     </div>

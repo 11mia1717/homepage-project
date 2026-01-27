@@ -187,9 +187,10 @@ const IdentityVerification = () => {
 
       {/* Content */}
       <main className="flex-1 px-8 py-12 max-w-[480px] mx-auto w-full">
-        <h1 className="text-[32px] font-extrabold text-gray-900 leading-tight tracking-tight mb-10">
-          안전한 서비스 이용을 위해<br />
-          본인인증이 필요합니다.
+        <h1 className="text-[32px] font-black text-gray-900 leading-[1.15] tracking-tight mb-10">
+          강력한 보안,<br />
+          <span className="text-[#E50914]">V-PASS</span> 로<br />
+          인증을 완료하세요.
         </h1>
 
         <div className="space-y-8">
@@ -309,9 +310,14 @@ const IdentityVerification = () => {
 
         {/* Feedback Message */}
         {message && (
-          <p className={`mt-8 text-center text-sm font-semibold flex items-center justify-center gap-2 ${message.includes('성공') || message.includes('발송') ? 'text-[#1A73E8]' : 'text-red-500'}`}>
-            <span>{message.includes('성공') || message.includes('발송') ? '✅' : '⚠️'}</span> {message}
-          </p>
+          <div className={`mt-8 px-6 py-4 rounded-2xl flex items-center gap-3 animate-in fade-in zoom-in-95 duration-300 ${
+            message.includes('성공') || message.includes('발송') 
+              ? 'bg-red-50 text-[#E50914] border border-red-100' 
+              : 'bg-red-50 text-red-500 border border-red-100'
+          }`}>
+            <span className="text-xl">{message.includes('성공') || message.includes('발송') ? '🛡️' : '⚠️'}</span>
+            <p className="text-sm font-bold leading-tight">{message}</p>
+          </div>
         )}
       </main>
 
@@ -320,9 +326,9 @@ const IdentityVerification = () => {
         <button
           onClick={otpSent ? handleVerifyOtp : handleRequestOtp}
           disabled={isSubmitting || (otpSent ? otp.length !== 6 : !isFormValid)}
-          className="btn-primary !rounded-lg"
+          className="btn-primary !rounded-2xl"
         >
-          {isSubmitting ? (otpSent ? '확인 중...' : '발송 중...') : (otpSent ? '인증번호 확인' : '인증번호발송')}
+          {isSubmitting ? (otpSent ? '보안 인증 중...' : '인증번호 가공 중...') : (otpSent ? '본인 확인 완료' : 'V-PASS 인증번호 받기')}
         </button>
       </div>
     </div>

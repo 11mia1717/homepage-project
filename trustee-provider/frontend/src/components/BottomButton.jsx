@@ -7,8 +7,8 @@ const BottomButton = ({ children, onClick, disabled = false, type = 'button' }) 
         type={type}
         onClick={onClick}
         disabled={disabled}
-        className={`w-full py-4 rounded-xl text-lg font-bold shadow-lg active:scale-95 transition-transform duration-200
-                   ${disabled ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#3182F6] text-white'}`}
+        className={`w-full py-4 rounded-2xl text-lg font-bold shadow-lg active:scale-95 transition-transform duration-200
+                   ${disabled ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-gradient-to-r from-[#E50914] to-[#B71C1C] text-white shadow-red-100'}`}
       >
         {children}
       </button>

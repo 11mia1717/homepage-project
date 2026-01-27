@@ -10,7 +10,7 @@ services:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: entrusting_db # Creates this DB by default
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - mysql-data:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql # For creating the second DB (trustee_db)
