@@ -7,6 +7,8 @@ public class RegisterRequest {
     private String phoneNumber;
     private String tokenId;
     private boolean isVerified;
+    private String ci;
+    private String di;
 
     public String getTokenId() {
         return tokenId;
@@ -54,5 +56,21 @@ public class RegisterRequest {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getCi() {
+        return ci;
+    }
+
+    public void setCi(String ci) {
+        this.ci = ci;
+    }
+
+    public String getDi() {
+        return di;
+    }
+
+    public void setDi(String di) {
+        this.di = di;
     }
 }

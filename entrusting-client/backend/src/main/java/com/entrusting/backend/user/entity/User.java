@@ -12,18 +12,46 @@ public class User {
     private String name; // 사용자 이름
     private String username;
     private String password;
-    private String phoneNumber; // 휴대폰 번호
+    
+    // [Compliance] Encrypted PII
+    private String phoneNumber; 
+    
+    // [Compliance] Connecting Information (Unique per person)
+    @Column(unique = true)
+    private String ci;
+    
+    // [Compliance] Duplication Information (Unique per site)
+    private String di;
+    
     private boolean isVerified;
 
     public User() {
     }
 
-    public User(String name, String username, String password, String phoneNumber, boolean isVerified) {
+    public User(String name, String username, String password, String phoneNumber, String ci, String di, boolean isVerified) {
         this.name = name;
         this.username = username;
         this.password = password;
         this.phoneNumber = phoneNumber;
+        this.ci = ci;
+        this.di = di;
         this.isVerified = isVerified;
+    }
+
+    public String getCi() {
+        return ci;
+    }
+
+    public void setCi(String ci) {
+        this.ci = ci;
+    }
+
+    public String getDi() {
+        return di;
+    }
+
+    public void setDi(String di) {
+        this.di = di;
     }
 
     public Long getId() {

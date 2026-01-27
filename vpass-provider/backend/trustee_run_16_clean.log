@@ -1,0 +1,175 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------------< com.trustee:backend >-------------------------
+[INFO] Building backend 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.2.1:run (default-cli) > test-compile @ backend >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ backend ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ backend ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ backend ---
+[INFO] skip non existing resourceDirectory C:\ContinueProject\homepage-project\trustee-provider\backend\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ backend ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] <<< spring-boot:3.2.1:run (default-cli) < test-compile @ backend <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.2.1:run (default-cli) @ backend ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.1)
+
+2026-01-27T12:54:08.138+09:00  INFO 33208 --- [trustee-backend] [           main] com.trustee.backend.BackendApplication   : Starting BackendApplication using Java 21.0.9 with PID 33208 (C:\ContinueProject\homepage-project\trustee-provider\backend\target\classes started by ez in C:\ContinueProject\homepage-project\trustee-provider\backend)
+2026-01-27T12:54:08.140+09:00  INFO 33208 --- [trustee-backend] [           main] com.trustee.backend.BackendApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-01-27T12:54:08.853+09:00  INFO 33208 --- [trustee-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-27T12:54:08.912+09:00  INFO 33208 --- [trustee-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 51 ms. Found 2 JPA repository interfaces.
+2026-01-27T12:54:09.537+09:00  INFO 33208 --- [trustee-backend] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8088 (http)
+2026-01-27T12:54:09.554+09:00  INFO 33208 --- [trustee-backend] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-27T12:54:09.554+09:00  INFO 33208 --- [trustee-backend] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2026-01-27T12:54:09.612+09:00  INFO 33208 --- [trustee-backend] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-27T12:54:09.613+09:00  INFO 33208 --- [trustee-backend] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1409 ms
+2026-01-27T12:54:09.732+09:00  INFO 33208 --- [trustee-backend] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-27T12:54:09.781+09:00  INFO 33208 --- [trustee-backend] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
+2026-01-27T12:54:09.803+09:00  INFO 33208 --- [trustee-backend] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-27T12:54:10.002+09:00  INFO 33208 --- [trustee-backend] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-27T12:54:10.024+09:00  INFO 33208 --- [trustee-backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-27T12:54:10.237+09:00  INFO 33208 --- [trustee-backend] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@42107318
+2026-01-27T12:54:10.240+09:00  INFO 33208 --- [trustee-backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-27T12:54:10.903+09:00  INFO 33208 --- [trustee-backend] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-27T12:54:10.943+09:00  INFO 33208 --- [trustee-backend] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-27T12:54:11.277+09:00  WARN 33208 --- [trustee-backend] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-01-27T12:54:11.294+09:00  WARN 33208 --- [trustee-backend] [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 48ee0694-4da1-44d0-8371-b443f0a83239
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-01-27T12:54:11.532+09:00  INFO 33208 --- [trustee-backend] [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@75973f7a, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7940b729, org.springframework.security.web.context.SecurityContextHolderFilter@2b5a04b0, org.springframework.security.web.header.HeaderWriterFilter@4a3404fa, org.springframework.web.filter.CorsFilter@527d1fe1, org.springframework.security.web.authentication.logout.LogoutFilter@30a5a58d, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5b78a946, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@37c762aa, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@24fb752f, org.springframework.security.web.access.ExceptionTranslationFilter@2b441609, org.springframework.security.web.access.intercept.AuthorizationFilter@1932ad2c]
+2026-01-27T12:54:11.691+09:00  INFO 33208 --- [trustee-backend] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8088 (http) with context path ''
+2026-01-27T12:54:11.696+09:00  INFO 33208 --- [trustee-backend] [           main] com.trustee.backend.BackendApplication   : Started BackendApplication in 3.946 seconds (process running for 4.26)
+Hibernate: select count(*) from carrier_user cu1_0
+[TRUSTEE-DB] CarrierUser data already exists. Skipping initialization.
+2026-01-27T13:03:43.432+09:00  INFO 33208 --- [trustee-backend] [nio-8088-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-27T13:03:43.433+09:00  INFO 33208 --- [trustee-backend] [nio-8088-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-01-27T13:03:43.434+09:00  INFO 33208 --- [trustee-backend] [nio-8088-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+[TRUSTEE-DEBUG] initAuth - Received Name: [È«±æµ¿], Phone: [01000000000]
+[TRUSTEE-DEBUG] initAuth - Received Name Bytes (UTF-8): ED 99 8D EA B8 B8 EB 8F 99 
+[TRUSTEE-DEBUG] initAuth - Session initialized for: È«±æµ¿ (01000000000)
+[TRUSTEE] Generated OTP for 01000000000: 133195
+Hibernate: select at1_0.token_id,at1_0.carrier,at1_0.client_data,at1_0.created_at,at1_0.name,at1_0.otp,at1_0.status from auth_token at1_0 where at1_0.token_id=?
+Hibernate: insert into auth_token (carrier,client_data,created_at,name,otp,status,token_id) values (?,?,?,?,?,?,?)
+Hibernate: select at1_0.token_id,at1_0.carrier,at1_0.client_data,at1_0.created_at,at1_0.name,at1_0.otp,at1_0.status from auth_token at1_0 where at1_0.token_id=?
+[TRUSTEE-SEC] Validating Identity - Expected: [È«±æµ¿, 01000000000], Input: [È«±æµ¿, 01000000000]
+Hibernate: select cu1_0.id,cu1_0.carrier,cu1_0.name,cu1_0.phone_number from carrier_user cu1_0 where cu1_0.phone_number=?
+[TRUSTEE-DB] Verifying for 01000000000: NameMatch=true, CarrierMatch=true (Input: SKT, Found: SKT)
+[TRUSTEE-SEC] OTP Regenerated for Security - Token: 5d8cf0ee-8e79-4c8b-a42d-5c752ac87110, OTP: 424842
+Hibernate: update auth_token set carrier=?,client_data=?,created_at=?,name=?,otp=?,status=? where token_id=?
+[TRUSTEE-DEBUG] Verification Attempt - TokenID: 5d8cf0ee-8e79-4c8b-a42d-5c752ac87110, OTP: [424842]
+Hibernate: select at1_0.token_id,at1_0.carrier,at1_0.client_data,at1_0.created_at,at1_0.name,at1_0.otp,at1_0.status from auth_token at1_0 where at1_0.token_id=?
+[TRUSTEE-DEBUG] Comparing OTPs - Stored: [424842], Received: [424842]
+Hibernate: select cu1_0.id,cu1_0.carrier,cu1_0.name,cu1_0.phone_number from carrier_user cu1_0 where cu1_0.phone_number=?
+[TRUSTEE-DB] Verifying for 01000000000: NameMatch=true, CarrierMatch=true (Input: SKT, Found: SKT)
+[TRUSTEE-DEBUG] SUCCESS !! Verification Completed for Token: 5d8cf0ee-8e79-4c8b-a42d-5c752ac87110
+Hibernate: update auth_token set carrier=?,client_data=?,created_at=?,name=?,otp=?,status=? where token_id=?
+Hibernate: select at1_0.token_id,at1_0.carrier,at1_0.client_data,at1_0.created_at,at1_0.name,at1_0.otp,at1_0.status from auth_token at1_0 where at1_0.token_id=?
+Hibernate: select at1_0.token_id,at1_0.carrier,at1_0.client_data,at1_0.created_at,at1_0.name,at1_0.otp,at1_0.status from auth_token at1_0 where at1_0.token_id=?
+Hibernate: select at1_0.token_id,at1_0.carrier,at1_0.client_data,at1_0.created_at,at1_0.name,at1_0.otp,at1_0.status from auth_token at1_0 where at1_0.token_id=?
+[TRUSTEE-DEBUG] initAuth - Received Name: [ÀÌ±¤Áø], Phone: [01030659693]
+[TRUSTEE-DEBUG] initAuth - Received Name Bytes (UTF-8): EC 9D B4 EA B4 91 EC A7 84 
+[TRUSTEE-DEBUG] initAuth - Session initialized for: ÀÌ±¤Áø (01030659693)
+[TRUSTEE] Generated OTP for 01030659693: 550963
+Hibernate: select at1_0.token_id,at1_0.carrier,at1_0.client_data,at1_0.created_at,at1_0.name,at1_0.otp,at1_0.status from auth_token at1_0 where at1_0.token_id=?
+Hibernate: insert into auth_token (carrier,client_data,created_at,name,otp,status,token_id) values (?,?,?,?,?,?,?)
+[TRUSTEE-DEBUG] initAuth - Received Name: [ÀÌ±¤Áø], Phone: [01030659693]
+[TRUSTEE-DEBUG] initAuth - Received Name Bytes (UTF-8): EC 9D B4 EA B4 91 EC A7 84 
+[TRUSTEE-DEBUG] initAuth - Session initialized for: ÀÌ±¤Áø (01030659693)
+[TRUSTEE] Generated OTP for 01030659693: 197424
+Hibernate: select at1_0.token_id,at1_0.carrier,at1_0.client_data,at1_0.created_at,at1_0.name,at1_0.otp,at1_0.status from auth_token at1_0 where at1_0.token_id=?
+Hibernate: insert into auth_token (carrier,client_data,created_at,name,otp,status,token_id) values (?,?,?,?,?,?,?)
+Hibernate: select at1_0.token_id,at1_0.carrier,at1_0.client_data,at1_0.created_at,at1_0.name,at1_0.otp,at1_0.status from auth_token at1_0 where at1_0.token_id=?
+[TRUSTEE-SEC] Validating Identity - Expected: [ÀÌ±¤Áø, 01030659693], Input: [ÀÌ±¤Áø, 01030659693]
+Hibernate: select cu1_0.id,cu1_0.carrier,cu1_0.name,cu1_0.phone_number from carrier_user cu1_0 where cu1_0.phone_number=?
+[TRUSTEE-DB] User not found for phone: 01030659693
+Hibernate: select at1_0.token_id,at1_0.carrier,at1_0.client_data,at1_0.created_at,at1_0.name,at1_0.otp,at1_0.status from auth_token at1_0 where at1_0.token_id=?
+[TRUSTEE-SEC] Validating Identity - Expected: [ÀÌ±¤Áø, 01030659693], Input: [ÀÌ±¤Áø, 01030659693]
+Hibernate: select cu1_0.id,cu1_0.carrier,cu1_0.name,cu1_0.phone_number from carrier_user cu1_0 where cu1_0.phone_number=?
+[TRUSTEE-DB] User not found for phone: 01030659693
+Hibernate: select at1_0.token_id,at1_0.carrier,at1_0.client_data,at1_0.created_at,at1_0.name,at1_0.otp,at1_0.status from auth_token at1_0 where at1_0.token_id=?
+[TRUSTEE-SEC] Validating Identity - Expected: [ÀÌ±¤Áø, 01030659693], Input: [ÀÌ±¤Áø, 01030659693]
+Hibernate: select cu1_0.id,cu1_0.carrier,cu1_0.name,cu1_0.phone_number from carrier_user cu1_0 where cu1_0.phone_number=?
+[TRUSTEE-DB] User not found for phone: 01030659693
+Hibernate: select at1_0.token_id,at1_0.carrier,at1_0.client_data,at1_0.created_at,at1_0.name,at1_0.otp,at1_0.status from auth_token at1_0 where at1_0.token_id=?
+[TRUSTEE-SEC] Validating Identity - Expected: [ÀÌ±¤Áø, 01030659693], Input: [ÀÌ±¤Áø, 01030659693]
+Hibernate: select cu1_0.id,cu1_0.carrier,cu1_0.name,cu1_0.phone_number from carrier_user cu1_0 where cu1_0.phone_number=?
+[TRUSTEE-DB] User not found for phone: 01030659693
+Hibernate: select at1_0.token_id,at1_0.carrier,at1_0.client_data,at1_0.created_at,at1_0.name,at1_0.otp,at1_0.status from auth_token at1_0 where at1_0.token_id=?
+[TRUSTEE-SEC] Validating Identity - Expected: [ÀÌ±¤Áø, 01030659693], Input: [ÀÌ±¤Áø, 01030659693]
+Hibernate: select cu1_0.id,cu1_0.carrier,cu1_0.name,cu1_0.phone_number from carrier_user cu1_0 where cu1_0.phone_number=?
+[TRUSTEE-DB] User not found for phone: 01030659693
+Hibernate: select at1_0.token_id,at1_0.carrier,at1_0.client_data,at1_0.created_at,at1_0.name,at1_0.otp,at1_0.status from auth_token at1_0 where at1_0.token_id=?
+[TRUSTEE-SEC] Validating Identity - Expected: [ÀÌ±¤Áø, 01030659693], Input: [ÀÌ±¤Áø, 01030659693]
+Hibernate: select cu1_0.id,cu1_0.carrier,cu1_0.name,cu1_0.phone_number from carrier_user cu1_0 where cu1_0.phone_number=?
+[TRUSTEE-DB] User not found for phone: 01030659693
+[TRUSTEE-DEBUG] initAuth - Received Name: [ÀÓÇýÁø], Phone: [01037315819]
+[TRUSTEE-DEBUG] initAuth - Received Name Bytes (UTF-8): EC 9E 84 ED 98 9C EC A7 84 
+[TRUSTEE-DEBUG] initAuth - Session initialized for: ÀÓÇýÁø (01037315819)
+[TRUSTEE] Generated OTP for 01037315819: 924716
+Hibernate: select at1_0.token_id,at1_0.carrier,at1_0.client_data,at1_0.created_at,at1_0.name,at1_0.otp,at1_0.status from auth_token at1_0 where at1_0.token_id=?
+Hibernate: insert into auth_token (carrier,client_data,created_at,name,otp,status,token_id) values (?,?,?,?,?,?,?)
+Hibernate: select at1_0.token_id,at1_0.carrier,at1_0.client_data,at1_0.created_at,at1_0.name,at1_0.otp,at1_0.status from auth_token at1_0 where at1_0.token_id=?
+[TRUSTEE-SEC] Validating Identity - Expected: [ÀÓÇýÁø, 01037315819], Input: [ÀÓÇýÁø, 01037315819]
+Hibernate: select cu1_0.id,cu1_0.carrier,cu1_0.name,cu1_0.phone_number from carrier_user cu1_0 where cu1_0.phone_number=?
+[TRUSTEE-DB] Verifying for 01037315819: NameMatch=true, CarrierMatch=true (Input: SKT, Found: SKT)
+[TRUSTEE-SEC] OTP Regenerated for Security - Token: 9b7282e5-3dfd-4011-a27e-195f6842538b, OTP: 642416
+Hibernate: update auth_token set carrier=?,client_data=?,created_at=?,name=?,otp=?,status=? where token_id=?
+[TRUSTEE-DEBUG] initAuth - Received Name: [ÀÌ±¤Áø], Phone: [01000000000]
+[TRUSTEE-DEBUG] initAuth - Received Name Bytes (UTF-8): EC 9D B4 EA B4 91 EC A7 84 
+[TRUSTEE-DEBUG] initAuth - Session initialized for: ÀÌ±¤Áø (01000000000)
+[TRUSTEE] Generated OTP for 01000000000: 952696
+Hibernate: select at1_0.token_id,at1_0.carrier,at1_0.client_data,at1_0.created_at,at1_0.name,at1_0.otp,at1_0.status from auth_token at1_0 where at1_0.token_id=?
+Hibernate: insert into auth_token (carrier,client_data,created_at,name,otp,status,token_id) values (?,?,?,?,?,?,?)
+[TRUSTEE-DEBUG] initAuth - Received Name: [ÀÌ±¤Áø], Phone: [00000000000]
+[TRUSTEE-DEBUG] initAuth - Received Name Bytes (UTF-8): EC 9D B4 EA B4 91 EC A7 84 
+[TRUSTEE-DEBUG] initAuth - Session initialized for: ÀÌ±¤Áø (00000000000)
+[TRUSTEE] Generated OTP for 00000000000: 290755
+Hibernate: select at1_0.token_id,at1_0.carrier,at1_0.client_data,at1_0.created_at,at1_0.name,at1_0.otp,at1_0.status from auth_token at1_0 where at1_0.token_id=?
+Hibernate: insert into auth_token (carrier,client_data,created_at,name,otp,status,token_id) values (?,?,?,?,?,?,?)
+[TRUSTEE-DEBUG] initAuth - Received Name: [Àå¹Î¾Æ], Phone: [0000000000]
+[TRUSTEE-DEBUG] initAuth - Received Name Bytes (UTF-8): EC 9E A5 EB AF BC EC 95 84 
+[TRUSTEE-DEBUG] initAuth - Session initialized for: Àå¹Î¾Æ (0000000000)
+[TRUSTEE] Generated OTP for 0000000000: 550317
+Hibernate: select at1_0.token_id,at1_0.carrier,at1_0.client_data,at1_0.created_at,at1_0.name,at1_0.otp,at1_0.status from auth_token at1_0 where at1_0.token_id=?
+Hibernate: insert into auth_token (carrier,client_data,created_at,name,otp,status,token_id) values (?,?,?,?,?,?,?)
+[TRUSTEE-DEBUG] initAuth - Received Name: [Àå¹Î¾Æ], Phone: [00000000000]
+[TRUSTEE-DEBUG] initAuth - Received Name Bytes (UTF-8): EC 9E A5 EB AF BC EC 95 84 
+[TRUSTEE-DEBUG] initAuth - Session initialized for: Àå¹Î¾Æ (00000000000)
+[TRUSTEE] Generated OTP for 00000000000: 032240
+Hibernate: select at1_0.token_id,at1_0.carrier,at1_0.client_data,at1_0.created_at,at1_0.name,at1_0.otp,at1_0.status from auth_token at1_0 where at1_0.token_id=?
+Hibernate: insert into auth_token (carrier,client_data,created_at,name,otp,status,token_id) values (?,?,?,?,?,?,?)
+[TRUSTEE-DEBUG] initAuth - Received Name: [Àå¹Î¾Æ], Phone: [000000000]
+[TRUSTEE-DEBUG] initAuth - Received Name Bytes (UTF-8): EC 9E A5 EB AF BC EC 95 84 
+[TRUSTEE-DEBUG] initAuth - Session initialized for: Àå¹Î¾Æ (000000000)
+[TRUSTEE] Generated OTP for 000000000: 786713
+Hibernate: select at1_0.token_id,at1_0.carrier,at1_0.client_data,at1_0.created_at,at1_0.name,at1_0.otp,at1_0.status from auth_token at1_0 where at1_0.token_id=?
+Hibernate: insert into auth_token (carrier,client_data,created_at,name,otp,status,token_id) values (?,?,?,?,?,?,?)
+[TRUSTEE-DEBUG] initAuth - Received Name: [È«±æµ¿], Phone: [01000000000]
+[TRUSTEE-DEBUG] initAuth - Received Name Bytes (UTF-8): ED 99 8D EA B8 B8 EB 8F 99 
+[TRUSTEE-DEBUG] initAuth - Session initialized for: È«±æµ¿ (01000000000)
+[TRUSTEE] Generated OTP for 01000000000: 171058
+Hibernate: select at1_0.token_id,at1_0.carrier,at1_0.client_data,at1_0.created_at,at1_0.name,at1_0.otp,at1_0.status from auth_token at1_0 where at1_0.token_id=?
+Hibernate: insert into auth_token (carrier,client_data,created_at,name,otp,status,token_id) values (?,?,?,?,?,?,?)

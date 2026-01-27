@@ -3,8 +3,7 @@
 이 파일은 현재까지 진행된 모든 작업 내역과 시스템 설정 상태를 요약하여 다시 방문했을 때 즉각적인 학습이 가능하도록 한 것입니다.
 
 ## 1. 최근 작업 요약
-- **Server-to-Server (S2S) 인증 완료:** 수탁사(`trustee-provider`)와 위탁사(`entrusting-client`) 서버 간의 직접 토큰 검증 로직 구현 완료. 
-    - `AuthController` (/api/v1/auth/verify/{tokenId}) 추가
+- **Server-to-Server (S2S) 인증 완료:** 수탁사(`vpass-provider`)와 위탁사(`entrusting-client`) 서버 간의 직접 토큰 검증 로직 구현 완료. 🛡️ ㅠ    - `AuthController` (/api/v1/auth/verify/{tokenId}) 추가
     - `S2SAuthService` (Entrusting Backend) 추가
     - 계좌 생성 시 최종 검증 강제화
 - **비즈니스 로직 고도화:** 가입 축하금(10,000원)을 **첫 번째 계좌**에만 지급하도록 서버/클라이언트 로직 수정.
@@ -24,8 +23,7 @@
 - **데이터베이스:** H2 예약어 충돌 이슈 해결을 위해 `User` 테이블 이름을 **`site_users`**로 변경함.
 - **포트 구성:**
     - 위탁사 (Continue - Entrusting Client): 8085 (Backend), [http://localhost:5175](http://localhost:5175) (Frontend)
-    - 수탁사 (Trustee Provider): 8086 (Backend), [http://localhost:5176](http://localhost:5176) (Frontend)
-- **명령어 환경:** 
+    - 수탁사 (V-PASS Provider): 8086 (Backend), [http://localhost:5176](http://localhost:5176) (Frontend) / vpass-provider ㅠ- **명령어 환경:** 
     - `netstat` 등 시스템 명령어 사용을 위해 `C:\Windows\System32`를 PATH에 임시 등록함.
     - `taskkill` 명령어를 통해 좀비 프로세스(Java)를 정리하여 포트 충돌 방지 로직 구축함.
 
@@ -37,7 +35,7 @@
 | **김중수** | 010-9511-9924 | SKT |
 | **방수진** | 010-8717-6882 | KT |
 | **김은수** | 010-5133-7437 | LG U+ |
-| **이광진** | 010-3065-9593 | 알뜰폰 (ALDDLE) |
+| **이광진** | 010-3065-9693 | 알뜰폰 (ALDDLE) |
 | **임혜진** | 010-3731-5819 | SKT |
 | **전용준** | 010-5047-0664 | KT |
 | **김유진** | 010-9287-7379 | LG U+ |

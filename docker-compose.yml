@@ -21,38 +21,10 @@ services:
       timeout: 20s
       retries: 10
 
-  # Entrusting Client (Banking System)
-  entrusting-backend:
-    build: ./entrusting-client/backend
-    container_name: entrusting-backend
-    restart: on-failure
-    ports:
-      - "8085:8085"
-    depends_on:
-      mysql:
-        condition: service_healthy
-    environment:
-      DB_URL: jdbc:mysql://mysql:3306/entrusting_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-      DB_USER: root
-      DB_PASSWORD: password
-      TRUSTEE_API_URL: http://trustee-backend:8086
-      ALLOWED_ORIGINS: http://localhost:5175
-    networks:
-      - app-network
-
-  entrusting-frontend:
-    build: ./entrusting-client/frontend
-    container_name: entrusting-frontend
-    restart: on-failure
-    ports:
-      - "5175:80"
-    networks:
-      - app-network
-
-  # Trustee Provider (Identity System)
-  trustee-backend:
-    build: ./trustee-provider/backend
-    container_name: trustee-backend
+  # V-PASS (Trustee Provider)
+  vpass-backend:
+    build: ./vpass-provider/backend
+    container_name: vpass-backend
     restart: on-failure
     ports:
       - "8086:8086"
@@ -63,13 +35,14 @@ services:
       DB_URL: jdbc:mysql://mysql:3306/trustee_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
       DB_USER: root
       DB_PASSWORD: password
-      ALLOWED_ORIGINS: http://localhost:5175,http://localhost:5176
+      # Allowed origins only for local development/testing if needed
+      ALLOWED_ORIGINS: http://localhost:5176
     networks:
       - app-network
 
-  trustee-frontend:
-    build: ./trustee-provider/frontend
-    container_name: trustee-frontend
+  vpass-frontend:
+    build: ./vpass-provider/frontend
+    container_name: vpass-frontend
     restart: on-failure
     ports:
       - "5176:80"
