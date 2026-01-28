@@ -7,10 +7,11 @@
 - [API 엔드포인트](#-api-엔드포인트)
 - [보안 구현](#-보안-구현)
 - [데이터 관리](#-데이터-관리)
+- [향후 계획](#-향후-계획)
 
 ## 🎯 서비스 개요
 
-V-PASS는 휴대폰 본인인증을 제공하는 수탁사입니다. 위탁사(Continue Bank, TM 센터)의 요청에 따라 사용자 본인인증을 수행하고 CI(Connecting Information)를 생성합니다.
+V-PASS는 휴대폰 본인인증을 제공하는 수탁사입니다. 위탁사(Continue Bank)의 요청에 따라 사용자 본인인증을 수행하고 CI(Connecting Information)를 생성합니다.
 
 ### 핵심 역할
 - 휴대폰 번호 기반 OTP 인증
@@ -21,6 +22,11 @@ V-PASS는 휴대폰 본인인증을 제공하는 수탁사입니다. 위탁사(C
 ### 서비스 포트
 - **Backend**: 8086
 - **Frontend**: 5176
+
+> ⚠️ **개발 상태 안내**
+> 
+> 현재 OTP 발송은 **테스트용 난수 생성** 방식으로 구현되어 있습니다.
+> 실제 SMS 발송은 추후 **AWS SNS (Simple Notification Service)** 연동 예정입니다.
 
 ## 🗄 데이터베이스 구조
 
@@ -434,14 +440,53 @@ VALUES ('홍길동', '900101', '01012345678', 'SKT');
 
 ### OTP 확인 방법
 
-**개발 모드:**
+**현재 (개발/테스트 모드):**
+- OTP는 6자리 난수로 생성됩니다
 - 백엔드 콘솔에 OTP 출력
 ```
 [V-PASS] OTP for 01012345678: 123456
 ```
 
-**프로덕션 모드:**
-- 실제 SMS 발송 API 연동 필요
+**향후 (프로덕션 모드):**
+- AWS SNS 연동을 통한 실제 SMS 발송
+- 자세한 내용은 [향후 계획](#-향후-계획) 섹션 참조
+
+## 🚀 향후 계획
+
+### AWS SNS 연동
+
+현재 OTP는 테스트 목적으로 난수를 생성하여 콘솔에 출력하는 방식입니다.
+프로덕션 환경에서는 **AWS SNS (Simple Notification Service)**를 연동하여 실제 SMS를 발송할 예정입니다.
+
+**구현 예정 코드:**
+```java
+@Service
+public class SmsService {
+    
+    private final AmazonSNS snsClient;
+    
+    public void sendOtp(String phoneNumber, String otp) {
+        PublishRequest request = new PublishRequest()
+            .withPhoneNumber("+82" + phoneNumber.substring(1))
+            .withMessage("[V-PASS] 인증번호: " + otp + " (3분 내 입력)");
+        
+        snsClient.publish(request);
+    }
+}
+```
+
+**AWS SNS 설정 예정:**
+```properties
+# application.properties
+aws.region=ap-northeast-2
+aws.sns.sender-id=VPASS
+```
+
+**연동 시 고려사항:**
+- AWS IAM 권한 설정
+- SMS 발송 비용 관리
+- 발송 실패 시 재시도 로직
+- 발송 기록 로깅
 
 ## 🔍 모니터링
 
