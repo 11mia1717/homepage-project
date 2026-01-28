@@ -4,7 +4,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 /**
- * SMS 발송 서비스
+ * [SMS-TMP] SMS 발송 서비스 (임시 구현)
+ * 
+ * ====================================================================
+ * 현재 상태: 테스트용 난수 OTP 생성 + 콘솔 출력
+ * 향후 계획: AWS SNS 연동을 통한 실제 SMS 발송
+ * ====================================================================
  * 
  * [개발 단계] 현재는 콘솔 로그로 OTP 출력 (테스트용)
  * [운영 단계] AWS SNS를 통한 실제 SMS 발송으로 전환
@@ -26,6 +31,7 @@ import org.springframework.stereotype.Service;
 public class SmsService {
 
     // ============================================================
+    // [SMS-TMP] 현재는 AWS SNS 미연동 상태
     // [운영 전환 시 주석 해제] AWS SNS Client 설정
     // ============================================================
     // private final SnsClient snsClient;
@@ -58,13 +64,16 @@ public class SmsService {
                     AwsBasicCredentials.create(awsAccessKey, awsSecretKey)
                 ))
                 .build();
-            System.out.println("[SMS-SERVICE] AWS SNS Client initialized for region: " + awsRegion);
+            System.out.println("[SMS-TMP] AWS SNS Client initialized for region: " + awsRegion);
         }
     }
     */
 
     /**
-     * OTP 인증번호 SMS 발송
+     * [SMS-TMP] OTP 인증번호 SMS 발송
+     * 
+     * 현재: 콘솔에 OTP 출력 (테스트용)
+     * 향후: AWS SNS를 통한 실제 SMS 발송
      * 
      * @param phoneNumber 수신자 전화번호 (숫자만, 예: 01012345678)
      * @param otp 6자리 인증번호
@@ -75,18 +84,22 @@ public class SmsService {
         String message = buildOtpMessage(otp);
         
         // ============================================================
-        // [개발 모드] 콘솔 로그 출력 (테스트용)
+        // [SMS-TMP] 개발 모드 - 콘솔 로그 출력 (테스트용 난수 OTP)
+        // 실제 SMS는 AWS SNS 연동 후 활성화됩니다
         // ============================================================
         if (!smsEnabled) {
             System.out.println("========================================");
-            System.out.println("[SMS-SERVICE] 개발 모드 - SMS 발송 시뮬레이션");
-            System.out.println("[SMS-SERVICE] 수신번호: " + formattedPhone);
-            System.out.println("[SMS-SERVICE] 발신자ID: " + senderId);
-            System.out.println("[SMS-SERVICE] 메시지 내용:");
+            System.out.println("[SMS-TMP] 개발 모드 - SMS 발송 시뮬레이션");
+            System.out.println("[SMS-TMP] ※ 현재 OTP는 테스트용 난수입니다");
+            System.out.println("[SMS-TMP] ※ AWS SNS 연동 예정");
+            System.out.println("[SMS-TMP] 수신번호: " + formattedPhone);
+            System.out.println("[SMS-TMP] 발신자ID: " + senderId);
+            System.out.println("[SMS-TMP] 메시지 내용:");
             System.out.println(message);
             System.out.println("========================================");
             return true;
         }
+
         
         // ============================================================
         // [운영 전환 시 주석 해제] AWS SNS를 통한 실제 SMS 발송
@@ -116,8 +129,8 @@ public class SmsService {
             
             PublishResponse response = snsClient.publish(request);
             
-            System.out.println("[SMS-SERVICE] SMS 발송 성공 - MessageId: " + response.messageId());
-            System.out.println("[SMS-SERVICE] 수신번호: " + e164Phone);
+            System.out.println("[SMS-TMP] SMS 발송 성공 - MessageId: " + response.messageId());
+            System.out.println("[SMS-TMP] 수신번호: " + e164Phone);
             
             // [컴플라이언스] SMS 발송 이력 로깅 (개인정보 마스킹)
             logSmsSent(maskPhoneNumber(formattedPhone), response.messageId());
@@ -125,7 +138,7 @@ public class SmsService {
             return true;
             
         } catch (SnsException e) {
-            System.err.println("[SMS-SERVICE] AWS SNS 발송 실패: " + e.getMessage());
+            System.err.println("[SMS-TMP] AWS SNS 발송 실패: " + e.getMessage());
             // [컴플라이언스] 발송 실패 로깅
             logSmsFailure(maskPhoneNumber(formattedPhone), e.getMessage());
             return false;
