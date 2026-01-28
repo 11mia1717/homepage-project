@@ -1,8 +1,0 @@
-IMAGE                                      ID             DISK USAGE   CONTENT SIZE   EXTRA
-eclipse-temurin:17-jdk-focal               5751a59a993d        636MB          200MB        
-homepage-project-trustee-frontend:latest   519b6b9d3e68       92.6MB           26MB   U    
-homepage-project-vpass-backend:latest      ffe3cf2dda3e        727MB          241MB   U    
-homepage-project-vpass-frontend:latest     10d306f2b719       92.6MB           26MB   U    
-mysql:8.0                                  7a9d63525e80       1.08GB          247MB   U    
-nginx:stable-alpine                        67cbbcc757a6         93MB         26.8MB        
-node:lts-alpine                            931d7d57f8c1        226MB         56.5MB        

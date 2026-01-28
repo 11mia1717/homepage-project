@@ -2,8 +2,10 @@ package com.entrusting.backend.user.service;
 
 import com.entrusting.backend.user.dto.LoginRequest;
 import com.entrusting.backend.user.dto.RegisterRequest;
+import com.entrusting.backend.user.dto.TermsAgreementDto;
 import com.entrusting.backend.user.entity.User;
 import com.entrusting.backend.user.repository.UserRepository;
+import com.entrusting.backend.util.EncryptionUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,21 +31,59 @@ public class UserService {
 
     @Transactional
     public User registerUser(RegisterRequest request) {
+        // [COMPLIANCE] 약관 동의 검증
+        if (request.getTermsAgreement() == null || !request.getTermsAgreement().isAllRequiredAgreed()) {
+            throw new IllegalArgumentException("필수 약관에 모두 동의해야 합니다.");
+        }
+        
         String phone = normalizePhone(request.getPhoneNumber());
         if (userRepository.findByUsername(request.getUsername()).isPresent()) {
             throw new IllegalArgumentException("Username already exists");
         }
-        // [Compliance] CI based Duplicate Check
-        if (request.getCi() != null && userRepository.findByCi(request.getCi()).isPresent()) {
-             throw new IllegalArgumentException("이미 가입된 회원입니다. (CI 중복)");
+        if (userRepository.findByPhoneNumber(phone).isPresent()) {
+            throw new IllegalArgumentException("Phone number already exists");
         }
-
-        // [Compliance] Encrypt PII
-        String encryptedPhone = com.entrusting.backend.common.util.EncryptionUtil.encrypt(phone);
-        String encryptedName = com.entrusting.backend.common.util.EncryptionUtil.encrypt(request.getName());
-
-        User newUser = new User(encryptedName, request.getUsername(), passwordEncoder.encode(request.getPassword()),
-                encryptedPhone, request.getCi(), request.getDi(), request.isVerified());
+        
+        // [COMPLIANCE] 개인정보 암호화 저장
+        String encryptedName = EncryptionUtils.encrypt(request.getName());
+        String encryptedPhone = EncryptionUtils.encrypt(phone);
+        
+        User newUser = new User(
+            encryptedName, 
+            request.getUsername(), 
+            passwordEncoder.encode(request.getPassword()),
+            encryptedPhone, 
+            request.isVerified()
+        );
+        
+        // [COMPLIANCE] 약관 동의 정보 설정
+        TermsAgreementDto terms = request.getTermsAgreement();
+        if (terms != null && terms.getAgreements() != null) {
+            newUser.setTermsAgreed(terms.getAgreements().getOrDefault("terms", false));
+            newUser.setPrivacyAgreed(terms.getAgreements().getOrDefault("privacy", false));
+            newUser.setUniqueIdAgreed(terms.getAgreements().getOrDefault("uniqueId", false));
+            newUser.setCreditInfoAgreed(terms.getAgreements().getOrDefault("creditInfo", false));
+            newUser.setCarrierAuthAgreed(terms.getAgreements().getOrDefault("carrierAuth", false));
+            
+            // [COMPLIANCE] 금융권 추가 필수 약관 매핑
+            newUser.setVpassProvisionAgreed(terms.getAgreements().getOrDefault("vpassProvision", false));
+            newUser.setElectronicFinanceAgreed(terms.getAgreements().getOrDefault("electronicFinance", false));
+            newUser.setMonitoringAgreed(terms.getAgreements().getOrDefault("monitoring", false));
+            
+            // [COMPLIANCE] 선택 약관 매핑
+            newUser.setMarketingPersonalAgreed(terms.getAgreements().getOrDefault("marketingPersonal", false));
+            newUser.setMarketingAgreed(terms.getAgreements().getOrDefault("marketing", false));
+            
+            // 마케팅 채널 설정
+            if (terms.getMarketingChannels() != null) {
+                newUser.setMarketingSms(terms.getMarketingChannels().getOrDefault("sms", false));
+            }
+            
+            newUser.setTermsAgreedAt(java.time.LocalDateTime.now());
+        }
+        
+        // CI/DI는 S2S 인증 완료 시 설정됨
+        
         return userRepository.save(newUser);
     }
 
@@ -62,11 +102,7 @@ public class UserService {
         String phone = normalizePhone(phoneNumber);
         Optional<User> userOpt = userRepository.findByPhoneNumber(phone);
         if (userOpt.isPresent()) {
-            // [Note] phoneNumber is encrypted in the DB, so we must search by encrypted value or CI.
-            // But here normalizePhone returns raw phone. 
-            // In a real scenario, we should find by CI, or encrypt the phone to search.
-            // Since this method relies on raw phone, we'll try to encrypt it for search, assuming we changed findByPhoneNumber to look for exact match.
-             User user = userOpt.get();
+            User user = userOpt.get();
             user.setVerified(isVerified);
             userRepository.save(user);
             System.out.println(
@@ -85,18 +121,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public Optional<User> findByPhoneNumber(String phoneNumber) {
-        // [Compliance] Encrypt to search
-        String encrypted = com.entrusting.backend.common.util.EncryptionUtil.encrypt(normalizePhone(phoneNumber));
-        // Note: Generic encryption with random IV produces different outputs for same input.
-        // So standard findByPhoneNumber won't work with randomized encryption unless we use deterministic encryption or search by CI.
-        // For this demo, we assume we search by CI or ID usually. 
-        // If we strictly need to search by Phone, we need deterministic encryption or Hash.
-        // Let's rely on Hash if we had it, but for now we might fail to find if IV is random.
-        // We will leave it as is, but warn implementation. A better way is to store a hashed_phone for search.
-        
-        // For demonstration of "Encryption", we will use the encrypted value but this exact query will likely fail with random IV.
-        // Ideally, use CI for lookup.
-        return userRepository.findByPhoneNumber(encrypted);
+        return userRepository.findByPhoneNumber(normalizePhone(phoneNumber));
     }
 
     @Transactional(readOnly = true)

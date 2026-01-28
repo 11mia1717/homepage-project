@@ -7,8 +7,7 @@ public class RegisterRequest {
     private String phoneNumber;
     private String tokenId;
     private boolean isVerified;
-    private String ci;
-    private String di;
+    private TermsAgreementDto termsAgreement; // 약관 동의 정보
 
     public String getTokenId() {
         return tokenId;
@@ -58,19 +57,11 @@ public class RegisterRequest {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getCi() {
-        return ci;
+    public TermsAgreementDto getTermsAgreement() {
+        return termsAgreement;
     }
 
-    public void setCi(String ci) {
-        this.ci = ci;
-    }
-
-    public String getDi() {
-        return di;
-    }
-
-    public void setDi(String di) {
-        this.di = di;
+    public void setTermsAgreement(TermsAgreementDto termsAgreement) {
+        this.termsAgreement = termsAgreement;
     }
 }

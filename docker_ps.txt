@@ -1,5 +1,0 @@
-CONTAINER ID   IMAGE                                      COMMAND                   CREATED          STATUS                        PORTS                                         NAMES
-ab79e7950f17   homepage-project-vpass-frontend            "/docker-entrypoint.…"   48 minutes ago   Exited (0) 17 minutes ago                                                   vpass-frontend
-251b98dcc2e2   homepage-project-vpass-backend             "java -jar app.jar"       48 minutes ago   Up About a minute             0.0.0.0:8086->8086/tcp, [::]:8086->8086/tcp   vpass-backend
-4f35c2b52ae4   homepage-project-trustee-frontend:latest   "/docker-entrypoint.…"   49 minutes ago   Exited (0) 49 minutes ago                                                   vibrant_wu
-84d3acbc210d   mysql:8.0                                  "docker-entrypoint.s…"   2 hours ago      Up About a minute (healthy)   0.0.0.0:3307->3306/tcp, [::]:3307->3306/tcp   shared-db

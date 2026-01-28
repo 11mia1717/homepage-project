@@ -224,3 +224,85 @@ body {
 .btn-text:hover {
   color: #1A73E8;
 }
+
+/* 토스뱅크 스타일 애니메이션 */
+@keyframes slide-up {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    transform: translateX(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.5s ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.4s ease-out;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.3s ease-out;
+}
+
+/* 체크박스 커스텀 스타일 */
+.checkbox-custom {
+  @apply w-6 h-6 rounded-full border-2 transition-all duration-300;
+}
+
+.checkbox-custom:checked {
+  @apply bg-blue-500 border-blue-500;
+}
+
+/* 그라디언트 배경 */
+.gradient-blue {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.gradient-purple {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+/* 카드 호버 효과 */
+.card-hover {
+  @apply transition-all duration-300 hover:shadow-lg hover:scale-[1.02];
+}

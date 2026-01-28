@@ -1,6 +1,7 @@
 C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\repository\AccountRepository.java
 C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\BackendApplication.java
 C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\entity\Account.java
+C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\dto\TermsAgreementDto.java
 C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\controller\AccountController.java
 C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\dto\LoginRequest.java
 C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\entity\Transaction.java
@@ -15,4 +16,6 @@ C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\
 C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\repository\UserRepository.java
 C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\controller\UserController.java
 C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\dto\AuthCallbackRequest.java
+C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\config\AppConfig.java
 C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\service\S2SAuthService.java
+C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\util\EncryptionUtils.java

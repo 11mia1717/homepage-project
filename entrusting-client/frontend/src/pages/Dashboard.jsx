@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Logo from '../components/Logo';
+import MarketingConsentModal from '../components/MarketingConsentModal';
 import {
   Bell,
   Settings,
@@ -23,11 +24,17 @@ const Dashboard = () => {
   const [userName, setUserName] = useState('고객');
   const [summary, setSummary] = useState({ totalBalance: 0, accounts: [], recentTransactions: [] });
   const [isLoading, setIsLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAgreed, setIsAgreed] = useState(false);
 
   const username = sessionStorage.getItem('logged_in_user');
   const isFirstLoginCheck = sessionStorage.getItem('is_first_login_check') === 'true';
 
   useEffect(() => {
+    // Check if user already agreed (simulated)
+    const agreed = localStorage.getItem(`marketing_agreed_${username}`);
+    setIsAgreed(!!agreed);
+
     // 1. 사용자 이름 설정
     const storedData = sessionStorage.getItem('register_form_data');
     if (storedData) {
@@ -64,6 +71,30 @@ const Dashboard = () => {
     navigate('/login');
   };
 
+  const handleConsentConfirm = async () => {
+    try {
+      // Compliance: Push to backend for TM Target creation (Phase 2 will implement this API)
+      const response = await fetch('/api/v1/compliance/marketing-consent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username,
+          productName: '루키즈 카드',
+          consentType: '3RD_PARTY_TM'
+        })
+      });
+
+      if (response.ok) {
+        localStorage.setItem(`marketing_agreed_${username}`, 'true');
+        setIsAgreed(true);
+        setIsModalOpen(false);
+        alert('이벤트 참여가 완료되었습니다! 3개월 내 상담이 진행됩니다.');
+      }
+    } catch (e) {
+      alert('동의 처리 중 오류가 발생했습니다.');
+    }
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-[#F8F9FA]">
       <header className="sticky top-0 z-20 flex items-center justify-between h-16 px-6 bg-white/80 backdrop-blur-md border-b border-gray-100">
@@ -93,6 +124,33 @@ const Dashboard = () => {
             <span className="text-[15px] text-gray-400 font-medium">오늘도 당신의 금융 생활을 응원합니다.</span>
           </h2>
         </section>
+
+        {/* Marketing Banner Stage 1 */}
+        {!isAgreed && (
+          <section
+            onClick={() => setIsModalOpen(true)}
+            className="bg-gradient-to-br from-[#1A73E8] to-[#0D47A1] rounded-[24px] p-6 text-white relative overflow-hidden shadow-xl shadow-blue-100 cursor-pointer group active:scale-[0.98] transition-all"
+          >
+            <div className="relative z-10">
+              <div className="bg-amber-400 text-blue-900 text-[10px] font-black px-2 py-0.5 rounded-md inline-block mb-3 uppercase tracking-tighter shadow-sm">EVENT</div>
+              <h3 className="text-[19px] font-bold leading-tight mb-1">마케팅 동의하고 스타벅스 받기 🎁</h3>
+              <p className="text-blue-100/90 text-[12px] font-medium leading-relaxed">루키즈 카드 상담 시 커피 쿠폰 증정!</p>
+              
+              <div className="mt-5 flex items-center gap-1 text-[11px] text-blue-200/80 font-bold">
+                <AlertCircle size={12} />
+                <span>동의 시 개인정보가 상담 목적으로 TM센터에 제공됩니다.</span>
+              </div>
+            </div>
+            
+            {/* Decors */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
+            <Gift size={80} className="absolute -bottom-4 -right-2 text-white/10 rotate-12 transition-transform group-hover:scale-110" />
+            
+            <div className="absolute bottom-6 right-6 w-8 h-8 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm transition-transform group-hover:translate-x-1">
+              <ChevronRight size={18} />
+            </div>
+          </section>
+        )}
 
 
         <section className="space-y-6">
@@ -247,6 +305,11 @@ const Dashboard = () => {
           </div>
         ))}
       </nav>
+      <MarketingConsentModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={handleConsentConfirm}
+      />
     </div>
   );
 };

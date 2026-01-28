@@ -58,8 +58,8 @@ aws rds create-db-instance --db-instance-identifier entrusting-db-v2 --db-instan
 ### 2-1. 서버 접속 및 환경 구성 (EC2 터미널)
 ```bash
 sudo apt update && sudo apt install -y openjdk-17-jdk nginx git maven
-git clone https://github.com/11mia1717/continue-project.git
-cd continue-project
+git clone https://github.com/11mia1717/homepage-project.git
+cd homepage-project
 ```
 
 ### 2-2. 프론트엔드 빌드 및 Nginx 설정
@@ -85,7 +85,7 @@ sudo systemctl restart nginx
 
 ### 2-3. 백엔드 빌드 및 (.env 기반) 가동
 ```bash
-cd ~/continue-project/entrusting-client/backend
+cd ~/homepage-project/entrusting-client/backend
 # 1. 환경 설정 파일 생성
 cat > .env <<EOF
 DB_HOST=<RDS-엔드포인트-주소>

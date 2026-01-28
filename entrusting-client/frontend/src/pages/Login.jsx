@@ -47,9 +47,25 @@ const Login = () => {
         <Logo />
       </header>
 
+      {/* Brand Philosophy - Added without changing existing structure */}
+      <div className="px-8 pt-3 pb-6 max-w-[480px] mx-auto w-full">
+        <div className="text-center animate-fade-in">
+          <p className="text-[#1A73E8] font-bold text-[13px] mb-2.5 opacity-90">
+            당신의 금융은 멈추지 않도록, 보안은 계속됩니다.
+          </p>
+          <p className="text-[#1A73E8] font-extrabold text-[15px] mb-2">
+            "금융의 중단 없는 흐름을 기술로 지킵니다."
+          </p>
+          <p className="text-gray-500 font-medium text-[14px] leading-relaxed">
+            보안 전문가의 DNA로 완성한 <strong className="text-[#1A73E8]">전문가들의 은행</strong><br/>
+            그렇기에 우리의 보안은 종료가 아닌 지속(Continue)입니다.<br/><br/><br/><br/><br/>
+          </p>
+        </div>
+      </div>
+
       {/* Content */}
-      <main className="flex-1 px-8 py-12 flex flex-col justify-center max-w-[480px] mx-auto w-full">
-        <h1 className="text-[32px] font-semibold text-gray-900 leading-tight tracking-tight mb-12">
+      <main className="flex-1 px-8 pt-4 pb-6 flex flex-col justify-start max-w-[480px] mx-auto w-full">
+        <h1 className="text-[32px] font-semibold text-gray-900 leading-tight tracking-tight mb-11">
           반갑습니다! 👋<br />
           로그인을 진행해 주세요.
         </h1>
@@ -88,7 +104,7 @@ const Login = () => {
         )} */}
 
         <div className="mt-12 flex items-center justify-between text-[16px] font-bold">
-          <Link to="/register" className="text-[#1A73E8] hover:underline px-1">회원가입</Link>
+          <Link to="/signup" className="text-[#1A73E8] hover:underline px-1">회원가입</Link>
           <div className="flex items-center gap-4 text-gray-400">
             <Link to="/find-id" className="hover:text-gray-900 transition-colors">아이디 찾기</Link>
             <div className="w-[1.5px] h-3.5 bg-gray-200"></div>

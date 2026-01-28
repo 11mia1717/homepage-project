@@ -27,33 +27,77 @@ public class UserController {
         this.restTemplate = restTemplate;
     }
 
+    /**
+     * 회원가입
+     * 
+     * [S2S 토큰 소비 로직]
+     * 1. 토큰 존재 여부 확인
+     * 2. 수탁사에 토큰 소비 요청 (POST /consume/{tokenId})
+     * 3. 토큰이 USED 상태로 변경됨 (재사용 불가)
+     * 4. 인증된 정보와 가입 정보 일치 여부 확인
+     * 5. 회원가입 진행
+     */
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody RegisterRequest request) {
         try {
-            // [Server-to-Server 검증]
+            // [1] 토큰 존재 여부 확인
             String tokenId = request.getTokenId();
             if (tokenId == null || tokenId.isEmpty()) {
                 throw new IllegalArgumentException("본인인증 토큰이 누락되었습니다. 다시 시도해 주세요.");
             }
 
-            java.util.Map<String, Object> verification = s2sAuthService.verifyTokenWithTrustee(tokenId);
-            if (verification == null || !"COMPLETED".equals(verification.get("status"))) {
-                throw new IllegalArgumentException("본인인증이 완료되지 않았거나 유효하지 않은 토큰입니다.");
+            // [2] S2S 토큰 소비 (일회성 사용)
+            // consume API는 토큰을 USED 상태로 변경하여 재사용 방지
+            java.util.Map<String, Object> verification;
+            try {
+                verification = s2sAuthService.consumeTokenWithTrustee(tokenId);
+            } catch (S2SAuthService.S2SAuthException e) {
+                throw new IllegalArgumentException(e.getMessage());
+            }
+            
+            if (verification == null) {
+                throw new IllegalArgumentException("본인인증 검증에 실패했습니다. 다시 시도해 주세요.");
+            }
+            
+            // [3] 토큰 상태 확인 (USED 또는 COMPLETED)
+            String status = String.valueOf(verification.get("status"));
+            if (!"USED".equals(status) && !"COMPLETED".equals(status)) {
+                throw new IllegalArgumentException("본인인증이 완료되지 않았습니다. (상태: " + status + ")");
             }
 
-            // [보안 추가] 인증된 실명/번호와 가입 정보가 일치하는지 최종 확인
+            // [4] 인증된 정보와 가입 정보 일치 여부 확인
             String verifiedName = (String) verification.get("name");
+            String verifiedPhone = (String) verification.get("phoneNumber");
+            
             if (verifiedName != null && !verifiedName.equals(request.getName())) {
+                System.err.println("[ENTRUSTING-SEC] Name mismatch! Verified: " + verifiedName + 
+                                 ", Request: " + request.getName());
                 throw new IllegalArgumentException("본인인증 성명과 가입 성명이 일치하지 않습니다.");
             }
+            
+            // [선택적] 전화번호 일치 확인
+            if (verifiedPhone != null) {
+                String cleanVerifiedPhone = verifiedPhone.replaceAll("\\D", "");
+                String cleanRequestPhone = request.getPhoneNumber().replaceAll("\\D", "");
+                if (!cleanVerifiedPhone.equals(cleanRequestPhone)) {
+                    System.err.println("[ENTRUSTING-SEC] Phone mismatch! Verified: " + cleanVerifiedPhone + 
+                                     ", Request: " + cleanRequestPhone);
+                    throw new IllegalArgumentException("본인인증 전화번호와 가입 전화번호가 일치하지 않습니다.");
+                }
+            }
 
-            // [수정] 본인인증이 완료되었으므로 isVerified=true 설정하여 가입
+            // [5] 회원가입 진행
             request.setVerified(true);
             userService.registerUser(request);
+            
+            System.out.println("[ENTRUSTING] Register SUCCESS - Name: " + request.getName() + 
+                             ", Username: " + request.getUsername());
             return ResponseEntity.ok("User registered successfully");
+            
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
+            System.err.println("[ENTRUSTING-ERROR] Register failed: " + e.getMessage());
             return ResponseEntity.internalServerError().body("서버 처리 중 오류가 발생했습니다: " + e.getMessage());
         }
     }

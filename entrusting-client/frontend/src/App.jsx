@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard';
 import ForgotPassword from './pages/ForgotPassword';
 import FindId from './pages/FindId';
 import CreateAccount from './pages/CreateAccount';
+import SignupFlow from './pages/SignupFlow';
 
 const ProtectedRoute = ({ children }) => {
   const isLoggedIn = sessionStorage.getItem('logged_in_user');
@@ -22,6 +23,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/signup" element={<SignupFlow />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/find-id" element={<FindId />} />
           <Route path="/auth/callback" element={<AuthCallback />} />
