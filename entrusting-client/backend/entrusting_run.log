@@ -34,25 +34,27 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v3.2.1)
 
-2026-01-27T12:38:25.309+09:00  INFO 3852 --- [entrusting-backend] [           main] c.entrusting.backend.BackendApplication  : Starting BackendApplication using Java 21.0.9 with PID 3852 (C:\ContinueProject\homepage-project\entrusting-client\backend\target\classes started by ez in C:\ContinueProject\homepage-project\entrusting-client\backend)
-2026-01-27T12:38:25.310+09:00  INFO 3852 --- [entrusting-backend] [           main] c.entrusting.backend.BackendApplication  : No active profile set, falling back to 1 default profile: "default"
-2026-01-27T12:38:25.811+09:00  INFO 3852 --- [entrusting-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-01-27T12:38:25.860+09:00  INFO 3852 --- [entrusting-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 43 ms. Found 3 JPA repository interfaces.
-2026-01-27T12:38:26.269+09:00  INFO 3852 --- [entrusting-backend] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8085 (http)
-2026-01-27T12:38:26.278+09:00  INFO 3852 --- [entrusting-backend] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2026-01-27T12:38:26.278+09:00  INFO 3852 --- [entrusting-backend] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
-2026-01-27T12:38:26.320+09:00  INFO 3852 --- [entrusting-backend] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2026-01-27T12:38:26.320+09:00  INFO 3852 --- [entrusting-backend] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 963 ms
-2026-01-27T12:38:26.432+09:00  INFO 3852 --- [entrusting-backend] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-01-27T12:38:26.470+09:00  INFO 3852 --- [entrusting-backend] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
-2026-01-27T12:38:26.491+09:00  INFO 3852 --- [entrusting-backend] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2026-01-27T12:38:26.719+09:00  INFO 3852 --- [entrusting-backend] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-01-27T12:38:26.739+09:00  INFO 3852 --- [entrusting-backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2026-01-27T12:38:27.904+09:00 ERROR 3852 --- [entrusting-backend] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Exception during pool initialization.
+2026-01-28T15:45:01.353+09:00  INFO 16060 --- [entrusting-backend] [           main] c.entrusting.backend.BackendApplication  : Starting BackendApplication using Java 21.0.9 with PID 16060 (C:\ContinueProject\homepage-project\entrusting-client\backend\target\classes started by ez in C:\ContinueProject\homepage-project\entrusting-client\backend)
+2026-01-28T15:45:01.355+09:00  INFO 16060 --- [entrusting-backend] [           main] c.entrusting.backend.BackendApplication  : No active profile set, falling back to 1 default profile: "default"
+2026-01-28T15:45:01.799+09:00  INFO 16060 --- [entrusting-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-28T15:45:01.838+09:00  INFO 16060 --- [entrusting-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 34 ms. Found 3 JPA repository interfaces.
+2026-01-28T15:45:02.190+09:00  INFO 16060 --- [entrusting-backend] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8085 (http)
+2026-01-28T15:45:02.198+09:00  INFO 16060 --- [entrusting-backend] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-28T15:45:02.198+09:00  INFO 16060 --- [entrusting-backend] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2026-01-28T15:45:02.230+09:00  INFO 16060 --- [entrusting-backend] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-28T15:45:02.231+09:00  INFO 16060 --- [entrusting-backend] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 841 ms
+2026-01-28T15:45:02.325+09:00  INFO 16060 --- [entrusting-backend] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-28T15:45:02.363+09:00  INFO 16060 --- [entrusting-backend] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
+2026-01-28T15:45:02.380+09:00  INFO 16060 --- [entrusting-backend] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-28T15:45:02.523+09:00  INFO 16060 --- [entrusting-backend] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-28T15:45:02.539+09:00  INFO 16060 --- [entrusting-backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-28T15:45:03.626+09:00 ERROR 16060 --- [entrusting-backend] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Exception during pool initialization.
 
-java.sql.SQLException: Access denied for user 'root'@'localhost' (using password: YES)
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:130) ~[mysql-connector-j-8.2.0.jar:8.2.0]
-	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-j-8.2.0.jar:8.2.0]
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:174) ~[mysql-connector-j-8.2.0.jar:8.2.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:64) ~[mysql-connector-j-8.2.0.jar:8.2.0]
 	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:815) ~[mysql-connector-j-8.2.0.jar:8.2.0]
 	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:438) ~[mysql-connector-j-8.2.0.jar:8.2.0]
 	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:241) ~[mysql-connector-j-8.2.0.jar:8.2.0]
@@ -103,8 +105,33 @@ java.sql.SQLException: Access denied for user 'root'@'localhost' (using password
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1358) ~[spring-boot-3.2.1.jar:3.2.1]
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1347) ~[spring-boot-3.2.1.jar:3.2.1]
 	at com.entrusting.backend.BackendApplication.main(BackendApplication.java:12) ~[classes/:na]
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
 
-2026-01-27T12:38:27.913+09:00  WARN 3852 --- [entrusting-backend] [           main] o.h.e.j.e.i.JdbcEnvironmentInitiator     : HHH000342: Could not obtain connection to query metadata
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486) ~[na:na]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:61) ~[mysql-connector-j-8.2.0.jar:8.2.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:104) ~[mysql-connector-j-8.2.0.jar:8.2.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:149) ~[mysql-connector-j-8.2.0.jar:8.2.0]
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:165) ~[mysql-connector-j-8.2.0.jar:8.2.0]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:88) ~[mysql-connector-j-8.2.0.jar:8.2.0]
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:120) ~[mysql-connector-j-8.2.0.jar:8.2.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:935) ~[mysql-connector-j-8.2.0.jar:8.2.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:805) ~[mysql-connector-j-8.2.0.jar:8.2.0]
+	... 49 common frames omitted
+Caused by: java.net.ConnectException: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:682) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:592) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:751) ~[na:na]
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:153) ~[mysql-connector-j-8.2.0.jar:8.2.0]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:62) ~[mysql-connector-j-8.2.0.jar:8.2.0]
+	... 52 common frames omitted
+
+2026-01-28T15:45:03.631+09:00  WARN 16060 --- [entrusting-backend] [           main] o.h.e.j.e.i.JdbcEnvironmentInitiator     : HHH000342: Could not obtain connection to query metadata
 
 java.lang.NullPointerException: Cannot invoke "org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(java.sql.SQLException, String)" because the return value of "org.hibernate.resource.transaction.backend.jdbc.internal.JdbcIsolationDelegate.sqlExceptionHelper()" is null
 	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcIsolationDelegate.delegateWork(JdbcIsolationDelegate.java:116) ~[hibernate-core-6.4.1.Final.jar:6.4.1.Final]
@@ -145,13 +172,13 @@ java.lang.NullPointerException: Cannot invoke "org.hibernate.engine.jdbc.spi.Sql
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1347) ~[spring-boot-3.2.1.jar:3.2.1]
 	at com.entrusting.backend.BackendApplication.main(BackendApplication.java:12) ~[classes/:na]
 
-2026-01-27T12:38:27.915+09:00 ERROR 3852 --- [entrusting-backend] [           main] j.LocalContainerEntityManagerFactoryBean : Failed to initialize JPA EntityManagerFactory: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment] due to: Unable to determine Dialect without JDBC metadata (please set 'jakarta.persistence.jdbc.url' for common cases or 'hibernate.dialect' when a custom Dialect implementation must be provided)
-2026-01-27T12:38:27.915+09:00  WARN 3852 --- [entrusting-backend] [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment] due to: Unable to determine Dialect without JDBC metadata (please set 'jakarta.persistence.jdbc.url' for common cases or 'hibernate.dialect' when a custom Dialect implementation must be provided)
-2026-01-27T12:38:27.920+09:00  INFO 3852 --- [entrusting-backend] [           main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
-2026-01-27T12:38:27.934+09:00  INFO 3852 --- [entrusting-backend] [           main] .s.b.a.l.ConditionEvaluationReportLogger : 
+2026-01-28T15:45:03.632+09:00 ERROR 16060 --- [entrusting-backend] [           main] j.LocalContainerEntityManagerFactoryBean : Failed to initialize JPA EntityManagerFactory: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment] due to: Unable to determine Dialect without JDBC metadata (please set 'jakarta.persistence.jdbc.url' for common cases or 'hibernate.dialect' when a custom Dialect implementation must be provided)
+2026-01-28T15:45:03.632+09:00  WARN 16060 --- [entrusting-backend] [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment] due to: Unable to determine Dialect without JDBC metadata (please set 'jakarta.persistence.jdbc.url' for common cases or 'hibernate.dialect' when a custom Dialect implementation must be provided)
+2026-01-28T15:45:03.634+09:00  INFO 16060 --- [entrusting-backend] [           main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2026-01-28T15:45:03.644+09:00  INFO 16060 --- [entrusting-backend] [           main] .s.b.a.l.ConditionEvaluationReportLogger : 
 
 Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
-2026-01-27T12:38:27.954+09:00 ERROR 3852 --- [entrusting-backend] [           main] o.s.boot.SpringApplication               : Application run failed
+2026-01-28T15:45:03.664+09:00 ERROR 16060 --- [entrusting-backend] [           main] o.s.boot.SpringApplication               : Application run failed
 
 org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment] due to: Unable to determine Dialect without JDBC metadata (please set 'jakarta.persistence.jdbc.url' for common cases or 'hibernate.dialect' when a custom Dialect implementation must be provided)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1773) ~[spring-beans-6.1.2.jar:6.1.2]
@@ -203,8 +230,8 @@ Caused by: org.hibernate.HibernateException: Unable to determine Dialect without
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  5.422 s
-[INFO] Finished at: 2026-01-27T12:38:27+09:00
+[INFO] Total time:  4.869 s
+[INFO] Finished at: 2026-01-28T15:45:03+09:00
 [INFO] ------------------------------------------------------------------------
 [ERROR] Failed to execute goal org.springframework.boot:spring-boot-maven-plugin:3.2.1:run (default-cli) on project backend: Process terminated with exit code: 1 -> [Help 1]
 [ERROR] 

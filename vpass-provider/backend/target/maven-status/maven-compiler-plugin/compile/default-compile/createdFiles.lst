@@ -4,6 +4,7 @@ com\trustee\backend\auth\service\AuthService.class
 com\trustee\backend\auth\repository\CarrierUserRepository.class
 com\trustee\backend\auth\dto\AuthStatusResponse.class
 com\trustee\backend\auth\config\SecurityConfig.class
+com\trustee\backend\auth\util\JwtProvider.class
 com\trustee\backend\auth\dto\AuthInitRequest.class
 com\trustee\backend\auth\controller\AuthController.class
 com\trustee\backend\auth\entity\AuthStatus.class
@@ -12,6 +13,8 @@ com\trustee\backend\auth\service\DataInitializer.class
 com\trustee\backend\auth\repository\AuthTokenRepository.class
 com\trustee\backend\auth\service\MockCarrierDatabase.class
 com\trustee\backend\auth\dto\AuthOtpRequest.class
+com\trustee\backend\auth\util\EncryptionUtil.class
+com\trustee\backend\auth\service\AuthTokenCleanupService.class
 com\trustee\backend\DotenvPostProcessor.class
 com\trustee\backend\auth\dto\AuthVerificationResponse.class
 com\trustee\backend\auth\entity\CarrierUser.class

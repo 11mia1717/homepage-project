@@ -54,26 +54,31 @@ public class UserService {
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new IllegalArgumentException("Invalid username or password");
         }
+        
+        // [Compliance] Decrypt PII before returning to controller/frontend
+        user.setName(com.entrusting.backend.common.util.EncryptionUtil.decrypt(user.getName()));
+        user.setPhoneNumber(com.entrusting.backend.common.util.EncryptionUtil.decrypt(user.getPhoneNumber()));
+        
         return user;
     }
 
     @Transactional
     public void updateUserVerifiedStatus(String phoneNumber, boolean isVerified) {
-        String phone = normalizePhone(phoneNumber);
-        Optional<User> userOpt = userRepository.findByPhoneNumber(phone);
+        String phoneInput = normalizePhone(phoneNumber);
+        // Find user by decrypting phone numbers (Demo strategy)
+        Optional<User> userOpt = userRepository.findAll().stream()
+                .filter(u -> phoneInput.equals(normalizePhone(com.entrusting.backend.common.util.EncryptionUtil.decrypt(u.getPhoneNumber()))))
+                .findFirst();
+
         if (userOpt.isPresent()) {
-            // [Note] phoneNumber is encrypted in the DB, so we must search by encrypted value or CI.
-            // But here normalizePhone returns raw phone. 
-            // In a real scenario, we should find by CI, or encrypt the phone to search.
-            // Since this method relies on raw phone, we'll try to encrypt it for search, assuming we changed findByPhoneNumber to look for exact match.
-             User user = userOpt.get();
+            User user = userOpt.get();
             user.setVerified(isVerified);
             userRepository.save(user);
             System.out.println(
-                    "[ENTRUSTING-DEBUG] Profile Updated - Number: " + phone + ", Verified: " + isVerified);
+                    "[ENTRUSTING-DEBUG] Profile Updated - Number: " + phoneInput + ", Verified: " + isVerified);
         } else {
             // 회원가입 중일 수 있으므로 에러를 던지지 않고 로그만 남김
-            System.out.println("[ENTRUSTING-DEBUG] Auth Callback received for NON-REGISTERED Number: " + phone
+            System.out.println("[ENTRUSTING-DEBUG] Auth Callback received for NON-REGISTERED Number: " + phoneInput
                     + ". This is expected during registration flow.");
         }
     }
@@ -87,27 +92,30 @@ public class UserService {
     public Optional<User> findByPhoneNumber(String phoneNumber) {
         // [Compliance] Encrypt to search
         String encrypted = com.entrusting.backend.common.util.EncryptionUtil.encrypt(normalizePhone(phoneNumber));
-        // Note: Generic encryption with random IV produces different outputs for same input.
-        // So standard findByPhoneNumber won't work with randomized encryption unless we use deterministic encryption or search by CI.
-        // For this demo, we assume we search by CI or ID usually. 
-        // If we strictly need to search by Phone, we need deterministic encryption or Hash.
-        // Let's rely on Hash if we had it, but for now we might fail to find if IV is random.
-        // We will leave it as is, but warn implementation. A better way is to store a hashed_phone for search.
+        Optional<User> userOpt = userRepository.findByPhoneNumber(encrypted);
         
-        // For demonstration of "Encryption", we will use the encrypted value but this exact query will likely fail with random IV.
-        // Ideally, use CI for lookup.
-        return userRepository.findByPhoneNumber(encrypted);
+        // [Compliance] Decrypt if found
+        userOpt.ifPresent(user -> {
+            user.setName(com.entrusting.backend.common.util.EncryptionUtil.decrypt(user.getName()));
+            user.setPhoneNumber(com.entrusting.backend.common.util.EncryptionUtil.decrypt(user.getPhoneNumber()));
+        });
+        
+        return userOpt;
     }
 
     @Transactional(readOnly = true)
     public String findUsernameByPhoneNumber(String phoneNumber, String name) {
-        String phone = normalizePhone(phoneNumber);
-        User user = userRepository.findByPhoneNumber(phone)
+        String phoneInput = normalizePhone(phoneNumber);
+        // Search by CI or find all and check (Demonstration logic)
+        User user = userRepository.findAll().stream()
+                .filter(u -> {
+                    String decPhone = com.entrusting.backend.common.util.EncryptionUtil.decrypt(u.getPhoneNumber());
+                    String decName = com.entrusting.backend.common.util.EncryptionUtil.decrypt(u.getName());
+                    return phoneInput.equals(normalizePhone(decPhone)) && name.equals(decName);
+                })
+                .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("입력하신 정보와 일치하는 회원을 찾을 수 없습니다."));
 
-        if (name != null && !name.equals(user.getName())) {
-            throw new IllegalArgumentException("입력하신 정보와 일치하는 회원을 찾을 수 없습니다.");
-        }
         return user.getUsername();
     }
 
@@ -116,8 +124,11 @@ public class UserService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with username: " + username));
 
-        String phone = normalizePhone(phoneNumber);
-        if (!phone.equals(user.getPhoneNumber()) || (name != null && !name.equals(user.getName()))) {
+        String inputPhone = normalizePhone(phoneNumber);
+        String dbPhone = com.entrusting.backend.common.util.EncryptionUtil.decrypt(user.getPhoneNumber());
+        String dbName = com.entrusting.backend.common.util.EncryptionUtil.decrypt(user.getName());
+
+        if (!inputPhone.equals(normalizePhone(dbPhone)) || (name != null && !name.equals(dbName))) {
             throw new IllegalArgumentException("본인확인 정보가 계정 정보와 일치하지 않습니다.");
         }
 

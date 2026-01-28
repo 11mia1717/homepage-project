@@ -10,7 +10,7 @@ services:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: entrusting_db # Creates this DB by default
     ports:
-      - "3307:3306"
+      - "3306:3306"
     volumes:
       - mysql-data:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql # For creating the second DB (trustee_db)
@@ -21,33 +21,7 @@ services:
       timeout: 20s
       retries: 10
 
-  # V-PASS (Trustee Provider)
-  vpass-backend:
-    build: ./vpass-provider/backend
-    container_name: vpass-backend
-    restart: on-failure
-    ports:
-      - "8086:8086"
-    depends_on:
-      mysql:
-        condition: service_healthy
-    environment:
-      DB_URL: jdbc:mysql://mysql:3306/trustee_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-      DB_USER: root
-      DB_PASSWORD: password
-      # Allowed origins only for local development/testing if needed
-      ALLOWED_ORIGINS: http://localhost:5176
-    networks:
-      - app-network
 
-  vpass-frontend:
-    build: ./vpass-provider/frontend
-    container_name: vpass-frontend
-    restart: on-failure
-    ports:
-      - "5176:80"
-    networks:
-      - app-network
 
 networks:
   app-network:

@@ -28,17 +28,23 @@ public class MockCarrierDatabase {
         Optional<CarrierUser> userOpt = carrierUserRepository.findByPhoneNumber(cleanPhone);
 
         if (userOpt.isEmpty()) {
-            System.out.println("[TRUSTEE-DB] User not found for phone: " + phoneNumber);
+            System.err.println("[TRUSTEE-DB-ERROR] User not found for phone: " + phoneNumber + " (clean: " + cleanPhone + ")");
             return false;
         }
 
         CarrierUser user = userOpt.get();
-        boolean isNameMatch = user.getName().equals(name);
-        boolean isCarrierMatch = carrier != null && user.getCarrier().equals(carrier);
+        boolean isNameMatch = user.getName().trim().equals(name.trim()); // 공백 제거 후 비교
+        boolean isCarrierMatch = carrier != null && user.getCarrier().equalsIgnoreCase(carrier); // 대소문자 무시 비교
 
-        System.out
-                .println("[TRUSTEE-DB] Verifying for " + phoneNumber + ": NameMatch=" + isNameMatch + ", CarrierMatch="
-                        + isCarrierMatch + " (Input: " + carrier + ", Found: " + user.getCarrier() + ")");
+        if (!isNameMatch || !isCarrierMatch) {
+            System.err.println("================[ 인증 실패 상세 로그 ]================");
+            System.err.println(" 입력값 -> 이름: [" + name + "], 번호: [" + phoneNumber + "], 통신사: [" + carrier + "]");
+            System.err.println(" DB값  -> 이름: [" + user.getName() + "], 번호: [" + user.getPhoneNumber() + "], 통신사: [" + user.getCarrier() + "]");
+            System.err.println(" 결과  -> 이름일치: " + isNameMatch + ", 통신사일치: " + isCarrierMatch);
+            System.err.println("=======================================================");
+        } else {
+            System.out.println("[TRUSTEE-DB-SUCCESS] 인증 성공: " + name + " (" + carrier + ")");
+        }
 
         return isNameMatch && isCarrierMatch;
     }

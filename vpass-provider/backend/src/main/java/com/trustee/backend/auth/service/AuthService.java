@@ -180,8 +180,9 @@ public class AuthService {
         System.out.println("[TRUSTEE-SEC] Validating Identity - Expected: [" + expectedName + ", " + expectedPhone
                 + "], Input: [" + inputName + ", " + inputPhone + "]");
 
+        // [보안/금융 규정] 회원가입 정보와 본인인증 입력 정보 불일치 시 거부 (Identity Mismatch Check)
         if (!expectedPhone.equals(inputPhone) || (expectedName != null && !expectedName.equals(inputName))) {
-            throw new IllegalArgumentException("정보 불일치: 본인인증 정보가 올바르지 않습니다.");
+            throw new IllegalArgumentException("정보 불일치: 회원가입하신 정보와 본인인증 정보가 다릅니다.");
         }
 
         // [핵심] 재전송 시에도 통신사 실명 대조
