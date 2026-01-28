@@ -3,8 +3,10 @@ package com.trustee.backend.auth.util;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import jakarta.annotation.PostConstruct;
 import java.security.Key;
 import java.util.Date;
 import java.util.UUID;
@@ -12,8 +14,14 @@ import java.util.UUID;
 @Component
 public class JwtProvider {
 
-    // Ideally, this should be in application.properties/yml
-    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+private Key key;
+
+    @PostConstruct
+    public void init() {
+        // JWT 서명 키를 동적으로 생성 (HS256 알고리즘 사용)
+        this.key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    }
+
     private final long expiration = 3600000; // 1 hour
 
     public String generateToken(UUID jti, UUID authRequestId, String name, String ci) {

@@ -11,6 +11,7 @@ const OtpInput = () => {
   const [timer, setTimer] = useState(180);
   const [isResendDisabled, setIsResendDisabled] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isRedirecting, setIsRedirecting] = useState(false); // 리다이렉션 로딩 상태 추가
   const inputRefs = useRef([]);
 
   const tokenId = searchParams.get('tokenId');
@@ -91,10 +92,16 @@ const OtpInput = () => {
 
       if (response.ok) {
         if (redirectUrl) {
+          setIsRedirecting(true); // 로딩 화면 표시 시작
+          
           const callbackUrl = new URL(redirectUrl);
           callbackUrl.searchParams.append('tokenId', tokenId);
           callbackUrl.searchParams.append('phoneNumber', phoneNumber.replace(/\D/g, ''));
-          window.location.href = callbackUrl.toString();
+          
+          // 2초 후 리다이렉션 수행
+          setTimeout(() => {
+            window.location.href = callbackUrl.toString();
+          }, 2000);
         } else {
           setMessage('본인인증 완료!');
         }
@@ -114,6 +121,26 @@ const OtpInput = () => {
     setTimer(180);
     setIsResendDisabled(true);
   };
+
+  if (isRedirecting) {
+    return (
+      <div className="fixed inset-0 z-[100] bg-white flex flex-col items-center justify-center p-8">
+        <div className="relative mb-8">
+          {/* 커스텀 로딩 애니메이션 */}
+          <div className="w-20 h-20 border-4 border-gray-100 border-t-[#E50914] rounded-full animate-spin"></div>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="w-12 h-12 bg-[#E50914]/10 rounded-full animate-pulse"></div>
+          </div>
+        </div>
+        <h2 className="text-2xl font-black text-gray-900 text-center mb-3 animate-pulse">
+          Continue Bank로<br />이동합니다
+        </h2>
+        <p className="text-gray-400 font-bold text-center">
+          안전하게 연결 중입니다. 잠시만 기다려 주세요.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col min-h-screen bg-white">

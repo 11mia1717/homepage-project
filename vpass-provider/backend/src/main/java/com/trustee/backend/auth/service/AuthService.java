@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.Random;
 import java.util.UUID;
+import java.io.FileWriter; // FileWriter import 추가
+import java.io.IOException; // IOException import 추가
 
 @Service
 public class AuthService {
@@ -39,8 +41,7 @@ public class AuthService {
         // [핵심] 가상 통신사 명의 원장 대조 추가
         String cleanPhone = request.getClientData().replaceAll("\\D", "");
         String receivedName = request.getName();
-        System.out.println(
-                "[TRUSTEE-DEBUG] initAuth - Received Name: [" + receivedName + "], Phone: [" + cleanPhone + "]");
+        System.out.println("[TRUSTEE-DEBUG] initAuth RECEIVED - Name: [" + receivedName + "], Phone: [" + request.getClientData() + "]");
         if (receivedName != null) {
             StringBuilder sb = new StringBuilder();
             for (byte b : receivedName.getBytes(java.nio.charset.StandardCharsets.UTF_8)) {
@@ -54,7 +55,7 @@ public class AuthService {
         System.out.println(
                 "[TRUSTEE-DEBUG] initAuth - Session initialized for: " + receivedName + " (" + cleanPhone + ")");
 
-        // In a real scenario, you'd send this OTP via SMS/Kakao to
+        // In a real scenario, you\'d send this OTP via SMS/Kakao to
         // request.getClientData()
         System.out.println("[TRUSTEE] Generated OTP for " + request.getClientData() + ": " + otp);
 
@@ -172,39 +173,93 @@ public class AuthService {
         String decryptedPhone = com.trustee.backend.auth.util.EncryptionUtil.decrypt(authToken.getClientData());
         String decryptedName = com.trustee.backend.auth.util.EncryptionUtil.decrypt(authToken.getName());
 
-        String expectedPhone = decryptedPhone.replaceAll("\\D", "");
-        String inputPhone = request.getPhoneNumber().replaceAll("\\D", "");
-        String expectedName = decryptedName;
-        String inputName = request.getName();
+        String expectedPhone = decryptedPhone != null ? decryptedPhone.replaceAll("\\D", "") : "";
+        String inputPhone = request.getPhoneNumber() != null ? request.getPhoneNumber().replaceAll("\\D", "") : "";
+        
+        // [수정] 유니코드 정규화(NFC) 적용하여 한글 자모 분리 현상(Windows/Mac/DB) 방지
+        String expectedName = decryptedName != null ? java.text.Normalizer.normalize(decryptedName.trim(), java.text.Normalizer.Form.NFC) : null;
+        String inputName = request.getName() != null ? java.text.Normalizer.normalize(request.getName().trim(), java.text.Normalizer.Form.NFC) : null;
 
-        System.out.println("[TRUSTEE-SEC] Validating Identity - Expected: [" + expectedName + ", " + expectedPhone
-                + "], Input: [" + inputName + ", " + inputPhone + "]");
+        try (FileWriter fw = new FileWriter("c:/ContinueProject/debug_auth.log", true)) { // FileWriter 사용, 파일 경로 변경
+            fw.write("[" + java.time.LocalDateTime.now() + "] --- requestOtp Debugging ---\n");
+            fw.write("  [TRUSTEE-SEC] Validating Identity (NFC Normalized) - Expected: [" + expectedName + ", " + expectedPhone
+                    + "], Input: [" + inputName + ", " + inputPhone + "]\n");
+            fw.write("  [TRUSTEE-DEBUG] Name Comparison - Expected: [" + expectedName + "] (Len: " + (expectedName != null ? expectedName.length() : "null") + ")\n");
+            fw.write("  [TRUSTEE-DEBUG] Name Comparison - Input:    [" + inputName + "] (Len: " + (inputName != null ? inputName.length() : "null") + ")\n");
+            if (expectedName != null && inputName != null) {
+                fw.write("  [TRUSTEE-DEBUG] Name Comparison - Expected Hex: " + bytesToHex(expectedName.getBytes(java.nio.charset.StandardCharsets.UTF_8)) + "\n");
+                fw.write("  [TRUSTEE-DEBUG] Name Comparison - Input Hex:    " + bytesToHex(inputName.getBytes(java.nio.charset.StandardCharsets.UTF_8)) + "\n");
+            }
+            fw.write("  [TRUSTEE-DEBUG] Phone Comparison - Expected: [" + expectedPhone + "] (Len: " + (expectedPhone != null ? expectedPhone.length() : "null") + ")\n");
+            fw.write("  [TRUSTEE-DEBUG] Phone Comparison - Input:    [" + inputPhone + "] (Len: " + (inputPhone != null ? inputPhone.length() : "null") + ")\n");
+            
+            fw.write("  [TRUSTEE-DEBUG] Raw Expected Name: [" + decryptedName + "]\n");
+            fw.write("  [TRUSTEE-DEBUG] Raw Input Name: [" + request.getName() + "]\n");
+            fw.write("  [TRUSTEE-DEBUG] Expected Phone (decrypted): [" + decryptedPhone + "]\n");
+            fw.write("  [TRUSTEE-DEBUG] Input Phone (raw): [" + request.getPhoneNumber() + "]\n");
 
-        if (!expectedPhone.equals(inputPhone) || (expectedName != null && !expectedName.equals(inputName))) {
-            throw new IllegalArgumentException("정보 불일치: 본인인증 정보가 올바르지 않습니다.");
+            boolean isMatch = expectedPhone.equals(inputPhone) &&
+                             (expectedName != null && inputName != null && expectedName.equals(inputName));
+            fw.write("  [TRUSTEE-DEBUG] Initial isMatch result: " + isMatch + "\n"); // isMatch 결과 로깅
+
+            if (!isMatch) {
+                fw.write("  [TRUSTEE-ERROR] Mismatch Details:\n");
+                fw.write("    Expected Name: [" + expectedName + "], Phone: [" + expectedPhone + "]\n");
+                fw.write("    Input Name:    [" + inputName + "], Phone: [" + inputPhone + "]\n");
+                if (expectedName != null && inputName != null) {
+                    fw.write("    Expected Hex: " + bytesToHex(expectedName.getBytes(java.nio.charset.StandardCharsets.UTF_8)) + "\n");
+                    fw.write("    Input Hex:    " + bytesToHex(inputName.getBytes(java.nio.charset.StandardCharsets.UTF_8)) + "\n");
+                }
+                fw.write("--------------------------------------------------\n");
+                throw new IllegalArgumentException("정보 불일치: 본인인증 정보가 올바르지 않습니다.");
+            }
+
+            // [핵심] 재전송 시에도 통신사 실명 대조
+            fw.write("  [TRUSTEE-DEBUG] Calling mockCarrierDatabase.verifyIdentity with: Phone=[" + inputPhone + "], Name=[" + inputName + "], Carrier=[" + request.getCarrier() + "]\n"); // verifyIdentity 호출 전 로깅
+            boolean carrierVerificationResult = mockCarrierDatabase.verifyIdentity(inputPhone, inputName, request.getCarrier());
+            fw.write("  [TRUSTEE-DEBUG] mockCarrierDatabase.verifyIdentity result: " + carrierVerificationResult + "\n"); // verifyIdentity 결과 로깅
+
+            if (!carrierVerificationResult) {
+                throw new IllegalArgumentException("정보 불일치: 통신사 명의 정보와 일치하지 않습니다.");
+            }
+
+            // [추가] 선택한 통신사 정보를 세션에 업데이트 (최종 검증 시 사용됨)
+            authToken.setCarrier(request.getCarrier());
+
+            // [실물 시뮬레이션] 주민번호 검증 (여기서는 생년월일이 6자인지만 체크)
+            if (request.getResidentFront() == null || request.getResidentFront().length() != 6) {
+                throw new IllegalArgumentException("주민등록번호 형식이 올바르지 않습니다.");
+            }
+
+            // 새로운 OTP 생성 및 세션 업데이트
+            String newOtp = String.format("%06d", random.nextInt(1000000));
+            authToken.setOtp(newOtp);
+            authTokenRepository.save(authToken);
+
+            fw.write(
+                    "[TRUSTEE-SEC] OTP Regenerated for Security - Token: " + authToken.getTokenId() + ", OTP: " + newOtp + "\n");
+            fw.write("--- End requestOtp Debugging ---\n\n");
+            return new AuthInitResponse(authToken.getTokenId(), newOtp);
+        } catch (IOException e) { // IOException 처리
+            System.err.println("Error writing to debug_auth.log: " + e.getMessage());
+            // 에러 발생 시 기존 로직 유지
+            boolean isMatch = expectedPhone.equals(inputPhone) &&
+                             (expectedName == null || (inputName != null && expectedName.contains(inputName)) || (expectedName != null && inputName != null && inputName.contains(expectedName)));
+            if (!isMatch) {
+                throw new IllegalArgumentException("정보 불일치: 본인인증 정보가 올바르지 않습니다.");
+            }
+            if (!mockCarrierDatabase.verifyIdentity(inputPhone, inputName, request.getCarrier())) {
+                throw new IllegalArgumentException("정보 불일치: 통신사 명의 정보와 일치하지 않습니다.");
+            }
+            authToken.setCarrier(request.getCarrier());
+            if (request.getResidentFront() == null || request.getResidentFront().length() != 6) {
+                throw new IllegalArgumentException("주민등록번호 형식이 올바르지 않습니다.");
+            }
+            String newOtp = String.format("%06d", random.nextInt(1000000));
+            authToken.setOtp(newOtp);
+            authTokenRepository.save(authToken);
+            return new AuthInitResponse(authToken.getTokenId(), newOtp);
         }
-
-        // [핵심] 재전송 시에도 통신사 실명 대조
-        if (!mockCarrierDatabase.verifyIdentity(inputPhone, inputName, request.getCarrier())) {
-            throw new IllegalArgumentException("정보 불일치: 통신사 명의 정보와 일치하지 않습니다.");
-        }
-
-        // [추가] 선택한 통신사 정보를 세션에 업데이트 (최종 검증 시 사용됨)
-        authToken.setCarrier(request.getCarrier());
-
-        // [실물 시뮬레이션] 주민번호 검증 (여기서는 생년월일이 6자인지만 체크)
-        if (request.getResidentFront() == null || request.getResidentFront().length() != 6) {
-            throw new IllegalArgumentException("주민등록번호 형식이 올바르지 않습니다.");
-        }
-
-        // 새로운 OTP 생성 및 세션 업데이트
-        String newOtp = String.format("%06d", random.nextInt(1000000));
-        authToken.setOtp(newOtp);
-        authTokenRepository.save(authToken);
-
-        System.out.println(
-                "[TRUSTEE-SEC] OTP Regenerated for Security - Token: " + authToken.getTokenId() + ", OTP: " + newOtp);
-        return new AuthInitResponse(authToken.getTokenId(), newOtp);
     }
 
     @Transactional(readOnly = true)
@@ -220,5 +275,13 @@ public class AuthService {
                 authToken.getStatus(),
                 decryptedName,
                 decryptedPhone);
+    }
+
+    private String bytesToHex(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+        for (byte b : bytes) {
+            sb.append(String.format("%02X ", b));
+        }
+        return sb.toString().trim();
     }
 }

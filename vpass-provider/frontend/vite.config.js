@@ -4,12 +4,13 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd(), '');
+  const env = loadEnv(mode, '../../', '');
   return {
     plugins: [
       react(),
       tailwindcss(),
     ],
+    envDir: '../../',
     server: {
       port: parseInt(env.VITE_PORT) || 5176,
       host: true,

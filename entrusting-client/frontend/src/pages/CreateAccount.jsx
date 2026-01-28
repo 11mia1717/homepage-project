@@ -65,14 +65,8 @@ const CreateAccount = () => {
                 const trusteeAuthPageUrl = new URL(`${import.meta.env.VITE_TRUSTEE_FRONTEND_URL}/verify`);
                 trusteeAuthPageUrl.searchParams.append('tokenId', initData.tokenId);
 
-                // 세션에 저장된 가입 정보를 활용하여 이름과 번호 전달
-                const storedData = sessionStorage.getItem('register_form_data');
-                if (storedData) {
-                    const parsed = JSON.parse(storedData);
-                    if (parsed.name) trusteeAuthPageUrl.searchParams.append('name', parsed.name);
-                    if (parsed.phoneNumber) trusteeAuthPageUrl.searchParams.append('phoneNumber', parsed.phoneNumber.replace(/\D/g, ''));
-                }
-
+                // [수정] URL에 개인정보(이름, 번호)를 포함하지 않음.
+                // 사용자가 본인인증 페이지에서 직접 입력하여 검증하도록 함.
                 const redirectUrl = new URL(`${window.location.origin}/create-account`);
                 redirectUrl.searchParams.append('verified', 'true');
                 trusteeAuthPageUrl.searchParams.append('redirectUrl', redirectUrl.toString());

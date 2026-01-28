@@ -1,0 +1,132 @@
+server:
+  port: 8082
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: tm-callcenter
+  
+  # Database Configuration
+  datasource:
+    url: jdbc:mysql://localhost:3307/tm_center?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 300000
+      connection-timeout: 20000
+  
+  # JPA Configuration
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+        default_batch_fetch_size: 100
+    open-in-view: false
+  
+  # Batch Configuration
+  batch:
+    jdbc:
+      initialize-schema: always
+    job:
+      enabled: false
+  
+  # Jackson Configuration
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Seoul
+    property-naming-strategy: SNAKE_CASE
+
+# JWT Configuration
+jwt:
+  secret: ${JWT_SECRET:your-256-bit-secret-key-for-jwt-token-generation-minimum-32-chars}
+  expiration: 86400000  # 24 hours
+  refresh-expiration: 604800000  # 7 days
+
+# AWS S3 Configuration (녹취 파일 저장)
+aws:
+  s3:
+    bucket: ${AWS_S3_BUCKET:tm-center-recordings}
+    region: ${AWS_REGION:ap-northeast-2}
+  access-key: ${AWS_ACCESS_KEY:}
+  secret-key: ${AWS_SECRET_KEY:}
+
+# Application Configuration
+app:
+  # 개인정보 보유기간 (일)
+  retention-days: 90
+  
+  # 파기 배치 작업 설정
+  batch:
+    destroy:
+      cron: "0 0 0 * * ?"  # 매일 자정
+      
+  # SMS 발송 설정
+  sms:
+    enabled: true
+    sender: "02-1234-5678"
+
+# Logging Configuration
+logging:
+  level:
+    root: INFO
+    com.tossbank.tmcenter: DEBUG
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+# Springdoc OpenAPI Configuration
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+
+---
+# Development Profile
+spring:
+  config:
+    activate:
+      on-profile: dev
+  
+  datasource:
+    url: jdbc:h2:mem:testdb;MODE=MySQL
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+
+---
+# Production Profile
+spring:
+  config:
+    activate:
+      on-profile: prod
+  
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+
+logging:
+  level:
+    root: WARN
+    com.tossbank.tmcenter: INFO

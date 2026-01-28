@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard';
 import ForgotPassword from './pages/ForgotPassword';
 import FindId from './pages/FindId';
 import CreateAccount from './pages/CreateAccount';
+import CardBenefitPage from './pages/CardBenefitPage';
 
 const ProtectedRoute = ({ children }) => {
   const isLoggedIn = sessionStorage.getItem('logged_in_user');
@@ -30,6 +31,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/card-benefit"
+            element={
+              <ProtectedRoute>
+                <CardBenefitPage />
               </ProtectedRoute>
             }
           />

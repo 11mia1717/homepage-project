@@ -43,9 +43,14 @@ public class UserController {
 
             // [보안 추가] 인증된 실명/번호와 가입 정보가 일치하는지 최종 확인
             String verifiedName = (String) verification.get("name");
+            String verifiedCi = (String) verification.get("ci");
+            
             if (verifiedName != null && !verifiedName.equals(request.getName())) {
                 throw new IllegalArgumentException("본인인증 성명과 가입 성명이 일치하지 않습니다.");
             }
+
+            // [추가] 인증된 CI 정보를 요청 객체에 반영 (UserService에서 중복 체크 시 사용)
+            request.setCi(verifiedCi);
 
             // [수정] 본인인증이 완료되었으므로 isVerified=true 설정하여 가입
             request.setVerified(true);
@@ -65,8 +70,18 @@ public class UserController {
             java.util.Map<String, String> response = new java.util.HashMap<>();
             response.put("status", "success");
             response.put("username", user.getUsername());
-            response.put("name", user.getName());
-            response.put("phoneNumber", user.getPhoneNumber());
+            
+            // [수정] 성명과 휴대폰번호 복호화 후 전달
+            String encryptedName = user.getName();
+            String encryptedPhone = user.getPhoneNumber();
+            String decryptedName = com.entrusting.backend.common.util.EncryptionUtil.decrypt(encryptedName);
+            String decryptedPhone = com.entrusting.backend.common.util.EncryptionUtil.decrypt(encryptedPhone);
+            
+            System.out.println("[ENTRUSTING-DEBUG] Login Response - Name(Enc): [" + encryptedName + "] -> Dec: [" + decryptedName + "]");
+            System.out.println("[ENTRUSTING-DEBUG] Login Response - Phone(Enc): [" + encryptedPhone + "] -> Dec: [" + decryptedPhone + "]");
+
+            response.put("name", decryptedName);
+            response.put("phoneNumber", decryptedPhone);
             return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

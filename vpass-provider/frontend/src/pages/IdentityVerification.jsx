@@ -14,22 +14,12 @@ const IdentityVerification = () => {
   const [timer, setTimer] = useState(180);
   const [message, setMessage] = useState('');
   const [tokenId, setTokenId] = useState(null);
-  const [isDataLocked, setIsDataLocked] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
     const urlTokenId = query.get('tokenId');
-    const urlName = query.get('name');
-    const urlPhone = query.get('phoneNumber');
-
     if (urlTokenId) setTokenId(urlTokenId);
-
-    if (urlName || urlPhone) {
-      if (urlName) setName(urlName);
-      if (urlPhone) setPhoneNumber(formatPhoneNumber(urlPhone));
-      setIsDataLocked(true);
-    }
   }, []);
 
   // 휴대폰 번호 포맷팅 함수
@@ -203,14 +193,9 @@ const IdentityVerification = () => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="성명을 입력하세요"
-                className={`input-field !rounded-lg ${isDataLocked ? 'bg-gray-100/50 text-gray-400 font-bold pr-12' : ''}`}
-                readOnly={isDataLocked}
+                className="input-field !rounded-lg"
+                readOnly={false}
               />
-              {isDataLocked && (
-                <div className="absolute right-4 top-1/2 -translate-y-1/2 text-emerald-600">
-                  <CheckCircle2 size={20} />
-                </div>
-              )}
             </div>
           </div>
 
@@ -255,15 +240,10 @@ const IdentityVerification = () => {
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(formatPhoneNumber(e.target.value))}
                   placeholder="인증받을 번호 입력"
-                  className={`input-field !rounded-lg w-full ${isDataLocked ? 'bg-gray-100/50 text-gray-400 font-bold pr-12' : ''}`}
-                  readOnly={isDataLocked}
+                  className="input-field !rounded-lg w-full"
+                  readOnly={false}
                   disabled={otpSent}
                 />
-                {isDataLocked && (
-                  <div className="absolute right-4 top-1/2 -translate-y-1/2 text-emerald-600">
-                    <CheckCircle2 size={20} />
-                  </div>
-                )}
               </div>
               <button
                 type="button"
@@ -279,13 +259,6 @@ const IdentityVerification = () => {
           {/* OTP 입력란 */}
           {otpSent && (
             <div className="space-y-5 animate-in fade-in slide-in-from-top-2 duration-300">
-              {/* 테스트 가이드 박스 (개발용) */}
-              <div className="p-5 bg-amber-50 border border-amber-100 rounded-2xl">
-                <p className="text-amber-800 text-sm font-medium leading-relaxed">
-                  💡 <span className="font-bold underline">인증번호 안내</span>: 현재 테스트 모드입니다.<br />
-                  입력하실 번호는 <span className="text-red-600 font-extrabold ml-1">{otp}</span> 입니다.
-                </p>
-              </div>
 
               <div>
                 <label className="input-label">인증번호 6자리</label>

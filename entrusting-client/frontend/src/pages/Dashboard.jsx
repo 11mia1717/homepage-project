@@ -231,6 +231,20 @@ const Dashboard = () => {
           </div>
         </section>
 
+        <section
+          onClick={() => navigate("/card-benefit")}
+          className="bg-gradient-to-br from-purple-500 to-indigo-600 rounded-[22px] p-6 text-white flex justify-between items-center group cursor-pointer relative overflow-hidden transition-all shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] duration-300 ease-out"
+        >
+          <div className="relative z-10">
+            <p className="text-purple-200 text-[10px] font-bold mb-1 tracking-widest uppercase">SPECIAL OFFER</p>
+            <h4 className="text-[18px] font-extrabold leading-tight">루키즈 카드 신청 이벤트! 💳</h4>
+            <p className="text-purple-100 text-[13px] font-medium mt-1">매일 간식 혜택까지! 놓치지 마세요! 🎉</p>
+          </div>
+          <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center shadow-lg transition-transform group-hover:rotate-12 group-hover:scale-110">
+            <CreditCard size={24} className="text-white" />
+          </div>
+        </section>
+
         <div className="pt-8"></div>
       </main>
 

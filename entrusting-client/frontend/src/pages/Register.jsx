@@ -140,7 +140,11 @@ const Register = () => {
 
       if (initResponse.ok && initData.tokenId) {
         // 수탁사 프론트엔드로 이동 (환경 변수 사용)
-        const trusteeAuthPageUrl = new URL(`${import.meta.env.VITE_TRUSTEE_FRONTEND_URL}/verify`);
+        const trusteeFrontendUrl = import.meta.env.VITE_TRUSTEE_FRONTEND_URL;
+        if (!trusteeFrontendUrl || !/^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i.test(trusteeFrontendUrl)) {
+          throw new Error('환경 변수 VITE_TRUSTEE_FRONTEND_URL이 유효한 URL이 아니거나 설정되지 않았습니다.');
+        }
+        const trusteeAuthPageUrl = new URL(`${trusteeFrontendUrl}/verify`);
         trusteeAuthPageUrl.searchParams.append('tokenId', initData.tokenId);
         trusteeAuthPageUrl.searchParams.append('phoneNumber', cleanPhoneNumber);
         trusteeAuthPageUrl.searchParams.append('name', name);
