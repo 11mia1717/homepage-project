@@ -25,7 +25,7 @@ import org.springframework.stereotype.Service;
  * aws.sns.region=ap-northeast-2
  * aws.sns.access-key=${AWS_ACCESS_KEY}
  * aws.sns.secret-key=${AWS_SECRET_KEY}
- * sms.sender-id=V-PASS
+ * sms.sender-id=SSAP
  */
 @Service
 public class SmsService {
@@ -39,7 +39,7 @@ public class SmsService {
     @Value("${sms.enabled:false}")
     private boolean smsEnabled;
     
-    @Value("${sms.sender-id:V-PASS}")
+    @Value("${sms.sender-id:SSAP}")
     private String senderId;
     
     // ============================================================
@@ -154,7 +154,7 @@ public class SmsService {
      */
     private String buildOtpMessage(String otp) {
         return String.format(
-            "[V-PASS 본인인증]\n" +
+            "[SSAP 본인인증]\n" +
             "인증번호: %s\n" +
             "타인에게 절대 알려주지 마세요.\n" +
             "유효시간: 3분",

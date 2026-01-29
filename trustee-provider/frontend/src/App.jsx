@@ -8,7 +8,7 @@ function App() {
   const [isTransitioning, setIsTransitioning] = useState(true);
 
   useEffect(() => {
-    // Simulate security connection delay when entering V-PASS
+    // Simulate security connection delay when entering SSAP
     const timer = setTimeout(() => {
       setIsTransitioning(false);
     }, 3000);

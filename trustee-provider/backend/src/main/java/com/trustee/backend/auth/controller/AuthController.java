@@ -36,10 +36,13 @@ public class AuthController {
 
     @PostMapping("/request-otp")
     public ResponseEntity<?> requestOtp(@RequestBody AuthOtpRequest request) {
+        System.out.println("[TRUSTEE-API] requestOtp CALLED - TokenId: " + request.getTokenId() + ", Phone: " + request.getPhoneNumber());
         try {
             AuthInitResponse response = authService.requestOtp(request);
+            System.out.println("[TRUSTEE-API] requestOtp SUCCESS - OTP Generated: " + response.getOtp());
             return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
+            System.err.println("[TRUSTEE-API] requestOtp FAILED - " + e.getMessage());
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

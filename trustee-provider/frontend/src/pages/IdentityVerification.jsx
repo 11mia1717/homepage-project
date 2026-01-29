@@ -104,15 +104,20 @@ const IdentityVerification = () => {
       }
 
       if (response.ok) {
-        // [복구] 테스트 편의를 위해 인증번호를 상태에 저장 (테스트 모드일 때만 data.otp 존재)
+        // ... (성공 부분 유지)
         if (data.otp) {
           setOtp(data.otp); 
+          setMessage('✅ 인증번호가 발송되었습니다. (테스트용 노출: ' + data.otp + ')');
+        } else {
+          setMessage('✅ 인증번호가 SMS로 발송되었습니다.');
         }
         setOtpSent(true);
         setTimer(180);
-        setMessage(data.otp ? '✅ 인증번호가 발송되었습니다. (테스트용 노출)' : '✅ 인증번호가 SMS로 발송되었습니다.');
       } else {
-        setMessage(`❌ ${data.message || '정보가 불일치하거나 요청에 실패했습니다.'}`);
+        // [디버깅] 상세 에러 정보 출력
+        const debugInfo = `Status: ${response.status} ${response.statusText}, Body: ${rawBody.substring(0, 100)}`;
+        console.error('[DEBUG-API] Error Detail:', debugInfo);
+        setMessage(`❌ [오류] ${data.message || '요청 실패'} (${response.status})`);
       }
     } catch (error) {
       setMessage('⚠️ 오류 발생: ' + error.message);

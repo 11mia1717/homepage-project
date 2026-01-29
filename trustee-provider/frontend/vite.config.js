@@ -21,8 +21,9 @@ export default defineConfig(({ mode }) => {
       ],
       proxy: {
         '/api': {
-          target: env.VITE_BACKEND_URL || 'http://127.0.0.1:8086',
+          target: 'http://127.0.0.1:8086',
           changeOrigin: true,
+          secure: false,
         }
       }
       // 포트 기본값: 수탁사 백엔드 8086
