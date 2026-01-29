@@ -111,7 +111,6 @@ public class UserController {
             java.util.Map<String, String> response = new java.util.HashMap<>();
             response.put("status", "success");
             response.put("username", user.getUsername());
-            // [Fix] Decrypt sensitive data before sending to frontend
             response.put("name", com.entrusting.backend.util.EncryptionUtils.decrypt(user.getName()));
             response.put("phoneNumber", com.entrusting.backend.util.EncryptionUtils.decrypt(user.getPhoneNumber()));
             return ResponseEntity.ok(response);

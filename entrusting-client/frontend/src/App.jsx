@@ -7,6 +7,8 @@ import ForgotPassword from './pages/ForgotPassword';
 import FindId from './pages/FindId';
 import CreateAccount from './pages/CreateAccount';
 import SignupFlow from './pages/SignupFlow';
+import AccountVerification from './pages/AccountVerification';
+import AuthBridge from './pages/AuthBridge';
 
 const ProtectedRoute = ({ children }) => {
   const isLoggedIn = sessionStorage.getItem('logged_in_user');
@@ -43,6 +45,15 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/account-verification"
+            element={
+              <ProtectedRoute>
+                <AccountVerification />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/auth/bridge" element={<AuthBridge />} />
           <Route path="/" element={<Navigate to="/login" replace />} />
         </Routes>
       </div>

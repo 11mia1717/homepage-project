@@ -29,6 +29,7 @@ public class Account {
     private String salt; // Unique salt for PIN
     private String status; // ACTIVE, SUSPENDED
     private int pinFailCount = 0;
+    private String accountType; // e.g., "SAVINGS", "CHECKING"
 
     private LocalDateTime createdAt;
 
@@ -113,5 +114,13 @@ public class Account {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public String getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
     }
 }

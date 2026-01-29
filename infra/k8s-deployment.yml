@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+  labels:
+    app: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: backend:latest # 로컬 Docker 이미지 이름
+        imagePullPolicy: IfNotPresent # 로컬 이미지를 사용하거나 이미지가 존재하지 않을 경우에만 pull
+        ports:
+        - containerPort: 8080
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: prod # 운영 환경 프로파일 설정 예시
+        # 필요한 경우 추가 환경 변수를 여기에 정의합니다.
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+spec:
+  selector:
+    app: backend
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+  type: ClusterIP # 내부 클러스터 통신용
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+  labels:
+    app: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: frontend:latest # 로컬 Docker 이미지 이름
+        imagePullPolicy: IfNotPresent # 로컬 이미지를 사용하거나 이미지가 존재하지 않을 경우에만 pull
+        ports:
+        - containerPort: 80
+        # Nginx 설정 파일에서 백엔드 서비스의 이름을 사용하도록 구성되어야 합니다.
+        # 예를 들어, proxy_pass http://backend-service:8080;
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+spec:
+  selector:
+    app: frontend
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+    nodePort: 30000 # 30000-32767 범위 내의 포트
+  type: NodePort # 외부에서 접근 가능하도록 NodePort 사용

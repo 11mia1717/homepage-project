@@ -42,7 +42,7 @@ public class UserService {
         if (userRepository.findByUsername(request.getUsername()).isPresent()) {
             throw new IllegalArgumentException("Username already exists");
         }
-        if (userRepository.findByPhoneNumber(phone).isPresent()) {
+        if (userRepository.findByPhoneNumber(phone).size() > 0) {
             throw new IllegalArgumentException("Phone number already exists");
         }
         
@@ -102,9 +102,10 @@ public class UserService {
     @Transactional
     public void updateUserVerifiedStatus(String phoneNumber, boolean isVerified) {
         String phone = normalizePhone(phoneNumber);
-        Optional<User> userOpt = userRepository.findByPhoneNumber(phone);
-        if (userOpt.isPresent()) {
-            User user = userOpt.get();
+        String encryptedPhone = EncryptionUtils.encrypt(phone);
+        java.util.List<User> users = userRepository.findByPhoneNumber(encryptedPhone);
+        if (!users.isEmpty()) {
+            User user = users.get(0); // 가장 최근 또는 첫 번째 사용자 업데이트
             user.setVerified(isVerified);
             userRepository.save(user);
             System.out.println(
@@ -123,18 +124,36 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public Optional<User> findByPhoneNumber(String phoneNumber) {
-        return userRepository.findByPhoneNumber(normalizePhone(phoneNumber));
+        String encryptedPhone = EncryptionUtils.encrypt(normalizePhone(phoneNumber));
+        java.util.List<User> users = userRepository.findByPhoneNumber(encryptedPhone);
+        return users.isEmpty() ? Optional.empty() : Optional.of(users.get(0));
     }
 
     @Transactional(readOnly = true)
     public String findUsernameByPhoneNumber(String phoneNumber, String name) {
         String phone = normalizePhone(phoneNumber);
-        User user = userRepository.findByPhoneNumber(phone)
-                .orElseThrow(() -> new IllegalArgumentException("입력하신 정보와 일치하는 회원을 찾을 수 없습니다."));
-
-        if (name != null && !name.equals(user.getName())) {
+        String encryptedPhone = EncryptionUtils.encrypt(phone);
+        
+        System.out.println("[ENTRUSTING-DEBUG] Searching for User - Normalized: " + phone + ", Encrypted: " + encryptedPhone);
+        
+        java.util.List<User> users = userRepository.findByPhoneNumber(encryptedPhone);
+        if (users.isEmpty()) {
+            System.err.println("[ENTRUSTING-DEBUG] User NOT FOUND for encrypted phone: " + encryptedPhone);
             throw new IllegalArgumentException("입력하신 정보와 일치하는 회원을 찾을 수 없습니다.");
         }
+
+        String encryptedName = EncryptionUtils.encrypt(name);
+        
+        // 이름까지 일치하는 사용자 찾기
+        User user = users.stream()
+                .filter(u -> encryptedName.equals(u.getName()))
+                .findFirst()
+                .orElseThrow(() -> {
+                    System.err.println("[ENTRUSTING-DEBUG] Name mismatch for phone: " + phone);
+                    return new IllegalArgumentException("입력하신 정보와 일치하는 회원을 찾을 수 없습니다.");
+                });
+
+        System.out.println("[ENTRUSTING-DEBUG] Found User: " + user.getUsername());
         return user.getUsername();
     }
 
@@ -144,7 +163,10 @@ public class UserService {
                 .orElseThrow(() -> new IllegalArgumentException("User not found with username: " + username));
 
         String phone = normalizePhone(phoneNumber);
-        if (!phone.equals(user.getPhoneNumber()) || (name != null && !name.equals(user.getName()))) {
+        String encryptedPhone = EncryptionUtils.encrypt(phone);
+        String encryptedName = EncryptionUtils.encrypt(name);
+
+        if (!encryptedPhone.equals(user.getPhoneNumber()) || (name != null && !encryptedName.equals(user.getName()))) {
             throw new IllegalArgumentException("본인확인 정보가 계정 정보와 일치하지 않습니다.");
         }
 

@@ -6,11 +6,13 @@ import AlertModal from '../components/AlertModal';
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [message, setMessage] = useState(''); // This state might become redundant if all messages go to modal
+  const [message, setMessage] = useState(''); 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState({ title: '', message: '' });
+  
   const navigate = useNavigate();
 
+  // ... (handleLogin function remains same)
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -27,7 +29,7 @@ const Login = () => {
           phoneNumber: data.phoneNumber
         }));
         sessionStorage.setItem('is_first_login_check', 'true');
-        setMessage('로그인 성공'); // This message is for successful login, not an error
+        setMessage('로그인 성공'); 
         navigate('/dashboard');
       } else {
         const errorText = await response.text();
@@ -47,7 +49,9 @@ const Login = () => {
         <Logo />
       </header>
 
-      {/* Brand Philosophy - Added without changing existing structure */}
+      {/* ... (Rest of component) */}
+
+      {/* Brand Philosophy */}
       <div className="px-8 pt-3 pb-6 max-w-[480px] mx-auto w-full">
         <div className="text-center animate-fade-in">
           <p className="text-[#1A73E8] font-bold text-[13px] mb-2.5 opacity-90">
@@ -95,13 +99,6 @@ const Login = () => {
             />
           </div>
         </form>
-
-        {/* The original message div is removed as error messages are now handled by AlertModal */}
-        {/* {message && (
-          <div className="mt-8 p-5 bg-red-50/50 rounded-2xl text-red-500 text-sm font-bold text-center border border-red-100">
-            {message}
-          </div>
-        )} */}
 
         <div className="mt-12 flex items-center justify-between text-[16px] font-bold">
           <Link to="/signup" className="text-[#1A73E8] hover:underline px-1">회원가입</Link>

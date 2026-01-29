@@ -20,10 +20,34 @@ const ForgotPassword = () => {
     useEffect(() => {
         const verified = searchParams.get('verified');
         const sid = searchParams.get('sid');
+        const name = searchParams.get('name');
+        const phoneNumber = searchParams.get('phoneNumber');
+
         if (verified === 'true') {
-            setIsVerified(true);
-            setStep(2);
-            if (sid) setUsername(sid);
+            // [UX] 비밀번호 재설정 전, 실제로 해당 정보의 유저가 있는지 먼저 확인
+            fetch(`/api/v1/auth/find-id?phoneNumber=${phoneNumber}&name=${encodeURIComponent(name || '')}`)
+                .then(res => {
+                    if (!res.ok) throw new Error('입력하신 정보로 가입된 계정을 찾을 수 없습니다.');
+                    return res.text();
+                })
+                .then(foundSid => {
+                    // Case-insensitive comparison (Trim whitespace)
+                    const normalizedFound = foundSid.trim().toLowerCase();
+                    const normalizedInput = sid.trim().toLowerCase();
+
+                    if (normalizedFound !== normalizedInput) {
+                        throw new Error('입력하신 아이디와 인증된 고객님의 아이디가 일치하지 않습니다.');
+                    }
+                    setIsVerified(true);
+                    setStep(2);
+                    if (sid) setUsername(sid);
+                })
+                .catch(err => {
+                    setMessage(err.message);
+                    // [UX] 계정이 없거나 정보가 다를 경우 브릿지 페이지로 이동
+                    const errorMsg = encodeURIComponent(err.message || '정보를 찾을 수 없습니다.');
+                    navigate(`/auth/bridge?type=error&message=${errorMsg}&next=/login&title=인증 실패`);
+                });
         }
     }, [searchParams]);
 

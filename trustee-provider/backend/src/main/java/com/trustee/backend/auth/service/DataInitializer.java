@@ -36,7 +36,18 @@ public class DataInitializer implements CommandLineRunner {
                 // Requested Dummy Data
                 new CarrierUser("홍길순", "01000000001", "SKT", "010101"),
                 new CarrierUser("고길동", "01000000002", "SKT", "750101"),
-                new CarrierUser("차은우", "01011111111", "SKT", "970330")
+                new CarrierUser("차은우", "01011111111", "SKT", "970330"),
+                // New Test Users (일영이 ~ 십영이) - All SKT as requested
+                new CarrierUser("일영이", "01011111111", "SKT", "010101"),
+                new CarrierUser("이영이", "01022222222", "SKT", "020202"),
+                new CarrierUser("삼영이", "01033333333", "SKT", "030303"),
+                new CarrierUser("사영이", "01044444444", "SKT", "040404"),
+                new CarrierUser("오영이", "01055555555", "SKT", "050505"),
+                new CarrierUser("육영이", "01066666666", "SKT", "060606"),
+                new CarrierUser("칠영이", "01077777777", "SKT", "070707"),
+                new CarrierUser("팔영이", "01088888888", "SKT", "080808"),
+                new CarrierUser("구영이", "01099999999", "SKT", "090909"),
+                new CarrierUser("십영이", "01010101010", "SKT", "101010")
             );
 
             carrierUserRepository.saveAll(initialUsers);

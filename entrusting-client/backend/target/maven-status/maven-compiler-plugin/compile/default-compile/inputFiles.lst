@@ -10,7 +10,6 @@ C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\
 C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\controller\AccessLogController.java
 C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\repository\TransactionRepository.java
 C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\controller\DashboardController.java
-C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\s2s\controller\S2SCustomerController.java
 C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\dto\RegisterRequest.java
 C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\service\UserService.java
 C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\entity\AccessLog.java
@@ -19,6 +18,7 @@ C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\
 C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\controller\AccountController.java
 C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\entity\Transaction.java
 C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\config\UserSecurityConfig.java
+C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\controller\S2SCustomerController.java
 C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\entity\User.java
 C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\repository\UserRepository.java
 C:\ContinueProject\homepage-project\entrusting-client\backend\src\main\java\com\entrusting\backend\user\controller\UserController.java

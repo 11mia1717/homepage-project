@@ -33,7 +33,9 @@ const FindId = () => {
                 })
                 .catch(err => {
                     setMessage(err.message);
-                    setStep(1);
+                    // [UX] 가입되지 않은 정보일 경우 브릿지 페이지로 이동
+                    const errorMsg = encodeURIComponent(err.message || '정보를 찾을 수 없습니다.');
+                    navigate(`/auth/bridge?type=error&message=${errorMsg}&next=/login&title=회원정보 없음`);
                 });
         }
     }, [searchParams]);
@@ -152,13 +154,13 @@ const FindId = () => {
                         </div>
 
                         <div className="py-12">
-                            <button
-                                onClick={handleAuthVerification}
-                                disabled={!name || phoneNumber.length < 10}
-                                className="btn-primary"
-                            >
-                                본인인증 하기
-                            </button>
+                                <button
+                                    onClick={handleAuthVerification}
+                                    disabled={!name || phoneNumber.replace(/\D/g, '').length < 11}
+                                    className="btn-primary"
+                                >
+                                    본인인증 하기
+                                </button>
                         </div>
                     </div>
                 ) : (

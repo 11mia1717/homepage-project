@@ -111,7 +111,16 @@ public class ConsentController {
         User user = userOpt.get();
         
         if (request.containsKey("ssapProvisionAgreed")) {
-            user.setSsapProvisionAgreed(request.get("ssapProvisionAgreed"));
+            boolean agreed = request.get("ssapProvisionAgreed");
+            user.setSsapProvisionAgreed(agreed);
+            
+            if (agreed) {
+                // [COMPLIANCE] 동의 시 3개월 보관 기간 설정
+                user.setThirdPartyProvisionRetentionUntil(java.time.LocalDateTime.now().plusMonths(3));
+            } else {
+                // [COMPLIANCE] 동의 철회 시 즉시 파기 (또는 null 처리)
+                user.setThirdPartyProvisionRetentionUntil(null);
+            }
         }
 
         userRepository.save(user);

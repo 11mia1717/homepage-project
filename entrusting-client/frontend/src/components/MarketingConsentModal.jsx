@@ -44,9 +44,9 @@ const MarketingConsentModal = ({ isOpen, onClose, onConfirm }) => {
           <div className="bg-blue-50/50 rounded-2xl p-5 mb-8 flex items-start gap-3 border border-blue-100/50">
             <GiftIcon className="w-6 h-6 text-[#1A73E8] shrink-0" />
             <div>
-              <p className="text-[14px] font-bold text-[#1A73E8]">스타벅스 커피 2잔 증정 (추첨)</p>
+              <p className="text-[14px] font-bold text-[#1A73E8]">Continue 신용카드 연회비 무료!</p>
               <p className="text-[12px] text-gray-500 mt-1 leading-relaxed">
-                마케팅 정보 수신 및 제3자 제공 동의 시 자동으로 응모됩니다.
+                상담만 해도 스타벅스 쿠폰이! (마케팅 동의 시)
               </p>
             </div>
           </div>

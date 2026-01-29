@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Logo from '../components/Logo';
-import MarketingConsentModal from '../components/MarketingConsentModal';
+import StarbucksEventModal from '../components/StarbucksEventModal';
 import {
   Bell,
   Settings,
@@ -68,8 +68,12 @@ const Dashboard = () => {
   }, [username, isFirstLoginCheck, navigate]);
 
   const handleLogout = () => {
-    sessionStorage.clear();
-    navigate('/login');
+    if (window.confirm('정말 로그아웃 하시겠습니까?')) {
+      sessionStorage.clear();
+      localStorage.removeItem('logged_in_user'); // Clear specific items if needed, or clear all
+      // localStorage.clear(); // Optional: if you want to wipe everything including marketing consent
+      navigate('/login');
+    }
   };
 
   const handleConsentConfirm = async () => {
@@ -134,8 +138,8 @@ const Dashboard = () => {
           >
             <div className="relative z-10">
               <div className="bg-amber-400 text-blue-900 text-[10px] font-black px-2 py-0.5 rounded-md inline-block mb-3 uppercase tracking-tighter shadow-sm">EVENT</div>
-              <h3 className="text-[19px] font-bold leading-tight mb-1">마케팅 동의하고 스타벅스 받기 🎁</h3>
-              <p className="text-blue-100/90 text-[12px] font-medium leading-relaxed">Continue 카드 상담 시 커피 쿠폰 증정!</p>
+              <h3 className="text-[24px] font-bold leading-tight mb-1">연회비 무료 & 스타벅스 쿠폰 🎁</h3>
+              <p className="text-blue-100/90 text-[14px] font-medium leading-relaxed">Continue 카드 상담만 해도 커피 쿠폰 증정!</p>
               
               <div className="mt-5 flex items-center gap-1 text-[11px] text-blue-200/80 font-bold">
                 <AlertCircle size={12} />
@@ -163,7 +167,7 @@ const Dashboard = () => {
               <span className="text-gray-900 font-bold text-[20px] tracking-tight">내 계좌</span>
             </div>
             <button
-              onClick={() => navigate('/create-account')}
+              onClick={() => navigate('/account-verification')}
               className="flex items-center gap-1.5 text-[#1A73E8] bg-blue-50 px-4 py-2 rounded-full text-xs font-bold hover:bg-blue-100 transition-colors"
             >
               <Plus size={14} />
@@ -201,7 +205,7 @@ const Dashboard = () => {
                     본인인증 완료 즉시 잔액으로 지급됩니다.
                   </p>
                   <button
-                    onClick={() => navigate('/create-account')}
+                    onClick={() => navigate('/account-verification')}
                     className="w-full h-14 bg-white text-[#1A73E8] rounded-xl font-semibold text-[16px] hover:bg-gray-50 active:scale-[0.98] transition-all shadow-lg max-w-[320px]"
                   >
                     10,000원 받고 계좌 만들기
@@ -306,10 +310,9 @@ const Dashboard = () => {
           </div>
         ))}
       </nav>
-      <MarketingConsentModal
+      <StarbucksEventModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        onConfirm={handleConsentConfirm}
       />
     </div>
   );

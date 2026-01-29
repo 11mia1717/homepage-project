@@ -26,59 +26,32 @@ Continue Bank는 금융 보안 컴플라이언스를 준수하는 현대적인 �
 
 ## 🏗 시스템 아키텍처
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                        Continue Bank 생태계                      │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    subgraph "Docker Desktop (MySQL Instances)"
+        DB1[(mysql-entrusting<br/>Port: 3306)]
+        DB2[(mysql-trustee<br/>Port: 3307)]
+        DB3[(mysql-callcenter<br/>Port: 3308)]
+    end
 
-┌──────────────────┐      ┌──────────────────┐      ┌──────────────────┐
-│  위탁사 (Client) │◄────►│ 수탁사 (SSAP)   │◄────►│ 수탁사 (TM 센터) │
-│  Continue Bank   │      │  본인인증 기관    │      │    콜센터        │
-└──────────────────┘      └──────────────────┘      └──────────────────┘
-│                         │                         │
-│ - 회원가입/로그인        │ - 휴대폰 본인인증        │ - 상담 예약 관리
-│ - 계좌 개설             │ - OTP 발송/검증         │ - 고객 정보 조회
-│ - 약관 동의 관리        │ - CI 생성/검증          │ - V-PASS 연동
-│ - 개인정보 관리         │ - 데이터 암호화         │ - 마케팅 동의 처리
-│                         │ - TTL 기반 데이터 삭제   │
-│                         │                         │
-└─────────────────────────┴─────────────────────────┴──────────────────┘
-                                    │
-                                    ▼
-                        ┌───────────────────────┐
-                        │   MySQL Database      │
-                        │  (Port: 3306)         │
-                        │                       │
-                        │ - entrusting_db       │
-                        │ - vpass_db            │
-                        │ - tm_center_db        │
-                        └───────────────────────┘
+    subgraph "백엔드 서비스"
+        SVC1[위탁사 클라이언트<br/>포트: 8085]
+        SVC2[수탁사 인증/SSAP<br/>포트: 8086]
+        SVC3[수탁사 콜센터/WAS<br/>포트: 8082]
+    end
+
+    SVC1 --> DB1
+    SVC2 --> DB2
+    SVC3 --> DB3
 ```
 
 ### 데이터 흐름
+1. **[위탁사]** 약관 동의 및 정보 입력
+2. **[위탁사→수탁사]** V-PASS 본인인증 요청 (tokenId 생성)
+3. **[수탁사]** OTP 발송 및 검증 (전용 DB 3307 사용)
+4. **[위탁사]** 회원가입 완료 (CI 기반 중복 체크)
 
-```
-사용자 회원가입 플로우:
-1. [위탁사] 약관 동의 (9개 필수 + 2개 선택)
-2. [위탁사] 기본 정보 입력 (이름, 휴대폰)
-3. [위탁사→수탁사] V-PASS 본인인증 요청 (tokenId 생성)
-4. [수탁사] OTP 발송 및 검증
-5. [수탁사] CI 생성 및 JWT 발급
-6. [수탁사→위탁사] 인증 완료 리다이렉트
-7. [위탁사] 회원가입 완료 (CI 기반 중복 체크)
-
-계좌 개설 플로우:
-1. [위탁사] 로그인 사용자 정보 확인
-2. [위탁사→수탁사] V-PASS 재인증 요청
-3. [수탁사] 본인인증 완료
-4. [위탁사] 계좌 개설 처리
-
-TM 센터 상담 예약 플로우:
-1. [위탁사] 상품 페이지에서 상담 신청
-2. [위탁사→수탁사] V-PASS 본인인증
-3. [위탁사→TM센터] 상담 예약 정보 전송 (마케팅 동의 포함)
-4. [TM센터] 예약 접수 및 관리
-```
+---
 
 ## ✨ 주요 기능
 
@@ -158,37 +131,14 @@ TM 센터 상담 예약 플로우:
 
 ```
 homepage-project/
-├── entrusting-client/          # 위탁사 (Continue Bank)
-│   ├── backend/
-│   │   └── src/main/java/com/entrusting/backend/
-│   │       ├── user/           # 사용자 관리
-│   │       ├── account/        # 계좌 관리
-│   │       └── auth/           # 인증 관리
-│   └── frontend/
-│       └── src/
-│           ├── pages/          # 페이지 컴포넌트
-│           └── components/     # 재사용 컴포넌트
-│
-├── ssap-provider/              # 수탁사 (SSAP 본인인증)
-│   ├── backend/
-│   │   └── src/main/java/com/vpass/backend/
-│   │       ├── auth/           # 인증 서비스
-│   │       └── encryption/     # 암호화 서비스
-│   └── frontend/
-│       └── src/
-│           └── pages/          # 본인인증 페이지
-│
-├── tm-center/                  # 수탁사 (TM 센터)
-│   ├── backend/
-│   │   └── src/main/java/com/tmcenter/backend/
-│   │       ├── consultation/   # 상담 관리
-│   │       └── auth/           # 인증 연동
-│   └── frontend/
-│       └── src/
-│           └── pages/          # 상담 관리 페이지
-│
-├── init.sql                    # 데이터베이스 초기화 스크립트
-└── README.md                   # 프로젝트 문서 (본 파일)
+├── entrusting-client/    # 위탁사 (Continue Bank)
+├── trustee-provider/     # 수탁사 (SSAP 본인인증)
+├── tm-center/            # 수탁사 (TM 센터)
+├── docs/                 # 문서 관리 (배포 가이드, 설계서 등)
+├── infra/                # 인프라 설정 (Nginx, K8s, 보안키)
+├── database/             # DB 관련 스크립트
+├── start-all.bat         # 전체 서비스 통합 실행
+└── docker-compose.yml    # 전용 MySQL 컨테이너 구성
 ```
 
 ## 🚀 시작하기

@@ -1,21 +1,56 @@
 version: '3.8'
 
 services:
-  # Shared Database (MySQL)
-  mysql:
+  # MySQL for Entrusting Client (Continue Bank)
+  mysql-entrusting:
     image: mysql:8.0
-    container_name: shared-db
+    container_name: mysql-entrusting
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: continue12!
-      MYSQL_USER: continue
-      MYSQL_PASSWORD: continue12!
-      MYSQL_DATABASE: entrusting_db # Creates this DB by default
+      MYSQL_DATABASE: entrusting_db
     ports:
       - "3306:3306"
     volumes:
-      - mysql-data:/var/lib/mysql
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql # For creating the second DB (trustee_db)
+      - mysql-entrusting-data:/var/lib/mysql
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  # MySQL for Trustee Provider (V-PASS)
+  mysql-trustee:
+    image: mysql:8.0
+    container_name: mysql-trustee
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: continue12!
+      MYSQL_DATABASE: trustee_db
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-trustee-data:/var/lib/mysql
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  # MySQL for Call Center (TM Center)
+  mysql-callcenter:
+    image: mysql:8.0
+    container_name: mysql-callcenter
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: continue12!
+      MYSQL_DATABASE: callcenter_db
+    ports:
+      - "3308:3306"
+    volumes:
+      - mysql-callcenter-data:/var/lib/mysql
     networks:
       - app-network
     healthcheck:
@@ -31,11 +66,11 @@ services:
     ports:
       - "8085:8085"
     depends_on:
-      mysql:
+      mysql-entrusting:
         condition: service_healthy
     environment:
-      DB_URL: jdbc:mysql://mysql:3306/entrusting_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-      DB_USER: continue
+      DB_URL: jdbc:mysql://mysql-entrusting:3306/entrusting_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      DB_USER: root
       DB_PASSWORD: continue12!
       TRUSTEE_API_URL: http://trustee-backend:8086
       ALLOWED_ORIGINS: http://localhost:5175,http://localhost:5178
@@ -60,11 +95,11 @@ services:
     ports:
       - "8086:8086"
     depends_on:
-      mysql:
+      mysql-trustee:
         condition: service_healthy
     environment:
-      DB_URL: jdbc:mysql://mysql:3306/trustee_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-      DB_USER: continue
+      DB_URL: jdbc:mysql://mysql-trustee:3306/trustee_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      DB_USER: root
       DB_PASSWORD: continue12!
       ALLOWED_ORIGINS: http://localhost:5175,http://localhost:5176,http://localhost:5178
     networks:
@@ -84,4 +119,6 @@ networks:
     driver: bridge
 
 volumes:
-  mysql-data:
+  mysql-entrusting-data:
+  mysql-trustee-data:
+  mysql-callcenter-data:

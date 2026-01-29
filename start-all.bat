@@ -2,7 +2,7 @@
 setlocal enabledelayedexpansion
 
 echo ========================================================
-echo [ContinueProject] Starting All Services (H2 InMemory DB)
+echo [ContinueProject] Starting All Services (MySQL Docker DB)
 echo ========================================================
 echo.
 

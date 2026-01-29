@@ -65,13 +65,9 @@ const CreateAccount = () => {
                 const trusteeAuthPageUrl = new URL(`${import.meta.env.VITE_TRUSTEE_FRONTEND_URL}/verify`);
                 trusteeAuthPageUrl.searchParams.append('tokenId', initData.tokenId);
 
-                // 세션에 저장된 가입 정보를 활용하여 이름과 번호 전달
-                const storedData = sessionStorage.getItem('register_form_data');
-                if (storedData) {
-                    const parsed = JSON.parse(storedData);
-                    if (parsed.name) trusteeAuthPageUrl.searchParams.append('name', parsed.name);
-                    if (parsed.phoneNumber) trusteeAuthPageUrl.searchParams.append('phoneNumber', parsed.phoneNumber.replace(/\D/g, ''));
-                }
+                // [Fixed] Use the resolved variables 'realName' and 'realPhone' directly
+                if (realName) trusteeAuthPageUrl.searchParams.append('name', realName);
+                if (realPhone) trusteeAuthPageUrl.searchParams.append('phoneNumber', realPhone);
 
                 const redirectUrl = new URL(`${window.location.origin}/create-account`);
                 redirectUrl.searchParams.append('verified', 'true');

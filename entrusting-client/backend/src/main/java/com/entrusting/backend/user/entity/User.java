@@ -78,6 +78,10 @@ public class User {
     @Column(name = "marketing_push")
     private Boolean marketingPush = false; // 푸시 알림 마케팅 동의
     
+    // [COMPLIANCE] 제3자 제공 동의 보유기간 (상담 완료 후 3개월)
+    @Column(name = "third_party_retention_until")
+    private java.time.LocalDateTime thirdPartyProvisionRetentionUntil;
+
     @Column(name = "terms_agreed_at")
     private java.time.LocalDateTime termsAgreedAt; // 약관 동의 일시
 
@@ -290,5 +294,13 @@ public class User {
     }
     public void setTermsAgreedAt(java.time.LocalDateTime termsAgreedAt) {
         this.termsAgreedAt = termsAgreedAt;
+    }
+
+    public java.time.LocalDateTime getThirdPartyProvisionRetentionUntil() {
+        return thirdPartyProvisionRetentionUntil;
+    }
+
+    public void setThirdPartyProvisionRetentionUntil(java.time.LocalDateTime thirdPartyProvisionRetentionUntil) {
+        this.thirdPartyProvisionRetentionUntil = thirdPartyProvisionRetentionUntil;
     }
 }
