@@ -103,12 +103,14 @@ const IdentityVerification = () => {
         data = { message: rawBody };
       }
 
-      if (response.ok && data.otp) {
-        // [복구] 테스트 편의를 위해 인증번호를 상태에 저장 (가이드 박스에 표시됨)
-        setOtp(data.otp); 
+      if (response.ok) {
+        // [복구] 테스트 편의를 위해 인증번호를 상태에 저장 (테스트 모드일 때만 data.otp 존재)
+        if (data.otp) {
+          setOtp(data.otp); 
+        }
         setOtpSent(true);
         setTimer(180);
-        setMessage('인증번호가 발송되었습니다.');
+        setMessage(data.otp ? '✅ 인증번호가 발송되었습니다. (테스트용 노출)' : '✅ 인증번호가 SMS로 발송되었습니다.');
       } else {
         setMessage(`❌ ${data.message || '정보가 불일치하거나 요청에 실패했습니다.'}`);
       }
@@ -144,6 +146,7 @@ const IdentityVerification = () => {
           finalUrl.searchParams.set('tokenId', tokenId || '');
           finalUrl.searchParams.set('phoneNumber', cleanPhone);
           finalUrl.searchParams.set('name', name);
+          finalUrl.searchParams.set('verified', 'true'); // [핵심] 인증 완료 파라미터 추가
           window.location.href = finalUrl.toString();
         } else {
           setMessage('본인인증이 성공적으로 완료되었습니다.');

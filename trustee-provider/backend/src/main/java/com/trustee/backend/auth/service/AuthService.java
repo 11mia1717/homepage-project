@@ -65,13 +65,14 @@ public class AuthService {
         // [보안] SecureRandom을 사용한 6자리 OTP 생성
         String otp = generateOtp();
 
-        String cleanPhone = request.getClientData().replaceAll("\\D", "");
         String receivedName = request.getName();
+        String rawPhone = request.getClientData();
+        String cleanPhone = (rawPhone != null) ? rawPhone.replaceAll("\\D", "") : "";
         
         System.out.println("[TRUSTEE] initAuth - Name: [" + receivedName + "], Phone: [" + cleanPhone + "]");
 
-        // [로직] 인증 세션 생성 (실제 검증은 confirmAuth 시점에 수행)
-        AuthToken authToken = new AuthToken(tokenId, request.getAuthRequestId(), request.getClientData(), request.getName(), request.getCarrier(),
+        // [보안] 인증 세션 생성 (전화번호는 숫자로만 정제하여 저장)
+        AuthToken authToken = new AuthToken(tokenId, request.getAuthRequestId(), cleanPhone, receivedName, request.getCarrier(),
                 otp,
                 AuthStatus.PENDING,
                 LocalDateTime.now());
