@@ -169,10 +169,7 @@ const Register = () => {
         const targetUrl = trusteeAuthPageUrl.toString();
         console.log('[DEBUG] Redirecting to Trustee:', targetUrl);
 
-        // [DEBUG] 사용자가 주소 확인을 원할 경우 (테스트 모드)
-        if (window.confirm(`[본인인증 시작]\n인증 토큰 발급 성공!\n\n수탁사(V-PASS) 페이지로 이동하시겠습니까?\nURL: ${targetUrl}`)) {
-          window.location.href = targetUrl;
-        }
+        window.location.href = targetUrl;
       } else {
         // [DEBUG] 상세 에러 메시지 표시
         const errorMsg = initData.message || initData.error || '알 수 없는 서버 오류';

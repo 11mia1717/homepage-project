@@ -147,8 +147,8 @@ public class AuthService {
         }
 
         // [핵심] 인증번호가 맞더라도, 실제 통신사 정보와 일치하는지 최종 단계에서 검증
-        String cleanPhone = authToken.getClientData().replaceAll("\\D", "");
-        if (!mockCarrierDatabase.verifyIdentity(cleanPhone, authToken.getName(), authToken.getCarrier())) {
+        String cleanPhone = authToken.getClientData().replaceAll("\\D", "").trim();
+        if (!mockCarrierDatabase.verifyIdentity(cleanPhone, authToken.getName(), authToken.getCarrier(), authToken.getResidentFront())) {
             System.err
                     .println("[TRUSTEE-ERROR] Identity Disclosure Mismatch at FINAL step for: " + authToken.getName()
                             + " (" + authToken.getCarrier() + ")");
@@ -186,30 +186,26 @@ public class AuthService {
         }
 
         // [핵심] 위탁사에서 등록한 정보와 현재 입력한 정보가 일치하는지 검증
-        String expectedPhone = authToken.getClientData().replaceAll("\\D", "");
-        String inputPhone = request.getPhoneNumber().replaceAll("\\D", "");
-        String expectedName = authToken.getName();
-        String inputName = request.getName();
+        String expectedPhone = authToken.getClientData().replaceAll("\\D", "").trim();
+        String inputPhone = request.getPhoneNumber().replaceAll("\\D", "").trim();
+        String expectedName = (authToken.getName() != null) ? authToken.getName().trim() : "";
+        String inputName = (request.getName() != null) ? request.getName().trim() : "";
 
         System.out.println("[TRUSTEE-SEC] Validating Identity - Expected: [" + expectedName + ", " + expectedPhone
                 + "], Input: [" + inputName + ", " + inputPhone + "]");
 
-        if (!expectedPhone.equals(inputPhone) || (expectedName != null && !expectedName.equals(inputName))) {
-            throw new IllegalArgumentException("정보 불일치: 본인인증 정보가 올바르지 않습니다.");
+        if (!expectedPhone.equals(inputPhone) || (!expectedName.equals(inputName))) {
+            throw new IllegalArgumentException("정보 불일치: 위탁사에 등록된 정보와 일치하지 않습니다.");
         }
 
         // [핵심] 재전송 시에도 통신사 실명 대조
-        if (!mockCarrierDatabase.verifyIdentity(inputPhone, inputName, request.getCarrier())) {
+        if (!mockCarrierDatabase.verifyIdentity(inputPhone, inputName, request.getCarrier(), request.getResidentFront())) {
             throw new IllegalArgumentException("정보 불일치: 통신사 명의 정보와 일치하지 않습니다.");
         }
 
-        // [추가] 선택한 통신사 정보를 세션에 업데이트 (최종 검증 시 사용됨)
+        // [추가] 선택한 통신사 및 주민번호 정보를 세션에 업데이트 (최종 검증 시 사용됨)
         authToken.setCarrier(request.getCarrier());
-
-        // [실물 시뮬레이션] 주민번호 검증 (여기서는 생년월일이 6자인지만 체크)
-        if (request.getResidentFront() == null || request.getResidentFront().length() != 6) {
-            throw new IllegalArgumentException("주민등록번호 형식이 올바르지 않습니다.");
-        }
+        authToken.setResidentFront(request.getResidentFront());
 
         // [보안] 새로운 OTP 생성 및 세션 업데이트
         String newOtp = generateOtp();

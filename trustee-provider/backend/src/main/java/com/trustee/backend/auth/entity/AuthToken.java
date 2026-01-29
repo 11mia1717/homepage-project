@@ -28,6 +28,9 @@ public class AuthToken {
     @Column(length = 500)
     private String name; // 이름 (암호화)
     
+    @Column(length = 10)
+    private String residentFront; // 주민등록번호 앞자리
+    
     private String carrier;
     
     @Column(length = 100)
@@ -139,5 +142,13 @@ public class AuthToken {
     
     public void setDi(String di) {
         this.di = di;
+    }
+
+    public String getResidentFront() {
+        return residentFront;
+    }
+
+    public void setResidentFront(String residentFront) {
+        this.residentFront = residentFront;
     }
 }

@@ -22,8 +22,10 @@ public class MockCarrierDatabase {
      * @param carrier     통신사 (SKT, KT, LGU+, ALDDLE)
      * @return 일치 여부
      */
-    public boolean verifyIdentity(String phoneNumber, String name, String carrier) {
-        String cleanPhone = phoneNumber.replaceAll("\\D", "");
+    public boolean verifyIdentity(String phoneNumber, String name, String carrier, String residentFront) {
+        String cleanPhone = phoneNumber.replaceAll("\\D", "").trim();
+        String cleanName = (name != null) ? name.trim() : "";
+        String cleanResident = (residentFront != null) ? residentFront.trim() : "";
         
         Optional<CarrierUser> userOpt = carrierUserRepository.findByPhoneNumber(cleanPhone);
 
@@ -33,13 +35,15 @@ public class MockCarrierDatabase {
         }
 
         CarrierUser user = userOpt.get();
-        boolean isNameMatch = user.getName().equals(name);
-        boolean isCarrierMatch = carrier != null && user.getCarrier().equals(carrier);
+        boolean isNameMatch = user.getName().trim().equals(cleanName);
+        boolean isCarrierMatch = carrier != null && user.getCarrier().trim().equalsIgnoreCase(carrier.trim());
+        boolean isResidentMatch = user.getResidentFront() != null && user.getResidentFront().trim().equals(cleanResident);
 
-        System.out
-                .println("[TRUSTEE-DB] Verifying for " + phoneNumber + ": NameMatch=" + isNameMatch + ", CarrierMatch="
-                        + isCarrierMatch + " (Input: " + carrier + ", Found: " + user.getCarrier() + ")");
+        System.out.println("[TRUSTEE-DB] Verifying for " + phoneNumber + 
+                ": NameMatch=" + isNameMatch + 
+                ", CarrierMatch=" + isCarrierMatch + 
+                ", ResidentMatch=" + isResidentMatch);
 
-        return isNameMatch && isCarrierMatch;
+        return isNameMatch && isCarrierMatch && isResidentMatch;
     }
 }

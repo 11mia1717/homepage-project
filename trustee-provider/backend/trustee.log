@@ -63,3 +63,37 @@ This generated password is for development use only. Your security configuration
 2026-01-29T13:27:51.794+09:00  INFO 29620 --- [trustee-backend] [http-nio-8086-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
 2026-01-29T13:27:51.796+09:00  INFO 29620 --- [trustee-backend] [http-nio-8086-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2026-01-29T13:27:51.797+09:00  INFO 29620 --- [trustee-backend] [http-nio-8086-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-01-29T14:05:59.613+09:00  INFO 31792 --- [trustee-backend] [main] com.trustee.backend.BackendApplication   : Starting BackendApplication using Java 21.0.9 with PID 31792 (C:\ContinueProject\homepage-project\trustee-provider\backend\target\backend-0.0.1-SNAPSHOT.jar started by ez in C:\ContinueProject\homepage-project\trustee-provider\backend)
+2026-01-29T14:05:59.617+09:00 DEBUG 31792 --- [trustee-backend] [main] com.trustee.backend.BackendApplication   : Running with Spring Boot v3.2.1, Spring v6.1.2
+2026-01-29T14:05:59.619+09:00  INFO 31792 --- [trustee-backend] [main] com.trustee.backend.BackendApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-01-29T14:06:01.338+09:00  INFO 31792 --- [trustee-backend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-29T14:06:01.474+09:00  INFO 31792 --- [trustee-backend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 112 ms. Found 2 JPA repository interfaces.
+2026-01-29T14:06:02.763+09:00  INFO 31792 --- [trustee-backend] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8086 (http)
+2026-01-29T14:06:02.786+09:00  INFO 31792 --- [trustee-backend] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-29T14:06:02.789+09:00  INFO 31792 --- [trustee-backend] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2026-01-29T14:06:02.885+09:00  INFO 31792 --- [trustee-backend] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-29T14:06:02.885+09:00  INFO 31792 --- [trustee-backend] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3113 ms
+2026-01-29T14:06:02.950+09:00  INFO 31792 --- [trustee-backend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-29T14:06:03.524+09:00  INFO 31792 --- [trustee-backend] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:trustee_db user=SA
+2026-01-29T14:06:03.536+09:00  INFO 31792 --- [trustee-backend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-29T14:06:03.572+09:00  INFO 31792 --- [trustee-backend] [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:trustee_db'
+2026-01-29T14:06:03.960+09:00  INFO 31792 --- [trustee-backend] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-29T14:06:04.090+09:00  INFO 31792 --- [trustee-backend] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
+2026-01-29T14:06:04.170+09:00  INFO 31792 --- [trustee-backend] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-29T14:06:04.851+09:00  INFO 31792 --- [trustee-backend] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-29T14:06:04.968+09:00  WARN 31792 --- [trustee-backend] [main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-29T14:06:06.710+09:00  INFO 31792 --- [trustee-backend] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-29T14:06:06.804+09:00  INFO 31792 --- [trustee-backend] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-29T14:06:07.755+09:00  WARN 31792 --- [trustee-backend] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-01-29T14:06:07.816+09:00  WARN 31792 --- [trustee-backend] [main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 0f3a9da4-5fc7-4ce3-a079-c3640ec70c7c
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-01-29T14:06:08.464+09:00  INFO 31792 --- [trustee-backend] [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5aefdb9e, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7a491a60, org.springframework.security.web.context.SecurityContextHolderFilter@3b3b2290, org.springframework.security.web.header.HeaderWriterFilter@3e984100, org.springframework.web.filter.CorsFilter@80b6098, org.springframework.security.web.authentication.logout.LogoutFilter@6de4071b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@623ed5ed, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@49e92724, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5c30decf, org.springframework.security.web.access.ExceptionTranslationFilter@69d2c460, org.springframework.security.web.access.intercept.AuthorizationFilter@da5b46f]
+2026-01-29T14:06:08.960+09:00  INFO 31792 --- [trustee-backend] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8086 (http) with context path ''
+2026-01-29T14:06:09.012+09:00  INFO 31792 --- [trustee-backend] [main] com.trustee.backend.BackendApplication   : Started BackendApplication in 10.763 seconds (process running for 13.028)
+2026-01-29T14:07:50.510+09:00  INFO 31792 --- [trustee-backend] [http-nio-8086-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-29T14:07:50.511+09:00  INFO 31792 --- [trustee-backend] [http-nio-8086-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-01-29T14:07:50.512+09:00  INFO 31792 --- [trustee-backend] [http-nio-8086-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms

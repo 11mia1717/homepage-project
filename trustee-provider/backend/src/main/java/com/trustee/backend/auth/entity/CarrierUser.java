@@ -19,13 +19,17 @@ public class CarrierUser {
     @Column(nullable = false)
     private String carrier;
 
+    @Column(length = 6)
+    private String residentFront;
+
     public CarrierUser() {
     }
 
-    public CarrierUser(String name, String phoneNumber, String carrier) {
+    public CarrierUser(String name, String phoneNumber, String carrier, String residentFront) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.carrier = carrier;
+        this.residentFront = residentFront;
     }
 
     public Long getId() {
@@ -58,5 +62,13 @@ public class CarrierUser {
 
     public void setCarrier(String carrier) {
         this.carrier = carrier;
+    }
+
+    public String getResidentFront() {
+        return residentFront;
+    }
+
+    public void setResidentFront(String residentFront) {
+        this.residentFront = residentFront;
     }
 }

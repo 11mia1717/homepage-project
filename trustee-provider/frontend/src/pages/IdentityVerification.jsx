@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, CheckCircle2, AlertTriangle, ShieldX } from 'lucide-react';
+import { ChevronLeft, CheckCircle2, AlertTriangle, ShieldX, Lock } from 'lucide-react';
 import Logo from '../components/Logo';
 
 const IdentityVerification = () => {
@@ -71,6 +71,11 @@ const IdentityVerification = () => {
   const handleRequestOtp = async () => {
     if (!name || !residentFront || !telecom || !phoneNumber) {
       setMessage('모든 정보를 입력해 주세요.');
+      return;
+    }
+
+    if (!agreed) {
+      setMessage('⚠️ 본인인증 이용약관에 동의해 주세요.');
       return;
     }
 
@@ -239,16 +244,17 @@ const IdentityVerification = () => {
             <label className="input-label">성명</label>
             <div className="relative">
               <input
-                type="text"
+                inputMode="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="성명을 입력하세요"
-                className={`input-field !rounded-lg ${isDataLocked ? 'bg-gray-100/50 text-gray-400 font-bold pr-12' : ''}`}
+                className={`input-field !rounded-xl transition-all ${isDataLocked ? 'bg-gray-100 border-gray-200 text-gray-500 font-bold cursor-not-allowed pr-12' : 'focus:ring-2 focus:ring-red-100'}`}
                 readOnly={isDataLocked}
               />
               {isDataLocked && (
-                <div className="absolute right-4 top-1/2 -translate-y-1/2 text-emerald-600">
-                  <CheckCircle2 size={20} />
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2">
+                  <div className="w-[1px] h-4 bg-gray-300 mr-2"></div>
+                  <Lock size={18} className="text-gray-400" />
                 </div>
               )}
             </div>
@@ -295,21 +301,22 @@ const IdentityVerification = () => {
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(formatPhoneNumber(e.target.value))}
                   placeholder="인증받을 번호 입력"
-                  className={`input-field !rounded-lg w-full ${isDataLocked ? 'bg-gray-100/50 text-gray-400 font-bold pr-12' : ''}`}
+                  className={`input-field !rounded-xl w-full transition-all ${isDataLocked ? 'bg-gray-100 border-gray-200 text-gray-500 font-bold cursor-not-allowed pr-12' : 'focus:ring-2 focus:ring-red-100'}`}
                   readOnly={isDataLocked}
                   disabled={otpSent}
                 />
                 {isDataLocked && (
-                  <div className="absolute right-4 top-1/2 -translate-y-1/2 text-emerald-600">
-                    <CheckCircle2 size={20} />
+                  <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2">
+                    <div className="w-[1px] h-4 bg-gray-300 mr-2"></div>
+                    <Lock size={18} className="text-gray-400" />
                   </div>
                 )}
               </div>
               <button
                 type="button"
                 onClick={handleRequestOtp}
-                className="btn-action whitespace-nowrap self-center !rounded-lg"
-                disabled={otpSent && timer > 150}
+                className={`btn-action whitespace-nowrap self-center !rounded-lg transition-all ${!agreed ? 'opacity-50 cursor-not-allowed bg-gray-300 pointer-events-none' : ''}`}
+                disabled={(otpSent && timer > 150) || !agreed}
               >
                 {otpSent ? '재발송' : '인증번호발송'}
               </button>
