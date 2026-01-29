@@ -53,8 +53,8 @@ public class User {
     @Column(name = "carrier_auth_agreed")
     private Boolean carrierAuthAgreed = false; // 본인확인서비스
     
-    @Column(name = "vpass_provision_agreed")
-    private Boolean vpassProvisionAgreed = false; // V-pass 정보 제공 동의
+    @Column(name = "ssap_provision_agreed")
+    private Boolean ssapProvisionAgreed = false; // SSAP 정보 제공 동의
     
     @Column(name = "electronic_finance_agreed")
     private Boolean electronicFinanceAgreed = false; // 전자금융거래 기본약관
@@ -64,6 +64,19 @@ public class User {
     
     @Column(name = "marketing_personal_agreed")
     private Boolean marketingPersonalAgreed = false; // 개인맞춤형 상품 추천 (선택)
+    
+    // [COMPLIANCE] 마케팅 동의 상세 항목
+    @Column(name = "marketing_agreed")
+    private Boolean marketingAgreed = false; // 마케팅 정보 수신 동의
+    
+    @Column(name = "marketing_sms")
+    private Boolean marketingSms = false; // SMS 마케팅 동의
+    
+    @Column(name = "marketing_email")
+    private Boolean marketingEmail = false; // 이메일 마케팅 동의
+    
+    @Column(name = "marketing_push")
+    private Boolean marketingPush = false; // 푸시 알림 마케팅 동의
     
     @Column(name = "terms_agreed_at")
     private java.time.LocalDateTime termsAgreedAt; // 약관 동의 일시
@@ -248,11 +261,11 @@ public class User {
         this.marketingPush = marketingPush;
     }
 
-    public Boolean getVpassProvisionAgreed() {
-        return vpassProvisionAgreed;
+    public Boolean getSsapProvisionAgreed() {
+        return ssapProvisionAgreed;
     }
-    public void setVpassProvisionAgreed(Boolean vpassProvisionAgreed) {
-        this.vpassProvisionAgreed = vpassProvisionAgreed;
+    public void setSsapProvisionAgreed(Boolean ssapProvisionAgreed) {
+        this.ssapProvisionAgreed = ssapProvisionAgreed;
     }
     public Boolean getElectronicFinanceAgreed() {
         return electronicFinanceAgreed;

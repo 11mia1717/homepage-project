@@ -11,7 +11,7 @@ function App() {
     // Simulate security connection delay when entering V-PASS
     const timer = setTimeout(() => {
       setIsTransitioning(false);
-    }, 1500);
+    }, 3000);
     return () => clearTimeout(timer);
   }, []);
 

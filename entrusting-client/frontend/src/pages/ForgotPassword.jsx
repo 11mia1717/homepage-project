@@ -183,10 +183,10 @@ const ForgotPassword = () => {
                             </p>
                         </div>
 
-                        {/* [COMPLIANCE] V-PASS 데이터 전송 고지 */}
+                        {/* [COMPLIANCE] SSAP 데이터 전송 고지 */}
                         <div className="mt-8 p-4 bg-amber-50/50 border border-amber-200 rounded-2xl">
                             <p className="text-[12px] font-bold text-gray-700 mb-2">
-                                ※ 본인인증 시 다음 정보가 V-pass로 전송됩니다:
+                                ※ 본인인증 시 다음 정보가 SSAP로 전송됩니다:
                             </p>
                             <p className="text-[12px] text-gray-600 font-medium leading-relaxed ml-4">
                                 이름, 휴대폰번호

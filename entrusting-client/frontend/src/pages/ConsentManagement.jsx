@@ -16,15 +16,15 @@ const ConsentManagement = () => {
   useEffect(() => {
     // 실제 운영 환경에서는 API를 통해 가져오지만, 교육용으로 세션/더미 활용
     const savedUser = JSON.parse(sessionStorage.getItem('user') || '{"name":"홍길동", "joinedAt":"2026-01-28T14:30:00"}');
-    const savedTerms = JSON.parse(sessionStorage.getItem('terms_agreement') || '{"agreements":{"age":true,"terms":true,"privacy":true,"uniqueId":true,"creditInfo":true,"carrierAuth":true,"vpassProvision":true,"electronicFinance":true,"monitoring":true,"marketingPersonal":true,"marketing":false},"agreedAt":"2026-01-28T14:30:00"}');
+    const savedTerms = JSON.parse(sessionStorage.getItem('terms_agreement') || '{"agreements":{"age":true,"terms":true,"privacy":true,"uniqueId":true,"creditInfo":true,"carrierAuth":true,"ssapProvision":true,"electronicFinance":true,"monitoring":true,"marketingPersonal":true,"marketing":false},"agreedAt":"2026-01-28T14:30:00"}');
     
     setUser(savedUser);
     setTerms(savedTerms);
     
     // 더미 본인인증 기록
     setAuthRecords([
-      { purpose: '회원가입 시 본인인증', date: '2026-01-28T14:32:00', method: 'V-pass 휴대폰 인증' },
-      { purpose: '계좌 개설 시 본인인증', date: '2026-01-28T14:40:00', method: 'V-pass 휴대폰 인증' }
+      { purpose: '회원가입 시 본인인증', date: '2026-01-28T14:32:00', method: 'SSAP 휴대폰 인증' },
+      { purpose: '계좌 개설 시 본인인증', date: '2026-01-28T14:40:00', method: 'SSAP 휴대폰 인증' }
     ]);
   }, []);
 
@@ -60,8 +60,8 @@ const ConsentManagement = () => {
     { id: 'privacy', title: '개인정보 수집 및 이용' },
     { id: 'uniqueId', title: '고유식별정보 처리' },
     { id: 'creditInfo', title: '신용정보 조회 및 제공' },
-    { id: 'carrierAuth', title: 'V-pass 본인인증 이용' },
-    { id: 'vpassProvision', title: '개인정보의 V-pass 제공' },
+    { id: 'carrierAuth', title: 'SSAP 본인인증 이용' },
+    { id: 'ssapProvision', title: '개인정보의 SSAP 제공' },
     { id: 'electronicFinance', title: '전자금융거래 기본약관' },
     { id: 'monitoring', title: '금융거래 정보 모니터링' }
   ];
@@ -93,7 +93,7 @@ const ConsentManagement = () => {
         {/* 필수 동의 항목 */}
         <section className="mb-12">
           <h2 className="text-[15px] font-bold text-gray-900 mb-4 flex items-center gap-2">
-            <div className="w-1 h-4 bg-[#1A73E8] rounded-full"></div>
+              <div className="w-1 h-4 rounded-full" style={{ backgroundColor: 'rgb(26, 115, 232)' }}></div>
             필수 동의 항목 <span className="text-gray-400 text-[13px] font-medium">(철회 불가)</span>
           </h2>
           <div className="bg-gray-50 rounded-2xl border border-gray-100 divide-y divide-gray-100 overflow-hidden">
@@ -147,7 +147,8 @@ const ConsentManagement = () => {
                   ) : (
                     <button 
                       onClick={() => handleAgree(term.id)}
-                      className="text-[13px] font-bold text-[#1A73E8] hover:bg-blue-50 px-4 py-2 rounded-xl transition-all"
+                      className="text-[13px] font-bold hover:bg-blue-50 px-4 py-2 rounded-xl transition-all"
+                      style={{ color: 'rgb(26, 115, 232)' }}
                     >
                       동의하기
                     </button>
@@ -210,7 +211,7 @@ const ConsentManagement = () => {
         {/* 안내사항 */}
         <div className="p-6 bg-blue-50 rounded-2xl border border-blue-100">
           <p className="text-[13px] font-bold text-gray-700 mb-3 flex items-center gap-1.5">
-            <span className="text-[#1A73E8]">⚠️</span> 안내사항
+            <span style={{ color: 'rgb(26, 115, 232)' }}>⚠️</span> 안내사항
           </p>
           <ul className="text-[12px] text-gray-600 font-medium space-y-2 leading-relaxed">
             <li className="flex items-start gap-1.5">

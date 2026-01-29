@@ -66,7 +66,7 @@ public class UserService {
             newUser.setCarrierAuthAgreed(terms.getAgreements().getOrDefault("carrierAuth", false));
             
             // [COMPLIANCE] 금융권 추가 필수 약관 매핑
-            newUser.setVpassProvisionAgreed(terms.getAgreements().getOrDefault("vpassProvision", false));
+            newUser.setSsapProvisionAgreed(terms.getAgreements().getOrDefault("ssapProvision", false));
             newUser.setElectronicFinanceAgreed(terms.getAgreements().getOrDefault("electronicFinance", false));
             newUser.setMonitoringAgreed(terms.getAgreements().getOrDefault("monitoring", false));
             

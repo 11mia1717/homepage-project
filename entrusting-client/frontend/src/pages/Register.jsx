@@ -98,8 +98,8 @@ const Register = () => {
             ...termsAgreement,
             agreements: {
               ...termsAgreement.agreements,
-              carrierAuth: true,     // 본인인증 완료 시 자동 동의 처리 (V-pass 페이지에서 동의함)
-              vpassProvision: true   // 본인인증 완료 시 자동 동의 처리 (V-pass 페이지에서 동의함)
+              carrierAuth: true,     // 본인인증 완료 시 자동 동의 처리 (SSAP 페이지에서 동의함)
+              ssapProvision: true   // 본인인증 완료 시 자동 동의 처리 (SSAP 페이지에서 동의함)
             }
           }
         }),
@@ -156,19 +156,29 @@ const Register = () => {
       }
 
       if (initResponse.ok && initData.tokenId) {
-        // 수탁사 프론트엔드로 이동 (환경 변수 사용)
-        const trusteeAuthPageUrl = new URL(`${import.meta.env.VITE_TRUSTEE_FRONTEND_URL}/verify`);
+        // 수탁사 프론트엔드로 이동 (환경 변수 우선 사용, 없으면 현재 Host 기반 추론)
+        const trusteeFrontendBase = import.meta.env.VITE_TRUSTEE_FRONTEND_URL || `${window.location.protocol}//${window.location.hostname}:5176`;
+        const trusteeAuthPageUrl = new URL(`${trusteeFrontendBase}/verify`);
+        
         trusteeAuthPageUrl.searchParams.append('tokenId', initData.tokenId);
         trusteeAuthPageUrl.searchParams.append('phoneNumber', cleanPhoneNumber);
-        trusteeAuthPageUrl.searchParams.append('name', name);
+        trusteeAuthPageUrl.searchParams.append('name', cleanName);
         // 인증 완료 후 다시 위탁사 콜백 페이지로 복귀
         trusteeAuthPageUrl.searchParams.append('redirectUrl', `${window.location.origin}/auth/callback`);
 
-        window.location.href = trusteeAuthPageUrl.toString();
+        const targetUrl = trusteeAuthPageUrl.toString();
+        console.log('[DEBUG] Redirecting to Trustee:', targetUrl);
+
+        // [DEBUG] 사용자가 주소 확인을 원할 경우 (테스트 모드)
+        if (window.confirm(`[본인인증 시작]\n인증 토큰 발급 성공!\n\n수탁사(V-PASS) 페이지로 이동하시겠습니까?\nURL: ${targetUrl}`)) {
+          window.location.href = targetUrl;
+        }
       } else {
+        // [DEBUG] 상세 에러 메시지 표시
+        const errorMsg = initData.message || initData.error || '알 수 없는 서버 오류';
         setModalContent({ 
-          title: '본인인증 실패', 
-          message: initData.message || '인증 서버와 통신 중 오류가 발생했습니다.' 
+          title: `본인인증 실패 (Code: ${initResponse.status})`, 
+          message: `서버 응답: ${errorMsg}\n\n(API: /trustee-api/v1/auth/init)` 
         });
         setIsModalOpen(true);
       }
@@ -261,11 +271,11 @@ const Register = () => {
               )}
             </div>
             
-            {/* [COMPLIANCE] V-PASS 데이터 전송 고지 (위치 이동됨) */}
+            {/* [COMPLIANCE] SSAP 데이터 전송 고지 (위치 이동됨) */}
             {!isVerified && (
               <div className="mt-3 p-4 bg-amber-50/50 border border-amber-200 rounded-2xl animate-in fade-in slide-in-from-top-2 duration-300">
                 <p className="text-[12px] font-bold text-gray-700 mb-2">
-                  ※ 본인인증 시 다음 정보가 V-pass로 전송됩니다:
+                  ※ 본인인증 시 다음 정보가 SSAP로 전송됩니다:
                 </p>
                 <p className="text-[12px] text-gray-600 font-medium leading-relaxed ml-4">
                   이름, 휴대폰번호

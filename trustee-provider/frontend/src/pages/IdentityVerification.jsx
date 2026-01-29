@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, CheckCircle2 } from 'lucide-react';
+import { ChevronLeft, CheckCircle2, AlertTriangle, ShieldX } from 'lucide-react';
 import Logo from '../components/Logo';
 
 const IdentityVerification = () => {
   const navigate = useNavigate();
+  const [isValidAccess, setIsValidAccess] = useState(true); // [SECURITY] 접근 유효성 상태 추가
   const [name, setName] = useState('');
   const [residentFront, setResidentFront] = useState('');
   const [telecom, setTelecom] = useState('');
@@ -16,7 +17,7 @@ const IdentityVerification = () => {
   const [tokenId, setTokenId] = useState(null);
   const [isDataLocked, setIsDataLocked] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [agreed, setAgreed] = useState(false); // [COMPLIANCE] V-PASS 이용 동의 추가
+  const [agreed, setAgreed] = useState(false); // [COMPLIANCE] SSAP 이용 동의 추가
 
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
@@ -24,7 +25,13 @@ const IdentityVerification = () => {
     const urlName = query.get('name');
     const urlPhone = query.get('phoneNumber');
 
-    if (urlTokenId) setTokenId(urlTokenId);
+    // [SECURITY] TokenId가 없으면 직접 접근으로 간주하여 차단
+    if (!urlTokenId) {
+      setIsValidAccess(false);
+      return;
+    }
+
+    setTokenId(urlTokenId);
 
     if (urlName || urlPhone) {
       if (urlName) setName(urlName);
@@ -158,6 +165,37 @@ const IdentityVerification = () => {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
+  if (!isValidAccess) {
+    return (
+      <div className="flex flex-col min-h-screen bg-white items-center justify-center px-8 text-center">
+        <div className="w-20 h-20 bg-red-50 rounded-3xl flex items-center justify-center mb-8">
+          <ShieldX size={48} className="text-[#E50914]" />
+        </div>
+        <h2 className="text-2xl font-black text-gray-900 mb-4 tracking-tight">
+          비정상적인 접근입니다
+        </h2>
+        <p className="text-gray-500 font-medium leading-relaxed mb-10">
+          보안 정책에 따라 직접 주소를 입력한 접근은<br />
+          엄격히 차단됩니다.<br />
+          <span className="text-red-500 font-bold">위탁사 서비스를 통해 정상적으로 진입</span>해 주세요.
+        </p>
+        <div className="w-full max-w-[280px] p-4 bg-gray-50 rounded-2xl border border-gray-100 mb-10">
+          <div className="flex items-center gap-2 justify-center text-xs font-bold text-gray-400 uppercase tracking-widest">
+            <AlertTriangle size={14} />
+            Access Denied
+          </div>
+          <p className="text-[10px] text-gray-300 mt-2">Security ID: UNAUTHORIZED_DIRECT_ACCESS</p>
+        </div>
+        <button 
+          onClick={() => window.close()}
+          className="btn-primary !rounded-2xl !bg-gray-900"
+        >
+          확인
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col min-h-screen bg-white">
       {/* Header */}
@@ -191,7 +229,7 @@ const IdentityVerification = () => {
       <main className="flex-1 px-8 py-12 max-w-[480px] mx-auto w-full">
         <h1 className="text-[32px] font-black text-gray-900 leading-[1.15] tracking-tight mb-10">
           강력한 보안,<br />
-          <span className="text-[#E50914]">V-PASS</span> 로<br />
+          <span className="text-[#E50914]">SSAP</span> 로<br />
           인증을 완료하세요.
         </h1>
 
@@ -278,7 +316,7 @@ const IdentityVerification = () => {
             </div>
           </div>
  
-          {/* [COMPLIANCE] V-PASS 통합 약관 동의 */}
+          {/* [COMPLIANCE] SSAP 통합 약관 동의 */}
           <div className="pt-4 border-t border-gray-100">
             <div 
               className="flex items-start gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer active:opacity-70 transition-all"
@@ -292,7 +330,7 @@ const IdentityVerification = () => {
                   본인인증 이용약관 및 개인정보 제3자 제공에 동의합니다. (필수)
                 </p>
                 <div className="mt-2 space-y-1">
-                   <p className="text-[11px] text-gray-400 line-clamp-1">V-PASS 서비스 이용약관, 고유식별정보 처리, 통신사 이용약관 동의 등</p>
+                   <p className="text-[11px] text-gray-400 line-clamp-1">SSAP 서비스 이용약관, 고유식별정보 처리, 통신사 이용약관 동의 등</p>
                 </div>
               </div>
             </div>
@@ -350,7 +388,7 @@ const IdentityVerification = () => {
           disabled={isSubmitting || (otpSent ? otp.length !== 6 : !isFormValid)}
           className="btn-primary !rounded-2xl"
         >
-          {isSubmitting ? (otpSent ? '보안 인증 중...' : '인증번호 가공 중...') : (otpSent ? '본인 확인 완료' : 'V-PASS 인증번호 받기')}
+          {isSubmitting ? (otpSent ? '보안 인증 중...' : '인증번호 가공 중...') : (otpSent ? '본인 확인 완료' : 'SSAP 인증번호 받기')}
         </button>
       </div>
     </div>
