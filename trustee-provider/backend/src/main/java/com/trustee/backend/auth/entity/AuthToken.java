@@ -46,6 +46,9 @@ public class AuthToken {
     @Enumerated(EnumType.STRING)
     private AuthStatus status;
 
+    @Column(name = "retry_count")
+    private int retryCount = 0; // 인증 시도 횟수
+
     private LocalDateTime createdAt;
 
     public AuthToken() {
@@ -142,6 +145,18 @@ public class AuthToken {
     
     public void setDi(String di) {
         this.di = di;
+    }
+
+    public int getRetryCount() {
+        return retryCount;
+    }
+
+    public void setRetryCount(int retryCount) {
+        this.retryCount = retryCount;
+    }
+
+    public void incrementRetryCount() {
+        this.retryCount++;
     }
 
     public String getResidentFront() {

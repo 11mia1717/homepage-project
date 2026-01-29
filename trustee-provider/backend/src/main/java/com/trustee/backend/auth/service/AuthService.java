@@ -105,7 +105,28 @@ public class AuthService {
     public AuthStatusResponse getAuthStatus(UUID tokenId) {
         AuthToken authToken = authTokenRepository.findById(tokenId)
                 .orElseThrow(() -> new IllegalArgumentException("AuthToken not found with id: " + tokenId));
-        return new AuthStatusResponse(authToken.getTokenId(), authToken.getStatus(), authToken.getName());
+        
+        String name = authToken.getName();
+        String phone = authToken.getClientData();
+        
+        // [보안] 데이터가 암호화된 상태라면 상태(status)와 관계없이 무조건 복호화 시도하여 평문 보장
+        try {
+            if (name != null && name.length() > 15) { 
+                String decrypted = CryptoUtils.decryptAES256(name);
+                System.out.println("[TRUSTEE-DEBUG] getAuthStatus DECRYPT Name: " + name.substring(0, Math.min(10, name.length())) + "... -> " + decrypted);
+                name = decrypted;
+            }
+            if (phone != null && phone.length() > 15) {
+                String decrypted = CryptoUtils.decryptAES256(phone);
+                System.out.println("[TRUSTEE-DEBUG] getAuthStatus DECRYPT Phone: " + phone.substring(0, Math.min(10, phone.length())) + "... -> " + decrypted);
+                phone = decrypted;
+            }
+        } catch (Exception e) {
+            // 복호화 실패 시 원본 데이터(평문일 가능성 높음) 유지
+            System.err.println("[TRUSTEE-ERROR] getAuthStatus Decryption failed: " + e.getMessage() + " (Raw Name: " + (name != null && name.length() > 20 ? name.substring(0, 20) + "..." : name) + ")");
+        }
+        
+        return new AuthStatusResponse(authToken.getTokenId(), authToken.getStatus(), name, formatPhoneNumberWithHyphens(phone));
     }
 
     @Transactional
@@ -136,25 +157,50 @@ public class AuthService {
                     org.springframework.http.HttpStatus.GONE, "인증 유효 시간이 만료되었습니다. 다시 시작해 주세요.");
         }
 
+        // [보안] 인증 시도 횟수 제한 (5회)
+        if (authToken.getRetryCount() >= 5) {
+            System.err.println("[TRUSTEE-ERROR] Retry Limit Exceeded: " + requestedTokenId);
+            authToken.setStatus(AuthStatus.EXPIRED);
+            authTokenRepository.save(authToken);
+            throw new org.springframework.web.server.ResponseStatusException(
+                    org.springframework.http.HttpStatus.TOO_MANY_REQUESTS, "인증 시도 횟수(5회)를 초과하였습니다. 처음부터 다시 시작해 주세요.");
+        }
+
         String storedOtp = authToken.getOtp().trim();
         String sentOtp = requestedOtp.trim();
 
         System.out.println("[TRUSTEE-DEBUG] Comparing OTPs - Stored: [" + storedOtp + "], Received: [" + sentOtp + "]");
 
         if (!storedOtp.equals(sentOtp)) {
+            authToken.incrementRetryCount();
+            authTokenRepository.save(authToken);
+            
             System.err.println("[TRUSTEE-DEBUG] MISMATH !! Stored: [" + storedOtp + "] != Received: [" + sentOtp + "]");
+            int remaining = 5 - authToken.getRetryCount();
             throw new org.springframework.web.server.ResponseStatusException(
-                    org.springframework.http.HttpStatus.BAD_REQUEST, "인증번호가 일치하지 않습니다. (입력값: " + sentOtp + ")");
+                    org.springframework.http.HttpStatus.UNAUTHORIZED, "인증번호가 일치하지 않습니다. (남은 횟수: " + remaining + "회)");
         }
 
-        // [핵심] 인증번호가 맞더라도, 실제 통신사 정보와 일치하는지 최종 단계에서 검증
+        // [핵심] 이미 완료된 경우 중복 암호화 방지
+        if (authToken.getStatus() == AuthStatus.COMPLETED || authToken.getStatus() == AuthStatus.USED) {
+            System.out.println("[TRUSTEE-DEBUG] Already COMPLETED/USED. Skipping re-encryption.");
+            return;
+        }
+
+        System.out.println("[TRUSTEE-DEBUG] OTP Match SUCCESS. Generating CI/DI and Encrypting...");
         String cleanPhone = authToken.getClientData().replaceAll("\\D", "").trim();
+
+        // [핵심] 인증번호가 맞더라도, 실제 통신사 정보와 일치하는지 최종 단계에서 검증
         if (!mockCarrierDatabase.verifyIdentity(cleanPhone, authToken.getName(), authToken.getCarrier(), authToken.getResidentFront())) {
+            authToken.incrementRetryCount();
+            authTokenRepository.save(authToken);
+            
             System.err
                     .println("[TRUSTEE-ERROR] Identity Disclosure Mismatch at FINAL step for: " + authToken.getName()
                             + " (" + authToken.getCarrier() + ")");
+            int remaining = 5 - authToken.getRetryCount();
             throw new org.springframework.web.server.ResponseStatusException(
-                    org.springframework.http.HttpStatus.FORBIDDEN, "정보 불일치: 입력하신 정보와 통신사 명의 정보가 일치하지 않습니다.");
+                    org.springframework.http.HttpStatus.FORBIDDEN, "정보 불일치: 입력하신 정보와 통신사 명의 정보가 일치하지 않습니다. (남은 횟수: " + remaining + "회)");
         }
 
         // [COMPLIANCE] CI/DI 생성
@@ -245,21 +291,26 @@ public class AuthService {
         String decryptedName = authToken.getName();
         String decryptedPhone = authToken.getClientData();
         
-        // COMPLETED 상태인 경우에만 복호화 시도
-        if (authToken.getStatus() == AuthStatus.COMPLETED && authToken.getCi() != null) {
+        // COMPLETED 또는 USED 상태인 경우 복호화 시도
+        if ((authToken.getStatus() == AuthStatus.COMPLETED || authToken.getStatus() == AuthStatus.USED) 
+            && authToken.getCi() != null) {
             try {
-                decryptedName = CryptoUtils.decryptAES256(authToken.getName());
-                decryptedPhone = CryptoUtils.decryptAES256(authToken.getClientData());
+                System.out.println("[TRUSTEE-DEBUG] verifyToken - Decrypting Name: [" + decryptedName + "]");
+                if (decryptedName != null && decryptedName.length() > 10) {
+                    decryptedName = CryptoUtils.decryptAES256(decryptedName);
+                }
+                if (decryptedPhone != null && decryptedPhone.length() > 10) {
+                    decryptedPhone = CryptoUtils.decryptAES256(decryptedPhone);
+                }
             } catch (Exception e) {
-                // 복호화 실패 시 원본 반환 (하위 호환성)
-                System.err.println("[COMPLIANCE] Decryption failed, using raw data");
+                System.err.println("[COMPLIANCE] verifyToken Decryption failed: " + e.getMessage());
             }
         }
 
         return new AuthVerificationResponse(
                 authToken.getStatus(),
                 decryptedName,
-                decryptedPhone,
+                formatPhoneNumberWithHyphens(decryptedPhone),
                 authToken.getCi(),
                 authToken.getDi());
     }
@@ -323,11 +374,16 @@ public class AuthService {
         
         try {
             if (authToken.getCi() != null) {
-                decryptedName = CryptoUtils.decryptAES256(authToken.getName());
-                decryptedPhone = CryptoUtils.decryptAES256(authToken.getClientData());
+                System.out.println("[TRUSTEE-DEBUG] consumeToken - Decrypting Name: [" + decryptedName + "]");
+                if (decryptedName != null && decryptedName.length() > 10) {
+                    decryptedName = CryptoUtils.decryptAES256(decryptedName);
+                }
+                if (decryptedPhone != null && decryptedPhone.length() > 10) {
+                    decryptedPhone = CryptoUtils.decryptAES256(decryptedPhone);
+                }
             }
         } catch (Exception e) {
-            System.err.println("[COMPLIANCE] Decryption failed, using raw data");
+            System.err.println("[COMPLIANCE] Decryption failed in consumeToken, using raw data: " + e.getMessage());
         }
         
         // [핵심] 토큰 상태를 USED로 변경 (일회성 보장)
@@ -344,11 +400,34 @@ public class AuthService {
         return new AuthVerificationResponse(
                 AuthStatus.USED,  // 소비된 상태로 반환
                 decryptedName,
-                decryptedPhone,
+                formatPhoneNumberWithHyphens(decryptedPhone),
                 authToken.getCi(),
                 authToken.getDi());
     }
     
+    /**
+     * [보안] 데이터 암호화 여부 체크 (Base64 형식 및 길이 기반)
+     */
+    private boolean isEncrypted(String text) {
+        if (text == null) return false;
+        // AES-256 Base64 결과물은 보통 24자 이상 (padding 포함)
+        return text.length() >= 24 && !text.contains(" ") && !text.contains("-");
+    }
+
+    /**
+     * [개인정보보호] 전화번호 하이픈 포맷팅 (01012345678 -> 010-1234-5678)
+     */
+    private String formatPhoneNumberWithHyphens(String phone) {
+        if (phone == null) return null;
+        String digits = phone.replaceAll("\\D", "");
+        if (digits.length() == 11) {
+            return digits.substring(0, 3) + "-" + digits.substring(3, 7) + "-" + digits.substring(7);
+        } else if (digits.length() == 10) {
+            return digits.substring(0, 3) + "-" + digits.substring(3, 6) + "-" + digits.substring(6);
+        }
+        return digits;
+    }
+
     /**
      * [개인정보보호] 전화번호 마스킹
      */

@@ -31,10 +31,12 @@ public class UserService {
 
     @Transactional
     public User registerUser(RegisterRequest request) {
+        System.out.println("[ENTRUSTING-DEBUG] registerUser called for: " + request.getUsername());
         // [COMPLIANCE] 약관 동의 검증
-        if (request.getTermsAgreement() == null || !request.getTermsAgreement().isAllRequiredAgreed()) {
-            throw new IllegalArgumentException("필수 약관에 모두 동의해야 합니다.");
-        }
+        // [COMPLIANCE] 약관 동의 검증 제거 (사용자 요청)
+        // if (request.getTermsAgreement() == null || !request.getTermsAgreement().isAllRequiredAgreed()) {
+        //     throw new IllegalArgumentException("필수 약관에 모두 동의해야 합니다.");
+        // }
         
         String phone = normalizePhone(request.getPhoneNumber());
         if (userRepository.findByUsername(request.getUsername()).isPresent()) {

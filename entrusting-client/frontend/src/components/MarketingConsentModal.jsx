@@ -94,7 +94,7 @@ const MarketingConsentModal = ({ isOpen, onClose, onConfirm }) => {
               <span className="text-[12px] font-bold text-gray-500">2026 개인정보 처리 위탁 고지</span>
             </div>
             <ul className="text-[11px] text-gray-400 space-y-1.5 leading-relaxed font-medium">
-              <li>• 수탁사: Continue TM센터 (제공 목적: 루키즈 카드 상담)</li>
+              <li>• 수탁사: Continue TM센터 (제공 목적: Continue 카드 상담)</li>
               <li>• 수집 항목: 이름, 휴대전화번호 (CI 데이터는 가명처리)</li>
               <li>• 보유 기간: 상담 완료 후 3개월 (이후 즉시 파기)</li>
               <li>• 동의를 거부할 수 있으며, 거부 시 이벤트 참여가 제한됩니다.</li>

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * S2S (Server-to-Server) API for Call Center integration.
@@ -127,5 +128,45 @@ public class S2SCustomerController {
             return normalized.substring(0, 3) + "-***-" + normalized.substring(6);
         }
         return "***-****-****";
+    }
+    /**
+     * Get marketing consented users for Outbound (TM).
+     * [COMPLIANCE] S2S only.
+     */
+    @PostMapping("/marketing-consented")
+    public ResponseEntity<?> getMarketingConsentedUsers(
+            @RequestHeader(value = "X-Service-Token", required = false) String serviceToken) {
+
+        if (serviceToken == null || !VALID_S2S_TOKEN.equals(serviceToken)) {
+            return ResponseEntity.status(403).body(Map.of("error", "INVALID_TOKEN"));
+        }
+
+        List<Map<String, Object>> candidates = userRepository.findByMarketingAgreedTrue().stream()
+                .map(user -> {
+                    String decryptedName = EncryptionUtils.decrypt(user.getName());
+                    String decryptedPhone = EncryptionUtils.decrypt(user.getPhoneNumber());
+
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("customerRef", "CU" + user.getId());
+                    map.put("name", maskName(decryptedName));
+                    map.put("phone", maskPhone(decryptedPhone));
+                    map.put("marketingAgreedAt", user.getTermsAgreedAt()); // roughly
+                    return map;
+                })
+                .collect(Collectors.toList());
+
+        accessLogRepository.save(new AccessLog(
+                0L, // System
+                "CALLCENTER",
+                "callcenter-was",
+                "BATCH_RETRIEVE",
+                "마케팅 동의 고객 목록 조회 (Outbound)",
+                "S2S-API"
+        ));
+
+        return ResponseEntity.ok(Map.of(
+            "count", candidates.size(),
+            "candidates", candidates
+        ));
     }
 }

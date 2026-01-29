@@ -16,7 +16,8 @@ import {
   Home,
   Gift,
   LayoutGrid,
-  Menu
+  Menu,
+  AlertCircle
 } from 'lucide-react';
 
 const Dashboard = () => {
@@ -79,7 +80,7 @@ const Dashboard = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           username,
-          productName: '루키즈 카드',
+          productName: 'Continue 카드',
           consentType: '3RD_PARTY_TM'
         })
       });
@@ -134,7 +135,7 @@ const Dashboard = () => {
             <div className="relative z-10">
               <div className="bg-amber-400 text-blue-900 text-[10px] font-black px-2 py-0.5 rounded-md inline-block mb-3 uppercase tracking-tighter shadow-sm">EVENT</div>
               <h3 className="text-[19px] font-bold leading-tight mb-1">마케팅 동의하고 스타벅스 받기 🎁</h3>
-              <p className="text-blue-100/90 text-[12px] font-medium leading-relaxed">루키즈 카드 상담 시 커피 쿠폰 증정!</p>
+              <p className="text-blue-100/90 text-[12px] font-medium leading-relaxed">Continue 카드 상담 시 커피 쿠폰 증정!</p>
               
               <div className="mt-5 flex items-center gap-1 text-[11px] text-blue-200/80 font-bold">
                 <AlertCircle size={12} />

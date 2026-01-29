@@ -15,16 +15,13 @@ public class UserController {
 
     private final UserService userService;
     private final S2SAuthService s2sAuthService;
-    private final org.springframework.web.client.RestTemplate restTemplate;
 
     @org.springframework.beans.factory.annotation.Value("${trustee.api.base-url}")
     private String trusteeApiBaseUrl;
 
-    public UserController(UserService userService, S2SAuthService s2sAuthService,
-            org.springframework.web.client.RestTemplate restTemplate) {
+    public UserController(UserService userService, S2SAuthService s2sAuthService) {
         this.userService = userService;
         this.s2sAuthService = s2sAuthService;
-        this.restTemplate = restTemplate;
     }
 
     /**
@@ -45,6 +42,11 @@ public class UserController {
             if (tokenId == null || tokenId.isEmpty()) {
                 throw new IllegalArgumentException("본인인증 토큰이 누락되었습니다. 다시 시도해 주세요.");
             }
+
+            // [1.5] 약관 동의 여부 선검증 제거 (사용자 요청)
+            // if (request.getTermsAgreement() == null || !request.getTermsAgreement().isAllRequiredAgreed()) {
+            //    throw new IllegalArgumentException("필수 약관에 모두 동의해야 합니다.");
+            // }
 
             // [2] S2S 토큰 소비 (일회성 사용)
             // consume API는 토큰을 USED 상태로 변경하여 재사용 방지
@@ -109,8 +111,9 @@ public class UserController {
             java.util.Map<String, String> response = new java.util.HashMap<>();
             response.put("status", "success");
             response.put("username", user.getUsername());
-            response.put("name", user.getName());
-            response.put("phoneNumber", user.getPhoneNumber());
+            // [Fix] Decrypt sensitive data before sending to frontend
+            response.put("name", com.entrusting.backend.util.EncryptionUtils.decrypt(user.getName()));
+            response.put("phoneNumber", com.entrusting.backend.util.EncryptionUtils.decrypt(user.getPhoneNumber()));
             return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -123,21 +126,13 @@ public class UserController {
                 + ", Token: " + request.getTokenId());
         java.util.Map<String, String> response = new java.util.HashMap<>();
         try {
-            // [보안 강화] 수탁사 서버에 직접 토큰 상태 확인 (중앙 설정값 사용)
-            String trusteeUrl = trusteeApiBaseUrl + "/api/v1/auth/status/" + request.getTokenId();
-
-            java.util.Map statusResponse = null;
-            try {
-                statusResponse = restTemplate.getForObject(trusteeUrl, java.util.Map.class);
-                System.out.println("[ENTRUSTING-DEBUG] Trustee Response: " + statusResponse);
-
-                if (statusResponse == null || !"COMPLETED".equals(statusResponse.get("status"))) {
-                    throw new Exception("인증이 완료되지 않았거나 토큰이 유효하지 않습니다. (Status: " +
-                            (statusResponse != null ? statusResponse.get("status") : "null") + ")");
-                }
-            } catch (Exception e) {
-                System.err.println("[ENTRUSTING-DEBUG] Trustee Connection Error: " + e.getMessage());
-                throw new Exception("수탁사 인증 서버 연결 실패: " + e.getMessage());
+            // [보안 강화] S2SAuthService를 사용하여 수탁사 서버에 토큰 상태 확인
+            java.util.Map<String, Object> statusResponse = s2sAuthService.verifyTokenWithTrustee(String.valueOf(request.getTokenId()));
+            
+            if (statusResponse == null || !"COMPLETED".equals(String.valueOf(statusResponse.get("status")))) {
+                System.err.println("[ENTRUSTING-DEBUG] Verification Incomplete - Status: " + 
+                                 (statusResponse != null ? statusResponse.get("status") : "null"));
+                throw new Exception("인증이 완료되지 않았거나 토큰이 유효하지 않습니다.");
             }
 
             userService.updateUserVerifiedStatus(request.getPhoneNumber(), true);
@@ -145,8 +140,8 @@ public class UserController {
             response.put("status", "success");
             response.put("message", "verified successfully");
 
-            // [수정] 수탁사에서 받은 실제 이름을 사용 (홍길동 하드코딩 제거)
-            String verifiedName = (statusResponse != null) ? (String) statusResponse.get("name") : null;
+            // 수탁사에서 받은 실제 이름을 사용
+            String verifiedName = (String) statusResponse.get("name");
             response.put("name", verifiedName != null ? verifiedName : "인증완료");
 
             return org.springframework.http.ResponseEntity.ok(response);

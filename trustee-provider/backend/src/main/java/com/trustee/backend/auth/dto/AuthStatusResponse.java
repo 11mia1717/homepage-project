@@ -7,11 +7,13 @@ public class AuthStatusResponse {
     private UUID tokenId;
     private AuthStatus status;
     private String name;
+    private String phoneNumber;
 
-    public AuthStatusResponse(UUID tokenId, AuthStatus status, String name) {
+    public AuthStatusResponse(UUID tokenId, AuthStatus status, String name, String phoneNumber) {
         this.tokenId = tokenId;
         this.status = status;
         this.name = name;
+        this.phoneNumber = phoneNumber;
     }
 
     public UUID getTokenId() {
@@ -36,5 +38,13 @@ public class AuthStatusResponse {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

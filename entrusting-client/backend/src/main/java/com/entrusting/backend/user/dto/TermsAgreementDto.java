@@ -7,17 +7,36 @@ public class TermsAgreementDto {
     private Map<String, Boolean> marketingChannels;
 
     public boolean isAllRequiredAgreed() {
-        if (agreements == null) return false;
-        // [COMPLIANCE] 금융권 필수 약관 9종 검증
-        return agreements.getOrDefault("age", false) &&             // 만 14세 이상
-               agreements.getOrDefault("terms", false) &&           // 서비스 이용약관
-               agreements.getOrDefault("privacy", false) &&         // 개인정보 수집·이용
-               agreements.getOrDefault("uniqueId", false) &&        // 고유식별정보 처리
-               agreements.getOrDefault("creditInfo", false) &&      // 신용정보 조회·제공
-               agreements.getOrDefault("carrierAuth", false) &&     // V-pass 서비스 이용
-               agreements.getOrDefault("vpassProvision", false) &&  // V-pass 정보 제공
-               agreements.getOrDefault("electronicFinance", false) && // 전자금융거래 기본
-               agreements.getOrDefault("monitoring", false);        // 거래 모니터링/AML
+        if (agreements == null) {
+            System.err.println("[ENTRUSTING-DEBUG] Agreements Map is NULL");
+            return false;
+        }
+        System.out.println("[ENTRUSTING-DEBUG] Agreements Map: " + agreements);
+
+        boolean age = agreements.getOrDefault("age", false);
+        boolean terms = agreements.getOrDefault("terms", false);
+        boolean privacy = agreements.getOrDefault("privacy", false);
+        boolean uniqueId = agreements.getOrDefault("uniqueId", false);
+        boolean creditInfo = agreements.getOrDefault("creditInfo", false);
+        boolean carrierAuth = agreements.getOrDefault("carrierAuth", false);
+        boolean ssapProvision = agreements.getOrDefault("ssapProvision", false);
+        boolean electronicFinance = agreements.getOrDefault("electronicFinance", false);
+        boolean monitoring = agreements.getOrDefault("monitoring", false);
+
+        if (!age || !terms || !privacy || !uniqueId || !creditInfo || !carrierAuth || !ssapProvision || !electronicFinance || !monitoring) {
+            System.err.println("[ENTRUSTING-DEBUG] Validation FAILED - Missing fields:");
+            if (!age) System.err.println(" - age is false/missing");
+            if (!terms) System.err.println(" - terms is false/missing");
+            if (!privacy) System.err.println(" - privacy is false/missing");
+            if (!uniqueId) System.err.println(" - uniqueId is false/missing");
+            if (!creditInfo) System.err.println(" - creditInfo is false/missing");
+            if (!carrierAuth) System.err.println(" - carrierAuth is false/missing");
+            if (!ssapProvision) System.err.println(" - ssapProvision is false/missing");
+            if (!electronicFinance) System.err.println(" - electronicFinance is false/missing");
+            if (!monitoring) System.err.println(" - monitoring is false/missing");
+            return false;
+        }
+        return true;
     }
 
     public Map<String, Boolean> getAgreements() {

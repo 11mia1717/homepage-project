@@ -147,9 +147,8 @@ const IdentityVerification = () => {
 
         if (redirectUrl) {
           const finalUrl = new URL(redirectUrl);
-          const cleanPhone = phoneNumber.replace(/\D/g, '');
           finalUrl.searchParams.set('tokenId', tokenId || '');
-          finalUrl.searchParams.set('phoneNumber', cleanPhone);
+          finalUrl.searchParams.set('phoneNumber', phoneNumber); // 하이픈 포함된 상태로 전달
           finalUrl.searchParams.set('name', name);
           finalUrl.searchParams.set('verified', 'true'); // [핵심] 인증 완료 파라미터 추가
           window.location.href = finalUrl.toString();
