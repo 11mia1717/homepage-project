@@ -231,21 +231,6 @@ const Register = () => {
             />
           </div>
 
-          {/* [COMPLIANCE] V-PASS 데이터 전송 고지 */}
-          {!isVerified && (
-            <div className="p-4 bg-amber-50/50 border border-amber-200 rounded-2xl">
-              <p className="text-[12px] font-bold text-gray-700 mb-2">
-                ※ 본인인증 시 다음 정보가 V-pass로 전송됩니다:
-              </p>
-              <p className="text-[12px] text-gray-600 font-medium leading-relaxed ml-4">
-                이름, 휴대폰번호
-              </p>
-              <p className="text-[11px] text-gray-500 font-medium mt-2 leading-relaxed">
-                (본인인증 목적으로만 사용되며, 다른 용도로는 절대 사용되지 않습니다)
-              </p>
-            </div>
-          )}
-
           {/* 휴대폰 번호 & 본인인증 */}
           <div>
             <label className="input-label">휴대폰 번호</label>
@@ -275,6 +260,21 @@ const Register = () => {
                 </button>
               )}
             </div>
+            
+            {/* [COMPLIANCE] V-PASS 데이터 전송 고지 (위치 이동됨) */}
+            {!isVerified && (
+              <div className="mt-3 p-4 bg-amber-50/50 border border-amber-200 rounded-2xl animate-in fade-in slide-in-from-top-2 duration-300">
+                <p className="text-[12px] font-bold text-gray-700 mb-2">
+                  ※ 본인인증 시 다음 정보가 V-pass로 전송됩니다:
+                </p>
+                <p className="text-[12px] text-gray-600 font-medium leading-relaxed ml-4">
+                  이름, 휴대폰번호
+                </p>
+                <p className="text-[11px] text-gray-500 font-medium mt-2 leading-relaxed">
+                  (본인인증 목적으로만 사용되며, 다른 용도로는 절대 사용되지 않습니다)
+                </p>
+              </div>
+            )}
           </div>
 
           {/* 아이디 */}

@@ -32,7 +32,11 @@ public class DataInitializer implements CommandLineRunner {
                 new CarrierUser("김유진", "01092877379", "LGU+"),
                 new CarrierUser("장민아", "01049328977", "SKT"),
                 new CarrierUser("이승원", "01092128221", "KT"),
-                new CarrierUser("홍길동", "01000000000", "SKT")
+                new CarrierUser("홍길동", "01000000000", "SKT"),
+                // Requested Dummy Data
+                new CarrierUser("홍길순", "01000000001", "SKT"),
+                new CarrierUser("고길동", "01000000002", "SKT"),
+                new CarrierUser("차은우", "01011111111", "SKT")
             );
 
             carrierUserRepository.saveAll(initialUsers);

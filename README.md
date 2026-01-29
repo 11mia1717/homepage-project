@@ -146,9 +146,9 @@ TM 센터 상담 예약 플로우:
 ### Infrastructure
 - **Database**: MySQL (Port 3306)
 - **Backend Ports**:
-  - 위탁사: 8080
+  - 위탁사: 8085
   - V-PASS: 8086
-  - TM 센터: 8082
+  - TM 센터: 8080
 - **Frontend Ports**:
   - 위탁사: 5175
   - V-PASS: 5176

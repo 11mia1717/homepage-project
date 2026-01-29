@@ -10,8 +10,6 @@ import java.util.UUID;
 @RequestMapping("/api/v1/compliance")
 public class ComplianceController {
 
-    public ComplianceController() {
-    }
 
     @PostMapping("/marketing-consent")
     public Map<String, Object> registerMarketingConsent(@RequestBody Map<String, String> request) {
@@ -31,4 +29,26 @@ public class ComplianceController {
             "message", "마케팅 활용 동의가 성공적으로 기록되었습니다. (보유기한: 3개월)"
         );
     }
+
+    private final com.entrusting.backend.user.repository.UserRepository userRepository;
+
+    @org.springframework.beans.factory.annotation.Autowired
+    public ComplianceController(com.entrusting.backend.user.repository.UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    @GetMapping("/marketing-consented-users")
+    public java.util.List<Map<String, Object>> getMarketingConsentedUsers() {
+        return userRepository.findByMarketingAgreedTrue().stream()
+            .map(user -> Map.<String, Object>of(
+                "id", user.getId(),
+                "name", user.getName(),
+                "phone", user.getPhoneNumber(),
+                "type", "신용카드 권유",
+                "purpose", "상품 소개 및 권유",
+                "retentionUntil", LocalDate.now().plusMonths(3).toString()
+            ))
+            .collect(java.util.stream.Collectors.toList());
+    }
+
 }
