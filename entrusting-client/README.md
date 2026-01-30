@@ -1,471 +1,180 @@
 # Continue Bank (위탁사) - 기술 문서
 
 ## 📋 목차
-- [서비스 개요](#-서비스-개요)
-- [데이터베이스 구조](#-데이터베이스-구조)
-- [개인정보 처리 흐름](#-개인정보-처리-흐름)
-- [API 엔드포인트](#-api-엔드포인트)
-- [주요 기능](#-주요-기능)
-- [보안 구현](#-보안-구현)
+- [서비스 개요](#🎯-서비스-개요)
+- [데이터베이스 구조](#🗄-데이터베이스-구조)
+- [개인정보 처리 흐름](#🔄-개인정보-처리-흐름)
+- [API 명세서](#📡-api-엔드포인트)
+- [주요 기능](#🔑-주요-기능)
+- [보안 구현](#🔐-보안-구현)
+- [환경 설정](#📝-환경-변수)
+
+---
 
 ## 🎯 서비스 개요
 
-Continue Bank는 V-PASS 본인인증을 활용한 디지털 뱅킹 서비스의 위탁사입니다.
+Continue Bank는 SSAP 본인인증을 활용한 디지털 뱅킹 서비스의 위탁사입니다.
 
 ### 핵심 역할
 - 사용자 회원가입 및 인증 관리
-- 금융 서비스 제공 (계좌 개설, 거래 등)
-- 금융 컴플라이언스 준수 (약관 동의 관리)
-- V-PASS 및 TM 센터와의 연동
+- 금융 서비스 제공 (계좌 개설, 잔액 관리 등)
+- 금융 컴플라이언스 준수 (약관 동의 관리 및 감사 로그)
+- SSAP 및 TM 센터와의 실시간 데이터 연동
 
 ### 서비스 포트
-- **Backend**: 8080
-- **Frontend**: 5175
+- **백엔드 (Backend)**: 8085
+- **프론트엔드 (Frontend)**: 5175
+
+---
 
 ## 🗄 데이터베이스 구조
 
-### ERD (Entity Relationship Diagram)
+### ERD (개체 관계도)
 
-```
+```text
 ┌─────────────────────────────────────┐
 │            users 테이블              │
 ├─────────────────────────────────────┤
 │ id (PK)                    BIGINT   │
 │ username                   VARCHAR  │ ← 로그인 ID
 │ password                   VARCHAR  │ ← 암호화된 비밀번호
-│ name                       VARCHAR  │
-│ phone_number               VARCHAR  │
-│ ci                         VARCHAR  │ ← V-PASS에서 받은 CI
+│ name                       VARCHAR  │ ← AES-256 암호화 성명
+│ phone_number               VARCHAR  │ ← AES-256 암호화 연락처
+│ ci                         VARCHAR  │ ← 연계정보 (Connecting Info)
 │ created_at                 DATETIME │
 │                                     │
-│ ─── 약관 동의 정보 (9개 필수) ───    │
-│ age_agreed                 BOOLEAN  │ ← 만 14세 이상
-│ terms_agreed               BOOLEAN  │ ← 서비스 이용약관
-│ privacy_agreed             BOOLEAN  │ ← 개인정보 수집·이용
-│ unique_id_agreed           BOOLEAN  │ ← 고유식별정보 처리
-│ credit_info_agreed         BOOLEAN  │ ← 신용정보 조회·제공
-│ carrier_auth_agreed        BOOLEAN  │ ← V-pass 본인인증 이용
-│ vpass_provision_agreed     BOOLEAN  │ ← V-pass 데이터 제공
-│ electronic_finance_agreed  BOOLEAN  │ ← 전자금융거래 약관
-│ monitoring_agreed          BOOLEAN  │ ← 거래 모니터링/AML
+│ ─── 약관 동의 상태 (9개 필수) ───    │
+│ age_agreed                 BOOLEAN  │ ← 만 14세 이상 확인
+│ terms_agreed               BOOLEAN  │ ← 서비스 이용약관 동의
+│ privacy_agreed             BOOLEAN  │ ← 개인정보 수집·이용 동의
+│ unique_id_agreed           BOOLEAN  │ ← 고유식별정보 처리 동의
+│ credit_info_agreed         BOOLEAN  │ ← 신용정보 조회·제공 동의
+│ carrier_auth_agreed        BOOLEAN  │ ← 통신사 본인확인 이용 동의
+│ vpass_provision_agreed     BOOLEAN  │ ← 본인인증 데이터 제공 동의
+│ electronic_finance_agreed  BOOLEAN  │ ← 전자금융거래 기본약관
+│ monitoring_agreed          BOOLEAN  │ ← 금융거래 모니터링/AML 동의
 │                                     │
-│ ─── 약관 동의 정보 (선택) ───      │
-│ ssap_provision_agreed      BOOLEAN  │ ← 제휴 TM 센터 제공
-│ third_party_provision_agreed BOOLEAN  │ ← 제3자 정보 제공
-│ marketing_personal_agreed  BOOLEAN  │ ← 개인맞춤형 추천
-│ marketing_agreed           BOOLEAN  │ ← 혜택/이벤트 알림
+│ ─── 약관 동의 상태 (선택 항목) ───   │
+│ ssap_provision_agreed      BOOLEAN  │ ← 제휴 TM 센터 정보 제공
+│ third_party_provision_agreed BOOLEAN  │ ← 제3자 정보 제공 동의
+│ marketing_personal_agreed  BOOLEAN  │ ← 개인맞춤형 상품 추천
+│ marketing_agreed           BOOLEAN  │ ← 마케팅 혜택 알림 전체
 │                                     │
-│ marketing_sms_agreed       BOOLEAN  │ ← SMS 수신 동의
-│ agreed_at                  DATETIME │ ← 약관 동의 시각
+│ marketing_sms_agreed       BOOLEAN  │ ← SMS 광고 수신 동의
+│ agreed_at                  DATETIME │ ← 약찰 동의 발생 시각
 └─────────────────────────────────────┘
                 │
-                │ 1:N
+                │ 1:N (일대다)
                 ▼
 ┌─────────────────────────────────────┐
 │          accounts 테이블             │
 ├─────────────────────────────────────┤
 │ id (PK)                    BIGINT   │
 │ user_id (FK)               BIGINT   │
-│ account_number             VARCHAR  │
-│ balance                    DECIMAL  │
-│ account_type               VARCHAR  │
-│ status                     VARCHAR  │
+│ account_number             VARCHAR  │ ← 고유 계좌 번호
+│ balance                    DECIMAL  │ ← 현재 잔액
+│ account_type               VARCHAR  │ ← 계좌 종류
+│ status                     VARCHAR  │ ← 상태 (ACTIVE, LOST 등)
 │ created_at                 DATETIME │
 └─────────────────────────────────────┘
 ```
 
-### 주요 테이블 설명
+### 주요 테이블 상세
+#### 1. `users` 테이블
+사용자의 기본 정보와 세분화된 약관 동의 내역을 관리합니다.
+- **`ci`**: 수탁사(SSAP)에서 생성한 고유 식별값이며, 개인정보 노출 없는 중복 가입 방지 키로 활용됩니다.
+- **동의 필드**: 2026년 규정에 따라 필수(9종)와 선택(4종 이상) 항목이 물리적으로 분리되어 관리됩니다.
 
-#### 1. users 테이블
-사용자의 기본 정보와 약관 동의 내역을 저장합니다.
-
-**주요 컬럼:**
-- `ci`: V-PASS에서 생성한 Connecting Information (중복 가입 방지)
-- `age_agreed` ~ `monitoring_agreed`: 9개 필수 약관 동의 여부
-- `ssap_provision_agreed`, `third_party_provision_agreed`, `marketing_agreed`: 선택 약관 동의 여부
-- `agreed_at`: 약관 동의 시각 (법적 증거)
-
-#### 2. accounts 테이블
-사용자의 계좌 정보를 저장합니다.
-
-**주요 컬럼:**
-- `user_id`: users 테이블과의 외래키
-- `account_number`: 계좌번호 (자동 생성)
-- `balance`: 잔액
-- `status`: 계좌 상태 (ACTIVE, SUSPENDED, CLOSED)
-
-## 🔄 개인정보 처리 흐름
-
-### 1. 회원가입 플로우
-
-```
-[사용자] → [약관 동의 페이지]
-              │
-              ▼
-        9개 필수 약관 동의
-        2개 선택 약관 동의
-              │
-              ▼
-        [회원가입 페이지]
-              │
-              ├─ 이름 입력
-              ├─ 휴대폰번호 입력
-              │
-              ▼
-        [본인인증 하기] 클릭
-              │
-              ▼
-        ┌─────────────────────┐
-        │ V-PASS로 리다이렉트  │
-        │ (tokenId 전달)      │
-        └─────────────────────┘
-              │
-              ▼
-        V-PASS 본인인증 완료
-        (CI 생성 및 JWT 발급)
-              │
-              ▼
-        Continue Bank로 복귀
-        (tokenId, phoneNumber, name)
-              │
-              ▼
-        [회원가입 페이지]
-              │
-              ├─ 아이디 입력
-              ├─ 비밀번호 입력
-              │
-              ▼
-        [회원가입 완료] 버튼 클릭
-              │
-              ▼
-        POST /api/v1/auth/register
-              │
-              ├─ CI 기반 중복 체크
-              ├─ 비밀번호 암호화
-              ├─ 약관 동의 정보 저장
-              │
-              ▼
-        회원가입 완료 → 로그인 페이지
-```
-
-### 2. 계좌 개설 플로우
-
-```
-[로그인 사용자] → [대시보드]
-                      │
-                      ▼
-                [계좌 개설하기] 클릭
-                      │
-                      ▼
-                [계좌 개설 페이지]
-                      │
-                      ▼
-                [본인인증 하기] 클릭
-                      │
-                      ▼
-                ┌─────────────────────┐
-                │ V-PASS로 리다이렉트  │
-                │ (재인증)            │
-                └─────────────────────┘
-                      │
-                      ▼
-                V-PASS 본인인증 완료
-                      │
-                      ▼
-                Continue Bank로 복귀
-                      │
-                      ▼
-                POST /api/v1/accounts/create
-                      │
-                      ├─ 계좌번호 자동 생성
-                      ├─ 초기 잔액 설정
-                      ├─ 계좌 상태: ACTIVE
-                      │
-                      ▼
-                계좌 개설 완료 → 대시보드
-```
-
-### 3. 개인정보 전송 (V-PASS)
-
-**전송 시점:**
-- 회원가입 시 본인인증
-- 계좌 개설 시 본인인증
-- 아이디 찾기
-- 비밀번호 재설정
-
-**전송 데이터:**
-```json
-{
-  "clientData": "01012345678",  // 휴대폰번호 (암호화 전)
-  "name": "홍길동"               // 이름 (암호화 전)
-}
-```
-
-**수신 데이터:**
-```json
-{
-  "tokenId": "uuid-generated-token",
-  "ci": "encrypted-ci-value",
-  "jwt": "jwt-token"
-}
-```
-
-## 📡 API 엔드포인트
-
-### 인증 관련
-
-#### POST /api/v1/auth/register
-회원가입
-
-**Request Body:**
-```json
-{
-  "name": "홍길동",
-  "username": "user123",
-  "password": "Password123!",
-  "phoneNumber": "01012345678",
-  "tokenId": "uuid-from-vpass",
-  "termsAgreement": {
-    "agreements": {
-      "age": true,
-      "terms": true,
-      "privacy": true,
-      "uniqueId": true,
-      "creditInfo": true,
-      "carrierAuth": true,
-      "vpassProvision": true,
-      "electronicFinance": true,
-      "monitoring": true,
-      "marketingPersonal": false,
-      "marketing": true
-    }
-  }
-}
-```
-
-**Response:** `200 OK` or `400 Bad Request`
-
-#### POST /api/v1/auth/login
-로그인
-
-**Request Body:**
-```json
-{
-  "username": "user123",
-  "password": "Password123!"
-}
-```
-
-**Response:**
-```json
-{
-  "id": 1,
-  "username": "user123",
-  "name": "홍길동",
-  "phoneNumber": "01012345678",
-  "joinedAt": "2026-01-28T14:30:00"
-}
-```
-
-#### GET /api/v1/auth/find-id
-아이디 찾기
-
-**Query Parameters:**
-- `phoneNumber`: 휴대폰번호
-- `name`: 이름
-
-**Response:** `user123` (마스킹: `us***`)
-
-#### POST /api/v1/auth/reset-password
-비밀번호 재설정
-
-**Query Parameters:**
-- `username`: 아이디
-- `newPassword`: 새 비밀번호
-- `phoneNumber`: 휴대폰번호
-- `name`: 이름
-
-**Response:** `200 OK`
-
-### 계좌 관련
-
-#### POST /api/v1/accounts/create
-계좌 개설
-
-**Request Body:**
-```json
-{
-  "userId": 1,
-  "accountType": "SAVINGS"
-}
-```
-
-**Response:**
-```json
-{
-  "id": 1,
-  "accountNumber": "110-123-456789",
-  "balance": 0,
-  "accountType": "SAVINGS",
-  "status": "ACTIVE",
-  "createdAt": "2026-01-28T15:00:00"
-}
-```
-
-#### GET /api/v1/accounts/user/{userId}
-사용자 계좌 조회
-
-**Response:**
-```json
-[
-  {
-    "id": 1,
-    "accountNumber": "110-123-456789",
-    "balance": 1000000,
-    "accountType": "SAVINGS",
-    "status": "ACTIVE"
-  }
-]
-```
-
-## 🔑 주요 기능
-
-### 1. 약관 동의 관리
-
-**필수 약관 (9개):**
-1. 만 14세 이상 확인
-2. 서비스 이용약관
-3. 개인정보 수집 및 이용
-4. 고유식별정보 처리
-5. 신용정보 조회 및 제공
-6. V-pass 본인인증 이용
-7. 개인정보의 V-pass 제공
-8. 전자금융거래 기본약관
-9. 금융거래 정보 모니터링
-
-**선택 약관:**
-1. 제휴 TM 센터(Continue Call) 연락처 제공
-2. 제3자 정보 제공 동의
-3. 개인맞춤형 금융상품 추천
-4. 혜택 및 이벤트 소식
-
-**마이페이지 동의 관리:**
-- 혜택/이벤트 알림, 제휴 TM 제공, 제3자 제공 등 각 항목별 실시간 On/Off 기능
-- 동의 철회 시 즉시 DB 반영 및 감사 로그 기록
-
-**스타벅스 이벤트 (마케팅 활용 동의):**
-- 대시보드 배너를 통한 신규 혜택 안내
-- 참여 시 '제휴 TM 센터 연락처 제공' 항목 정밀 타겟 업데이트 로직 적용
-- 쿠폰 증정과 동시에 DB 동의 상태 실시간 동기화
-
-### 2. V-PASS 연동
-
-**연동 시나리오:**
-1. 위탁사에서 `/trustee-api/v1/auth/init` 호출
-2. V-PASS에서 `tokenId` 생성 및 반환
-3. V-PASS 인증 페이지로 리다이렉트 (tokenId, name, phoneNumber 전달)
-4. 사용자 본인인증 완료
-5. 위탁사로 리다이렉트 (verified=true, tokenId, phoneNumber, name)
-6. 위탁사에서 회원가입/계좌개설 처리
-
-### 3. 보안 기능
-
-**비밀번호 정책:**
-- 최소 8자 이상
-- 영문, 숫자, 특수문자 조합 권장
-
-**세션 관리:**
-- 로그인 시 사용자 정보 sessionStorage 저장
-- 로그아웃 시 세션 정보 삭제
-
-**중복 가입 방지:**
-- CI (Connecting Information) 기반 중복 체크
-- 동일 CI로 재가입 불가
-
-## 🔐 보안 구현
-
-### 1. 비밀번호 암호화
-- **알고리즘**: BCrypt
-- **처리**: Spring Security PasswordEncoder 사용
-
-### 2. CORS 설정
-```java
-@Configuration
-public class WebConfig {
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                    .allowedOrigins("http://localhost:5175", "http://localhost:5176")
-                    .allowedMethods("GET", "POST", "PUT", "DELETE")
-                    .allowCredentials(true);
-            }
-        };
-    }
-}
-```
-
-### 3. 프록시 설정
-V-PASS API 호출을 위한 프록시 설정 (`vite.config.js`):
-```javascript
-export default defineConfig({
-  server: {
-    proxy: {
-      '/trustee-api': {
-        target: 'http://localhost:8086',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/trustee-api/, '')
-      }
-    }
-  }
-})
-```
-
-## 📝 환경 변수
-
-### Backend (`application.properties`)
-```properties
-# Database
-spring.datasource.url=jdbc:mysql://localhost:3306/entrusting_db
-spring.datasource.username=root
-spring.datasource.password=your_password
-
-# Server
-server.port=8080
-
-# JPA
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
-```
-
-### Frontend (`.env`)
-```env
-VITE_TRUSTEE_FRONTEND_URL=http://localhost:5176
-VITE_API_BASE_URL=http://localhost:8080
-```
-
-## 🧪 테스트
-
-### 회원가입 테스트 시나리오
-1. http://localhost:5175/signup 접속
-2. 약관 동의 (필수 9개 체크)
-3. 이름, 휴대폰번호 입력
-4. 본인인증 → V-PASS 페이지 이동
-5. OTP 인증 완료
-6. 회원가입 페이지로 복귀
-7. 아이디, 비밀번호 입력
-8. 회원가입 완료
-
-### 계좌 개설 테스트 시나리오
-1. 로그인
-2. 대시보드에서 "계좌 개설하기" 클릭
-3. 본인인증 → V-PASS 페이지 이동
-4. OTP 인증 완료
-5. 계좌 개설 완료
-6. 대시보드에서 계좌 확인
+#### 2. `accounts` 테이블
+사용자의 금융 계좌 원장을 보관합니다.
+- **`status`**: 보이스피싱 대응 등을 위한 활성(ACTIVE), 정지(SUSPENDED), 분실(LOST) 상태값을 가집니다.
 
 ---
 
-**Continue Bank** - 안전하고 편리한 디지털 뱅킹 서비스 🏦
+## 🔄 개인정보 처리 흐름
+
+### 1. 회원가입 워크플로우
+1.  **동의**: 사용자가 필수 9개 및 선택 약관에 동의합니다.
+2.  **인증 초기화**: 이름/번호 입력 후 [인증하기] 클릭 시 SSAP로 세션 요청이 전달됩니다.
+3.  **인증 수행**: SSAP 웹 사이트로 리다이렉트되어 OTP 인증을 완료합니다.
+4.  **정보 전달**: 인증 완료 후 `tokenId`를 매개로 백엔드 간(S2S) 통신하여 검증된 정보를 위탁사가 수신합니다.
+5.  **가입 확정**: CI 기반 중복 체크 후 개인정보를 암호화하여 DB에 최종 저장합니다.
+
+### 2. 계좌 개설 워크플로우 (재인증)
+1.  **로그인**: 인증된 사용자가 대시보드에서 계좌 개설을 시도합니다.
+2.  **추가 인증**: 금융 사고 방지를 위해 SSAP를 통한 추가 본인 확인 절차를 거칩니다.
+3.  **발급**: 인증 성공 시에만 고유 계좌번호가 생성되고 원장에 등록됩니다.
+
+---
+
+## 📡 API 명세서
+
+### [사용자 인증 API]
+
+#### 1. 회원가입 (`POST /api/v1/auth/register`)
+- **요청 본문 (JSON)**: 성명, 아이디, 비밀번호, 연락처, `tokenId`, 약관 동의 맵
+- **응답**: 성공 시 회원 정보 반환
+
+#### 2. 로그인 (`POST /api/v1/auth/login`)
+- **요청 본문 (JSON)**: 아이디, 비밀번호
+- **응답**: 세션 정보 포함한 성공 메시지
+
+#### 3. 아이디/비밀번호 찾기
+- **`GET /api/v1/auth/find-id`**: 성명, 번호 기반 아이디 조회 (마스킹 처리)
+- **`POST /api/v1/auth/reset-password`**: 본인 인증 완료 후 새 비밀번호 설정
+
+### [계좌 관리 API]
+
+#### 1. 계좌 개설 (`POST /api/v1/accounts/create`)
+- **요청 본문 (JSON)**: 사용자 ID, 계좌 종류(SAVINGS 등)
+
+#### 2. 잔액 조회 (`GET /api/v1/accounts/user/{userId}`)
+- **응답**: 해당 사용자가 보유한 모든 계좌 목록 및 상세 정보
+
+---
+
+## 🔑 주요 컴플라이언스 기능
+
+### 1. 상시 동의 관리 (My Page)
+- 사용자는 마이페이지에서 선택적 동의 항목(마케팅, 제3자 제공 등)을 언제든 철회하거나 다시 동의할 수 있습니다.
+- 모든 상태 변경은 감사 로그에 초 단위로 기록됩니다.
+
+### 2. 스타벅스 이벤트 연동 (On-Demand 동의)
+- 특정 배너 클릭 시 발생하는 혜택 안내를 통해, 가입 당시 미동의했던 '제휴 제공' 동의를 실시간으로 획득하고 DB를 동기화합니다.
+
+### 3. 암호화 보관
+- 성명과 휴대폰 번호는 모든 저장소 단계에서 **AES-256-CBC** 방식으로 암호화되어 관리자도 원문을 직접 볼 수 없습니다.
+
+---
+
+## 🔐 보안 구현 명세
+
+### 1. 서버 측 보안
+- **Spring Security**: 모든 엔드포인트에 대한 접근 제어.
+- **CORS 설정**: 신뢰할 수 있는 도메인(`localhost:5175, 5176, 5173`)의 요청만 허용.
+
+### 2. 클라이언트 측 보안
+- **프록시 필터**: 브라우저에서 SSAP API로 직접 접근을 차단하고 Vite 프록시를 통해 요청을 중계합니다.
+
+---
+
+## 📝 환경 설정 파일
+
+### 백엔드 설정 (`application.properties`)
+```properties
+# 데이터베이스 접속 정보
+spring.datasource.url=jdbc:mysql://localhost:3306/entrusting_db
+# 암호화 키 설정 (환경 변수 권장)
+encryption.key=${ENCRYPTION_KEY}
+```
+
+### 프론트엔드 설정 (`.env`)
+```env
+# 통신 대상 URL
+VITE_TRUSTEE_FRONTEND_URL=http://localhost:5176
+VITE_API_BASE_URL=http://localhost:8085
+```
+
+---
+**Continue Bank** - 금융 보안을 기술의 최전선에서 리드합니다. 🏦
+

@@ -1,16 +1,25 @@
-# React + Vite
+# 프론트엔드 (React + Vite) - 은행 위탁사
+> "사용자 중심의 직관적인 뱅킹 인터페이스"
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+이 프로젝트는 Vite를 기반으로 구축된 Continue Bank의 고객용 웹 서비스 프레임워크입니다.
 
-Currently, two official plugins are available:
+## 🛠 주요 기술 스택
+- **프레임워크**: React 18
+- **빌드 도구**: Vite
+- **라우팅**: React Router v6
+- **스타일링**: Tailwind CSS 및 Vanilla CSS
+- **아이콘**: Lucide React
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 시작하기
+1. **패키지 설치**: `npm install`
+2. **개발 서버 실행**: `npm run dev` (기본 포트: 5175)
+3. **빌드**: `npm run build`
 
-## React Compiler
+## 📁 주요 구조
+- `src/pages`: 회원가입, 로그인, 대시보드 등 주요 화면
+- `src/components`: UI 컴포넌트 (버튼, 입력창, 모달 등)
+- `src/hooks`: 커스텀 Hook 및 전역 상태 관리
+- `src/utils`: 암호화 처리 및 공통 유틸리티
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+**Continue Bank** - 기술로 금융의 신뢰를 만듭니다. 🏦
