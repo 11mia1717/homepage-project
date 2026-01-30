@@ -1,10 +1,12 @@
 com\entrusting\backend\user\dto\LoginRequest.class
 com\entrusting\backend\user\service\AccountService.class
+com\entrusting\backend\config\WebConfig.class
 com\entrusting\backend\user\dto\AuthCallbackRequest.class
 com\entrusting\backend\user\entity\Account.class
 com\entrusting\backend\util\EncryptionUtils.class
 com\entrusting\backend\config\TestDataInitializer.class
 com\entrusting\backend\user\controller\UserController.class
+com\entrusting\backend\common\controller\HealthCheckController.class
 com\entrusting\backend\DotenvPostProcessor.class
 com\entrusting\backend\user\repository\TransactionRepository.class
 com\entrusting\backend\user\config\AppConfig.class

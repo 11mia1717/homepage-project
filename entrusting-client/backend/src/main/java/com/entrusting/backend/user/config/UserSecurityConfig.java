@@ -34,11 +34,12 @@ public class UserSecurityConfig {
                         .requestMatchers("/api/v1/accounts/**").permitAll() // 데모용: 세션 기반 로직이므로 전체 허용
                         .requestMatchers("/api/v1/dashboard/**").permitAll() // 데모용: 세션 기반 로직이므로 전체 허용
                         .requestMatchers("/api/v1/compliance/**").permitAll()
+                        .requestMatchers("/").permitAll()
                         .anyRequest().authenticated());
         return http.build();
     }
 
-    @Value("${cors.allowed-origins}")
+    @Value("${app.cors.allowed-origins}")
     private String allowedOrigins;
 
     @Bean

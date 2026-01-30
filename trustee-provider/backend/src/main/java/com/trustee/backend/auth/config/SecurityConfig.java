@@ -24,11 +24,12 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/v1/auth/**").permitAll()
+                        .requestMatchers("/").permitAll()
                         .anyRequest().authenticated());
         return http.build();
     }
 
-    @org.springframework.beans.factory.annotation.Value("${cors.allowed-origins}")
+    @org.springframework.beans.factory.annotation.Value("${app.cors.allowed-origins}")
     private String allowedOrigins;
 
     @Bean

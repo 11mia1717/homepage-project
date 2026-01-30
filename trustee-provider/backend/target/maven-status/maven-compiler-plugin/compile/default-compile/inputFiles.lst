@@ -8,6 +8,7 @@ C:\ContinueProject\homepage-project\trustee-provider\backend\src\main\java\com\t
 C:\ContinueProject\homepage-project\trustee-provider\backend\src\main\java\com\trustee\backend\auth\dto\AuthConfirmRequest.java
 C:\ContinueProject\homepage-project\trustee-provider\backend\src\main\java\com\trustee\backend\DotenvPostProcessor.java
 C:\ContinueProject\homepage-project\trustee-provider\backend\src\main\java\com\trustee\backend\auth\repository\AuthTokenRepository.java
+C:\ContinueProject\homepage-project\trustee-provider\backend\src\main\java\com\trustee\backend\config\WebConfig.java
 C:\ContinueProject\homepage-project\trustee-provider\backend\src\main\java\com\trustee\backend\auth\dto\AuthOtpRequest.java
 C:\ContinueProject\homepage-project\trustee-provider\backend\src\main\java\com\trustee\backend\auth\config\SecurityConfig.java
 C:\ContinueProject\homepage-project\trustee-provider\backend\src\main\java\com\trustee\backend\auth\service\AuthService.java
@@ -17,5 +18,6 @@ C:\ContinueProject\homepage-project\trustee-provider\backend\src\main\java\com\t
 C:\ContinueProject\homepage-project\trustee-provider\backend\src\main\java\com\trustee\backend\auth\config\WebConfig.java
 C:\ContinueProject\homepage-project\trustee-provider\backend\src\main\java\com\trustee\backend\auth\service\MockCarrierDatabase.java
 C:\ContinueProject\homepage-project\trustee-provider\backend\src\main\java\com\trustee\backend\auth\dto\AuthVerificationResponse.java
+C:\ContinueProject\homepage-project\trustee-provider\backend\src\main\java\com\trustee\backend\common\controller\HealthCheckController.java
 C:\ContinueProject\homepage-project\trustee-provider\backend\src\main\java\com\trustee\backend\auth\entity\AuthStatus.java
 C:\ContinueProject\homepage-project\trustee-provider\backend\src\main\java\com\trustee\backend\auth\entity\CarrierUser.java
