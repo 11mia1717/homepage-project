@@ -27,29 +27,30 @@ Continue Bank 프로젝트는 두 개의 데이터베이스로 구성됩니다:
 | privacy_agreed_at | DATETIME | 개인정보 동의 일시 | |
 | data_expire_at | DATETIME | 데이터 보관 만료일 | 금융거래 5년 |
 
-#### 약관 동의 필드 (필수 9종)
+#### 약관 동의 필드 (필수)
 
-| 컬럼명 | 설명 |
-|--------|------|
-| terms_agreed | 이용약관 |
-| privacy_agreed | 개인정보 수집·이용 |
-| unique_id_agreed | 고유식별정보 처리 |
-| credit_info_agreed | 신용정보 조회·제공 |
-| carrier_auth_agreed | SSAP 본인확인서비스 |
-| ssap_provision_agreed | SSAP 정보 제공 동의 |
-| electronic_finance_agreed | 전자금융거래 기본약관 |
-| monitoring_agreed | 금융거래 모니터링/AML |
-| marketing_personal_agreed | 개인맞춤형 상품 추천 (선택) |
+| 컬럼명 | 설명 | 비고 |
+|--------|------|------|
+| terms_agreed | 이용약관 | |
+| privacy_agreed | 개인정보 수집·이용 | |
+| unique_id_agreed | 고유식별정보 처리 | |
+| credit_info_agreed | 신용정보 조회·제공 | |
+| carrier_auth_agreed | SSAP 본인확인서비스 | |
+| electronic_finance_agreed | 전자금융거래 기본약관 | |
+| monitoring_agreed | 금융거래 모니터링/AML | |
 
-#### 마케팅 동의 필드 (선택)
+#### 선택 약관 및 마케팅 동의 필드
 
-| 컬럼명 | 설명 |
-|--------|------|
-| marketing_agreed | 마케팅 정보 수신 동의 |
-| marketing_sms | SMS 마케팅 |
-| marketing_email | 이메일 마케팅 |
-| marketing_push | 푸시 알림 마케팅 |
-| terms_agreed_at | 약관 동의 일시 |
+| 컬럼명 | 설명 | 비고 |
+|--------|------|------|
+| ssap_provision_agreed | 제휴 TM 센터(Continue Call) 제공 | 2026.01.30 타겟 관리 적용 |
+| third_party_provision_agreed | 제3자 정보 제공 동의 | |
+| marketing_agreed | 마케팅 정보 수신 동의 | |
+| marketing_sms | SMS 마케팅 | |
+| marketing_email | 이메일 마케팅 | |
+| marketing_push | 푸시 알림 마케팅 | |
+| marketing_personal_agreed | 개인맞춤형 상품 추천 | |
+| terms_agreed_at | 약관 동의 일시 | |
 
 ---
 
