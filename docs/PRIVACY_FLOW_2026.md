@@ -57,6 +57,14 @@ sequenceDiagram
     TM->>TM: 15. Agent makes Call (Outbound)
     TM->>TM: 16. Log Result (No PII Stored, only Ref ID)
     TM->>TM: 17. Retention Check (Auto-delete > 3 months)
+
+    Note over User, Entrusting: Phase 4: Continuous Consent (Event-Based)
+    
+    User->>Entrusting: 18. Click Starbucks Event Banner
+    Entrusting->>User: 19. Request Specific Consent (TM Provision)
+    User-->>Entrusting: 20. Agree to TM Center Provision
+    Entrusting->>Entrusting: 21. Sync DB: ssap_provision_agreed = true
+    Entrusting->>Entrusting: 22. Log Audit: "MARKETING_CONSENT" via Event
 ```
 
 ---

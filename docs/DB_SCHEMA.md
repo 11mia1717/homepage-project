@@ -23,14 +23,22 @@ Stores user profile and consent information.
 | `is_verified` | BOOLEAN | | Identity Verified Status | |
 | `terms_agreed` | BOOLEAN | | Essential Terms Agreement | |
 | `privacy_agreed` | BOOLEAN | | Personal Info Agreement | |
-| `marketing_agreed`| BOOLEAN | | Marketing Consent (General)| Granular Consent (2026) |
+| `unique_id_agreed` | BOOLEAN | | Unique ID Processing | Required |
+| `credit_info_agreed` | BOOLEAN | | Credit Info Inquiry | Required |
+| `carrier_auth_agreed` | BOOLEAN | | Carrier Auth Service | Required |
+| `electronic_finance_agreed` | BOOLEAN | | Elec. Finance Service | Required |
+| `monitoring_agreed` | BOOLEAN | | Finance Monitoring/AML | Required |
+| `ssap_provision_agreed` | BOOLEAN | | 3rd Party (TM) Provision | Starbucks Event Link |
+| `third_party_provision_agreed` | BOOLEAN | | 3rd Party (General) | Optional |
+| `marketing_agreed`| BOOLEAN | | Marketing Consent | Optional |
 | `marketing_sms` | BOOLEAN | | SMS Marketing | |
 | `marketing_email` | BOOLEAN | | Email Marketing | |
-| `ssap_provision_agreed` | BOOLEAN | | 3rd Party (SSAP) Provision | |
-| `third_party_provision_agreed` | BOOLEAN | | 3rd Party (General) Provision| |
+| `marketing_push` | BOOLEAN | | Push Marketing | |
+| `marketing_personal_agreed` | BOOLEAN | | Personal Marketing | Optional |
 | `privacy_agreed_at`| DATETIME | | Agreement Timestamp | |
+| `terms_agreed_at` | DATETIME | | Terms Agreement Time | |
 | `data_expire_at` | DATETIME | | Retention Expiry Date | Right to Erasure |
-| `third_party_retention_until` | DATETIME | | 3rd Party Retention Expiry | 3-Month Limit (TM) |
+| `third_party_retention_until` | DATETIME | | 3rd Party Retention Expiry| 3-Month Limit (TM) |
 
 ### `account` Table
 Stores banking account information.

@@ -25,7 +25,16 @@ This document outlines the core business logic and workflows of the Continue Ban
     *   Agent views "Marketing Target List" (fetched from S2S).
     *   Agent initiates call. Protocol requires re-confirming identity via SSAP if sensitive actions are needed.
 
----
+4.  **On-Demand Consent (Starbucks Event)**
+    *   **Trigger**: User clicks the "Starbucks Event" banner on the Dashboard.
+    *   **Logic**:
+        *   Modal requests consent for "Affiliate TM Center Provision".
+        *   On agreement, frontend calls `/api/v1/compliance/marketing-consent`.
+        *   **Backend Sync**: Sets `ssap_provision_agreed = true` for the user.
+        *   **Independence**: This flow is independent of initial registration choices and can be used to "opt-in" post-registration to get specific rewards.
+        *   **Verification**: Status is immediately reflected in "My Page" via `/api/v1/compliance/my-consent`.
+
+-----
 
 ## 2. SSAP Identity Verification (V-PASS)
 **Goal**: Securely verify user identity using a simulated "Virtual Carrier" system without storing PII permanently.
