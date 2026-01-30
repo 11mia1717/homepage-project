@@ -98,8 +98,7 @@ const Register = () => {
             ...termsAgreement,
             agreements: {
               ...termsAgreement.agreements,
-              carrierAuth: true,     // 본인인증 완료 시 자동 동의 처리 (SSAP 페이지에서 동의함)
-              ssapProvision: true   // 본인인증 완료 시 자동 동의 처리 (SSAP 페이지에서 동의함)
+              carrierAuth: true     // 본인인증 완료 시 자동 동의 처리
             }
           }
         }),

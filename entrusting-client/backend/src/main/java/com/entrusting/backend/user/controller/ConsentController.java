@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/api/consent")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:5175", "http://localhost:5173"})
 public class ConsentController {
 
     private final UserRepository userRepository;

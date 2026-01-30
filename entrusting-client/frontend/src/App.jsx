@@ -9,6 +9,7 @@ import CreateAccount from './pages/CreateAccount';
 import SignupFlow from './pages/SignupFlow';
 import AccountVerification from './pages/AccountVerification';
 import AuthBridge from './pages/AuthBridge';
+import MyPage from './pages/MyPage';
 
 const ProtectedRoute = ({ children }) => {
   const isLoggedIn = sessionStorage.getItem('logged_in_user');
@@ -34,6 +35,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/mypage"
+            element={
+              <ProtectedRoute>
+                <MyPage />
               </ProtectedRoute>
             }
           />

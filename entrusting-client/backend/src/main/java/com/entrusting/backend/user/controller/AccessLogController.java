@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/api/my")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:5175", "http://localhost:5173"})
 public class AccessLogController {
 
     private final AccessLogRepository accessLogRepository;

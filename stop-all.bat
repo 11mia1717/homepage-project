@@ -6,19 +6,21 @@ echo [ContinueProject] Stopping All Services...
 echo ========================================================
 echo.
 
-echo [1/2] Terminating Java Processes...
-taskkill /F /IM java.exe /T 2>nul
-if %errorlevel% neq 0 (
-    echo Using PowerShell to force kill Java processes...
-    powershell -Command "Get-Process -Name java -ErrorAction SilentlyContinue | Stop-Process -Force"
+echo [1/2] Terminating Backend Ports (8085, 8086)...
+for %%p in (8085 8086) do (
+    for /f "tokens=5" %%a in ('netstat -aon 2^>nul ^| findstr :%%p ^| findstr LISTENING') do (
+        echo Killing PID %%a on port %%p
+        taskkill /F /PID %%a >nul 2>&1
+    )
 )
 
 echo.
-echo [2/2] Terminating Node.js Processes...
-taskkill /F /IM node.exe /T 2>nul
-if %errorlevel% neq 0 (
-    echo Using PowerShell to force kill Node processes...
-    powershell -Command "Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force"
+echo [2/2] Terminating Frontend Ports (5175, 5176)...
+for %%p in (5175 5176) do (
+    for /f "tokens=5" %%a in ('netstat -aon 2^>nul ^| findstr :%%p ^| findstr LISTENING') do (
+        echo Killing PID %%a on port %%p
+        taskkill /F /PID %%a >nul 2>&1
+    )
 )
 
 echo.

@@ -62,7 +62,7 @@ echo ========================================================
 echo.
 
 :: 1. Backend - Entrusting Client (Continue Bank)
-echo [1/6] Starting Entrusting Client Backend (Port 8085)...
+echo [1/4] Starting Entrusting Client Backend (Port 8085)...
 if exist "entrusting-client\backend\target\backend-0.0.1-SNAPSHOT.jar" (
     start "Entrusting-Backend-8085" cmd /k "cd entrusting-client\backend && java -jar target\backend-0.0.1-SNAPSHOT.jar"
     echo [OK] Entrusting Client Backend starting...
@@ -72,22 +72,12 @@ if exist "entrusting-client\backend\target\backend-0.0.1-SNAPSHOT.jar" (
 timeout /t 5 >nul
 
 :: 2. Backend - SSAP (Trustee Provider)
-echo [2/6] Starting SSAP Backend (Port 8086)...
+echo [2/4] Starting SSAP Backend (Port 8086)...
 if exist "trustee-provider\backend\target\backend-0.0.1-SNAPSHOT.jar" (
     start "SSAP-Backend-8086" cmd /k "cd trustee-provider\backend && java -jar target\backend-0.0.1-SNAPSHOT.jar"
     echo [OK] SSAP Backend starting...
 ) else (
     echo [ERROR] SSAP JAR not found. Build required.
-)
-timeout /t 5 >nul
-
-:: 3. Backend - TM Center
-echo [3/6] Starting TM Center Backend (Port 8082)...
-if exist "tm-center\backend\target\backend-0.0.1-SNAPSHOT.jar" (
-    start "TM-Center-Backend-8082" cmd /k "cd tm-center\backend && java -jar target\backend-0.0.1-SNAPSHOT.jar"
-    echo [OK] TM Center Backend starting...
-) else (
-    echo [ERROR] TM Center JAR not found.
 )
 timeout /t 5 >nul
 
@@ -97,8 +87,8 @@ echo [RUN] Starting Frontend Services...
 echo ========================================================
 echo.
 
-:: 4. Frontend - Entrusting Client
-echo [4/6] Starting Entrusting Client Frontend (Port 5175/5178)...
+:: 3. Frontend - Entrusting Client
+echo [3/4] Starting Entrusting Client Frontend (Port 5175)...
 if exist "entrusting-client\frontend\package.json" (
     start "Entrusting-Frontend" cmd /k "cd entrusting-client\frontend && npm run dev"
     echo [OK] Entrusting Client Frontend starting...
@@ -107,8 +97,8 @@ if exist "entrusting-client\frontend\package.json" (
 )
 timeout /t 2 >nul
 
-:: 5. Frontend - SSAP
-echo [5/6] Starting SSAP Frontend (Port 5176)...
+:: 4. Frontend - SSAP
+echo [4/4] Starting SSAP Frontend (Port 5176)...
 if exist "trustee-provider\frontend\package.json" (
     start "SSAP-Frontend" cmd /k "cd trustee-provider\frontend && npm run dev"
     echo [OK] SSAP Frontend starting...
@@ -116,15 +106,6 @@ if exist "trustee-provider\frontend\package.json" (
     echo [ERROR] SSAP Frontend not found.
 )
 timeout /t 2 >nul
-
-:: 6. Frontend - TM Center
-echo [6/6] Starting TM Center Frontend (Port 5178/5177)...
-if exist "tm-center\frontend\package.json" (
-    start "TM-Center-Frontend" cmd /k "cd tm-center\frontend && npm run dev"
-    echo [OK] TM Center Frontend starting...
-) else (
-    echo [ERROR] TM Center Frontend not found.
-)
 
 echo.
 echo ========================================================
@@ -134,12 +115,10 @@ echo.
 echo   [Backend]
 echo     - Entrusting Client: http://localhost:8085
 echo     - SSAP:              http://localhost:8086
-echo     - TM Center:         http://localhost:8082
 echo.
 echo   [Frontend]
-echo     - Continue Bank:     http://localhost:5178 (or 5175)
+echo     - Continue Bank:     http://localhost:5175
 echo     - SSAP Auth:         http://localhost:5176
-echo     - TM Center Web:     http://localhost:5177 (or 5178)
 echo.
 echo ========================================================
 pause

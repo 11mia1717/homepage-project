@@ -12,6 +12,7 @@ export default defineConfig(({ mode }) => {
     ],
     server: {
       port: parseInt(env.VITE_PORT) || 5176,
+      strictPort: true,
       host: true,
       allowedHosts: [
         'localhost',

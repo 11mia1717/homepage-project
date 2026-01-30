@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Logo from '../components/Logo';
-import { ChevronLeft, ShieldCheck, AlertCircle, User, Phone } from 'lucide-react';
+import { ChevronLeft, ShieldCheck, AlertCircle } from 'lucide-react';
 import AlertModal from '../components/AlertModal';
 
 const AccountVerification = () => {
@@ -98,9 +98,8 @@ const AccountVerification = () => {
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
                                 placeholder="실명을 입력하세요"
-                                className="input-field pl-14"
+                                className="input-field"
                             />
-                            <User className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300" size={20} />
                         </div>
                     </div>
 
@@ -112,9 +111,8 @@ const AccountVerification = () => {
                                 value={phoneNumber}
                                 onChange={(e) => setPhoneNumber(formatPhoneNumber(e.target.value))}
                                 placeholder="생년월일 입력"
-                                className="input-field pl-14"
+                                className="input-field"
                             />
-                            <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300" size={20} />
                         </div>
                     </div>
 

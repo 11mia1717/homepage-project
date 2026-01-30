@@ -11,7 +11,8 @@ export default defineConfig(({ mode }) => {
       tailwindcss(),
     ],
     server: {
-      port: parseInt(env.VITE_PORT) || 5178,
+      port: parseInt(env.VITE_PORT) || 5175,
+      strictPort: true,
       host: true,
       allowedHosts: [
         'localhost',

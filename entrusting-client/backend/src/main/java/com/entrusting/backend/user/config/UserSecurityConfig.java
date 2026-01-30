@@ -33,6 +33,7 @@ public class UserSecurityConfig {
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers("/api/v1/accounts/**").permitAll() // 데모용: 세션 기반 로직이므로 전체 허용
                         .requestMatchers("/api/v1/dashboard/**").permitAll() // 데모용: 세션 기반 로직이므로 전체 허용
+                        .requestMatchers("/api/v1/compliance/**").permitAll()
                         .anyRequest().authenticated());
         return http.build();
     }

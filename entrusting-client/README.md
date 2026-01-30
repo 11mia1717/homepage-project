@@ -49,7 +49,9 @@ Continue Bank는 V-PASS 본인인증을 활용한 디지털 뱅킹 서비스의 
 │ electronic_finance_agreed  BOOLEAN  │ ← 전자금융거래 약관
 │ monitoring_agreed          BOOLEAN  │ ← 거래 모니터링/AML
 │                                     │
-│ ─── 약관 동의 정보 (2개 선택) ───    │
+│ ─── 약관 동의 정보 (선택) ───      │
+│ ssap_provision_agreed      BOOLEAN  │ ← 제휴 TM 센터 제공
+│ third_party_provision_agreed BOOLEAN  │ ← 제3자 정보 제공
 │ marketing_personal_agreed  BOOLEAN  │ ← 개인맞춤형 추천
 │ marketing_agreed           BOOLEAN  │ ← 혜택/이벤트 알림
 │                                     │
@@ -80,7 +82,7 @@ Continue Bank는 V-PASS 본인인증을 활용한 디지털 뱅킹 서비스의 
 **주요 컬럼:**
 - `ci`: V-PASS에서 생성한 Connecting Information (중복 가입 방지)
 - `age_agreed` ~ `monitoring_agreed`: 9개 필수 약관 동의 여부
-- `marketing_personal_agreed`, `marketing_agreed`: 2개 선택 약관 동의 여부
+- `ssap_provision_agreed`, `third_party_provision_agreed`, `marketing_agreed`: 선택 약관 동의 여부
 - `agreed_at`: 약관 동의 시각 (법적 증거)
 
 #### 2. accounts 테이블
@@ -341,15 +343,20 @@ Continue Bank는 V-PASS 본인인증을 활용한 디지털 뱅킹 서비스의 
 8. 전자금융거래 기본약관
 9. 금융거래 정보 모니터링
 
-**선택 약관 (2개):**
-1. 개인맞춤형 금융상품 추천
-2. 혜택 및 이벤트 소식
+**선택 약관:**
+1. 제휴 TM 센터(Continue Call) 연락처 제공
+2. 제3자 정보 제공 동의
+3. 개인맞춤형 금융상품 추천
+4. 혜택 및 이벤트 소식
 
-**동의 내역 관리 페이지:**
-- 필수/선택 약관 구분 표시
-- 동의일시 기록
-- 선택 약관 철회 기능 (48시간 재동의 제한)
-- 본인인증 기록 조회
+**마이페이지 동의 관리:**
+- 혜택/이벤트 알림, 제휴 TM 제공, 제3자 제공 등 각 항목별 실시간 On/Off 기능
+- 동의 철회 시 즉시 DB 반영 및 감사 로그 기록
+
+**스타벅스 이벤트 (마케팅 활용 동의):**
+- 대시보드 배너를 통한 신규 혜택 안내
+- 참여 시 '제휴 TM 센터 연락처 제공' 항목 정밀 타겟 업데이트 로직 적용
+- 쿠폰 증정과 동시에 DB 동의 상태 실시간 동기화
 
 ### 2. V-PASS 연동
 

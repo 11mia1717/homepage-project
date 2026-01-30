@@ -89,17 +89,6 @@ graph TD
 - 인증 기록 저장
 - 가상 통신사 데이터베이스
 
-### 3. 수탁사 (TM 센터)
-
-#### 상담 관리
-- 상담 예약 접수
-- 고객 정보 조회
-- SSAP 본인인증 연동
-
-#### 마케팅
-- 마케팅 동의 정보 관리
-- 상담 이력 관리
-
 ## 🛠 기술 스택
 
 ### Backend
@@ -109,23 +98,21 @@ graph TD
 - **Security**: Spring Security, JWT, AES-256
 - **ORM**: JPA / Hibernate
 
-### Frontend
+### 3. Frontend
 - **Framework**: React 18
 - **Build Tool**: Vite
 - **Routing**: React Router v6
-- **Styling**: Tailwind CSS (일부), Vanilla CSS
+- **Styling**: Tailwind CSS (some), Vanilla CSS
 - **Icons**: Lucide React
 
-### Infrastructure
-- **Database**: MySQL (Port 3306)
+### 4. Infrastructure
+- **Database**: MySQL (Port 3306, 3307)
 - **Backend Ports**:
   - 위탁사: 8085
   - SSAP: 8086
-  - TM 센터: 8080
 - **Frontend Ports**:
   - 위탁사: 5175
   - SSAP: 5176
-  - TM 센터: 5178
 
 ## 📁 프로젝트 구조
 
@@ -133,11 +120,10 @@ graph TD
 homepage-project/
 ├── entrusting-client/    # 위탁사 (Continue Bank)
 ├── trustee-provider/     # 수탁사 (SSAP 본인인증)
-├── tm-center/            # 수탁사 (TM 센터)
 ├── docs/                 # 문서 관리 (배포 가이드, 설계서 등)
 ├── infra/                # 인프라 설정 (Nginx, K8s, 보안키)
 ├── database/             # DB 관련 스크립트
-├── start-all.bat         # 전체 서비스 통합 실행
+├── start-all.bat         # 서비스 통합 실행
 └── docker-compose.yml    # 전용 MySQL 컨테이너 구성
 ```
 
@@ -166,12 +152,8 @@ source init.sql
 cd entrusting-client/backend
 ./mvnw spring-boot:run
 
-# V-PASS 백엔드
-cd vpass-provider/backend
-./mvnw spring-boot:run
-
-# TM 센터 백엔드
-cd tm-center/backend
+# SSAP 백엔드
+cd trustee-provider/backend
 ./mvnw spring-boot:run
 ```
 
@@ -183,30 +165,26 @@ cd entrusting-client/frontend
 npm install
 npm run dev -- --port 5175 --strictPort
 
-# V-PASS 프론트엔드 (Port 5176)
-cd vpass-provider/frontend
+# SSAP 프론트엔드 (Port 5176)
+cd trustee-provider/frontend
 npm install
 npm run dev -- --port 5176 --strictPort
-
-# TM 센터 프론트엔드 (Port 5178)
-cd tm-center/frontend
-npm install
-npm run dev -- --port 5178 --strictPort
 ```
 
 ### 4. 접속
 
 - **위탁사 (Continue Bank)**: http://localhost:5175
-- **V-PASS 본인인증**: http://localhost:5176
-- **TM 센터**: http://localhost:5178
+- **SSAP 본인인증**: http://localhost:5176
 
 ## 📚 서비스별 상세 문서
 
 각 서비스의 상세한 기술 문서는 다음 링크에서 확인하실 수 있습니다:
 
 - [위탁사 (Continue Bank) 문서](./entrusting-client/README.md)
-- [수탁사 (V-PASS) 문서](./vpass-provider/README.md)
-- [수탁사 (TM 센터) 문서](./tm-center/README.md)
+- [수탁사 (SSAP 인증) 문서](./trustee-provider/README.md)
+- [시스템 포트 명세서](../system_port_specification.md)
+- [데이터베이스 명세서](../docs/DB_SCHEMA.md)
+- [개인정보 처리 흐름도](../docs/PRIVACY_FLOW_2026.md)
 
 ## 🔐 보안 고려사항
 

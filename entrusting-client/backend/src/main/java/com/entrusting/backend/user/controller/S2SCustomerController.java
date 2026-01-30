@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/s2s")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*") // Allow Call Center Web to access S2S API
+@CrossOrigin(origins = {"http://localhost:5175", "http://localhost:5173"}) // Allow Call Center & Self
 public class S2SCustomerController {
 
     private final UserRepository userRepository;

@@ -15,8 +15,10 @@ const TermsAgreement = ({ onComplete }) => {
     creditInfo: false,    // 5. 신용정보 조회·제공
     electronicFinance: false, // 6. 전자금융거래 기본약관
     monitoring: false,    // 7. 거래 모니터링/AML
-    marketingPersonal: false, // 8. 개인맞춤형 추천 (선택)
-    marketing: false      // 9. 혜택/이벤트 알림 (선택)
+    ssapProvision: false, // 8. 제휴 TM (선택)
+    thirdPartyProvision: false, // 9. 제3자 제공 (선택)
+    marketingPersonal: false, // 10. 개인맞춤형 추천 (선택)
+    marketing: false      // 11. 혜택/이벤트 알림 (선택)
   });
 
   const [expandedId, setExpandedId] = useState(null);
@@ -134,8 +136,24 @@ const TermsAgreement = ({ onComplete }) => {
       summary: { items: "거래 일시, 금액, 상대방 정보", period: "5년 (특정금융정보법)" }
     },
     { 
+      id: 'thirdPartyProvision', 
+      title: '[선택] 제3자 정보 제공 동의', 
+      required: false, 
+      hasDetail: true, 
+      desc: "더 나은 서비스 제공을 위해 제휴사에 정보를 제공합니다.",
+      summary: { items: "이름, 휴대전화번호, CI (연계정보)", period: "제휴 서비스 종료 시까지" }
+    },
+    { 
+      id: 'ssapProvision', 
+      title: '[선택] 제휴 TM 센터(Continue Call)에 상품 소개 목적의 연락처 제공', 
+      required: false, 
+      hasDetail: true, 
+      desc: "전문 상담원이 고객님께 꼭 맞는 금융 상품을 안내해 드려요.",
+      summary: { items: "이름, 전화번호, 마케팅 활용 동의 여부", period: "동의 철회 시까지" }
+    },
+    { 
       id: 'marketingPersonal', 
-      title: '개인맞춤형 금융상품 추천 동의 (선택)', 
+      title: '[선택] 개인맞춤형 금융상품 추천 동의', 
       required: false, 
       hasDetail: true, 
       desc: "고객님의 패턴을 분석해 꼭 필요한 상품을 추천해 드려요.",
@@ -143,7 +161,7 @@ const TermsAgreement = ({ onComplete }) => {
     },
     { 
       id: 'marketing', 
-      title: '혜택 및 이벤트 소식 받기 (전화, 문자 메시지) (선택)', 
+      title: '[선택] 혜택 및 이벤트 소식 받기 (전화, 문자 메시지)', 
       required: false, 
       hasDetail: true, 
       desc: "특별 혜택과 이벤트 소식을 가장 먼저 보내드릴게요.",
@@ -275,25 +293,25 @@ const AgreementItem = ({ checked, onChange, required, title, desc, summary, hasD
                     )}
                 </div>
                 
-                {/* 2026 Compliance: Summary Display */}
-                {summary && (
-                    <div className="mt-1 pl-1 text-[12px] font-medium text-gray-400 bg-gray-50/50 p-2 rounded-lg">
-                        <div className="flex gap-2">
-                           <span className="text-gray-500 w-12 shrink-0">수집항목</span>
-                           <span className="text-gray-700">{summary.items}</span>
-                        </div>
-                        <div className="flex gap-2 mt-0.5">
-                           <span className="text-gray-500 w-12 shrink-0">보유기간</span>
-                           <span className="text-[#1A73E8] font-bold">{summary.period}</span>
-                        </div>
-                    </div>
-                )}
+                {/* 2026 Compliance: Summary Display moved to expandable section */}
             </div>
         </div>
       </div>
 
-      <div className={`px-2 pb-4 pl-12 transition-all duration-300 ease-in-out ${isExpanded ? 'max-h-[300px] opacity-100' : 'max-h-0 opacity-0 pointer-events-none'}`}>
+      <div className={`px-2 pb-4 pl-12 transition-all duration-300 ease-in-out ${isExpanded ? 'max-h-[400px] opacity-100' : 'max-h-0 opacity-0 pointer-events-none'}`}>
         <div className="p-4 bg-gray-50 rounded-2xl">
+          {summary && (
+              <div className="mb-3 text-[12px] font-medium text-gray-400 bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
+                  <div className="flex gap-2">
+                     <span className="text-gray-500 w-12 shrink-0">수집항목</span>
+                     <span className="text-gray-800">{summary.items}</span>
+                  </div>
+                  <div className="flex gap-2 mt-1">
+                     <span className="text-gray-500 w-12 shrink-0">보유기간</span>
+                     <span className="text-[#1A73E8] font-bold">{summary.period}</span>
+                  </div>
+              </div>
+          )}
           <p className="text-[13px] text-gray-500 leading-relaxed font-medium">*{desc}</p>
           <div className="mt-3 p-3 bg-white rounded-xl border border-gray-100">
              <p className="text-[11px] text-gray-400 font-mono leading-tight">

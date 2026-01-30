@@ -17,7 +17,8 @@ import {
   Gift,
   LayoutGrid,
   Menu,
-  AlertCircle
+  AlertCircle,
+  User
 } from 'lucide-react';
 
 const Dashboard = () => {
@@ -37,10 +38,17 @@ const Dashboard = () => {
     setIsAgreed(!!agreed);
 
     // 1. 사용자 이름 설정
-    const storedData = sessionStorage.getItem('register_form_data');
-    if (storedData) {
+    const registerData = sessionStorage.getItem('register_form_data');
+    const userProfile = sessionStorage.getItem('user_profile');
+    
+    if (userProfile) {
+        try {
+            const parsed = JSON.parse(userProfile);
+            if (parsed.name) setUserName(parsed.name);
+        } catch (e) {}
+    } else if (registerData) {
       try {
-        const parsed = JSON.parse(storedData);
+        const parsed = JSON.parse(registerData);
         if (parsed.name) setUserName(parsed.name);
       } catch (e) { }
     }
@@ -105,6 +113,13 @@ const Dashboard = () => {
       <header className="sticky top-0 z-20 flex items-center justify-between h-16 px-6 bg-white/80 backdrop-blur-md border-b border-gray-100">
         <Logo className="h-7" />
         <div className="flex items-center gap-2">
+          <button 
+            onClick={() => navigate('/mypage')}
+            className="p-2.5 text-gray-500 hover:bg-gray-50 rounded-full transition-colors"
+            title="내 정보"
+          >
+            <User size={28} />
+          </button>
           <button className="p-2.5 text-gray-500 hover:bg-gray-50 rounded-full transition-colors">
             <Bell size={28} />
           </button>
@@ -131,7 +146,6 @@ const Dashboard = () => {
         </section>
 
         {/* Marketing Banner Stage 1 */}
-        {!isAgreed && (
           <section
             onClick={() => setIsModalOpen(true)}
             className="bg-gradient-to-br from-[#1A73E8] to-[#0D47A1] rounded-[24px] p-6 text-white relative overflow-hidden shadow-xl shadow-blue-100 cursor-pointer group active:scale-[0.98] transition-all"
@@ -155,7 +169,6 @@ const Dashboard = () => {
               <ChevronRight size={18} />
             </div>
           </section>
-        )}
 
 
         <section className="space-y-6">
@@ -201,7 +214,7 @@ const Dashboard = () => {
                     <span className="text-yellow-300 font-semibold">10,000원</span> 혜택을 받으세요! 💰
                   </h3>
                   <p className="text-blue-100 text-[14px] font-normal opacity-90 mb-8">
-                    신규 가입 고객님께만 드리는 특별한 선물,<br />
+                    신규 가입 {userName} 고객님께만 드리는 특별한 선물,<br />
                     본인인증 완료 즉시 잔액으로 지급됩니다.
                   </p>
                   <button

@@ -66,3 +66,333 @@ This generated password is for development use only. Your security configuration
 2026-01-30T01:05:25.214+09:00  INFO 34940 --- [entrusting-backend] [http-nio-8085-exec-7] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
 2026-01-30T01:05:25.215+09:00  INFO 34940 --- [entrusting-backend] [http-nio-8085-exec-7] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2026-01-30T01:05:25.219+09:00  INFO 34940 --- [entrusting-backend] [http-nio-8085-exec-7] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2026-01-30T06:21:18.954+09:00  WARN 34940 --- [entrusting-backend] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=4h54m33s955ms900µs700ns).
+2026-01-30T09:03:03.806+09:00  WARN 34940 --- [entrusting-backend] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2h41m46s798ms469µs200ns).
+2026-01-30T09:09:36.194+09:00  INFO 41564 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : Starting BackendApplication using Java 21.0.9 with PID 41564 (C:\ContinueProject\homepage-project\entrusting-client\backend\target\backend-0.0.1-SNAPSHOT.jar started by ez in C:\ContinueProject\homepage-project\entrusting-client\backend)
+2026-01-30T09:09:36.198+09:00 DEBUG 41564 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : Running with Spring Boot v3.2.1, Spring v6.1.2
+2026-01-30T09:09:36.200+09:00  INFO 41564 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : No active profile set, falling back to 1 default profile: "default"
+2026-01-30T09:09:37.479+09:00  INFO 41564 --- [entrusting-backend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-30T09:09:37.592+09:00  INFO 41564 --- [entrusting-backend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 95 ms. Found 4 JPA repository interfaces.
+2026-01-30T09:09:38.365+09:00  INFO 41564 --- [entrusting-backend] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8085 (http)
+2026-01-30T09:09:38.376+09:00  INFO 41564 --- [entrusting-backend] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-30T09:09:38.377+09:00  INFO 41564 --- [entrusting-backend] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2026-01-30T09:09:38.410+09:00  INFO 41564 --- [entrusting-backend] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-30T09:09:38.410+09:00  INFO 41564 --- [entrusting-backend] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2070 ms
+2026-01-30T09:09:38.680+09:00  INFO 41564 --- [entrusting-backend] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-30T09:09:38.775+09:00  INFO 41564 --- [entrusting-backend] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
+2026-01-30T09:09:38.804+09:00  INFO 41564 --- [entrusting-backend] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-30T09:09:39.126+09:00  INFO 41564 --- [entrusting-backend] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-30T09:09:39.178+09:00  INFO 41564 --- [entrusting-backend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-30T09:09:39.481+09:00  INFO 41564 --- [entrusting-backend] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@46ea78f0
+2026-01-30T09:09:39.484+09:00  INFO 41564 --- [entrusting-backend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-30T09:09:39.568+09:00  WARN 41564 --- [entrusting-backend] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-30T09:09:40.853+09:00  INFO 41564 --- [entrusting-backend] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-30T09:09:41.029+09:00  INFO 41564 --- [entrusting-backend] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-30T09:09:41.891+09:00  INFO 41564 --- [entrusting-backend] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-01-30T09:09:42.967+09:00  WARN 41564 --- [entrusting-backend] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-01-30T09:09:43.001+09:00  WARN 41564 --- [entrusting-backend] [main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: c5deaa9d-3c6f-4456-80b9-aee237ee21af
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-01-30T09:09:43.521+09:00  INFO 41564 --- [entrusting-backend] [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4c02f50, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@35852b6, org.springframework.security.web.context.SecurityContextHolderFilter@2e962cec, org.springframework.security.web.header.HeaderWriterFilter@5ec10ab1, org.springframework.web.filter.CorsFilter@27d6ff8c, org.springframework.security.web.authentication.logout.LogoutFilter@7ceb432c, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@10e28d97, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@37d43b9b, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@105c253a, org.springframework.security.web.access.ExceptionTranslationFilter@808fa1, org.springframework.security.web.access.intercept.AuthorizationFilter@7f8f120c]
+2026-01-30T09:09:43.910+09:00  INFO 41564 --- [entrusting-backend] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8085 (http) with context path ''
+2026-01-30T09:09:43.941+09:00  INFO 41564 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : Started BackendApplication in 8.735 seconds (process running for 9.489)
+2026-01-30T09:10:38.949+09:00  INFO 41564 --- [entrusting-backend] [http-nio-8085-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-30T09:10:38.950+09:00  INFO 41564 --- [entrusting-backend] [http-nio-8085-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-01-30T09:10:38.950+09:00  INFO 41564 --- [entrusting-backend] [http-nio-8085-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-01-30T09:57:42.676+09:00  INFO 39952 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : Starting BackendApplication using Java 21.0.9 with PID 39952 (C:\ContinueProject\homepage-project\entrusting-client\backend\target\backend-0.0.1-SNAPSHOT.jar started by ez in C:\ContinueProject\homepage-project\entrusting-client\backend)
+2026-01-30T09:57:42.680+09:00 DEBUG 39952 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : Running with Spring Boot v3.2.1, Spring v6.1.2
+2026-01-30T09:57:42.681+09:00  INFO 39952 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : No active profile set, falling back to 1 default profile: "default"
+2026-01-30T09:57:44.173+09:00  INFO 39952 --- [entrusting-backend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-30T09:57:44.292+09:00  INFO 39952 --- [entrusting-backend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 105 ms. Found 4 JPA repository interfaces.
+2026-01-30T09:57:45.289+09:00  INFO 39952 --- [entrusting-backend] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8085 (http)
+2026-01-30T09:57:45.302+09:00  INFO 39952 --- [entrusting-backend] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-30T09:57:45.304+09:00  INFO 39952 --- [entrusting-backend] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2026-01-30T09:57:45.354+09:00  INFO 39952 --- [entrusting-backend] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-30T09:57:45.355+09:00  INFO 39952 --- [entrusting-backend] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2558 ms
+2026-01-30T09:57:45.674+09:00  INFO 39952 --- [entrusting-backend] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-30T09:57:45.818+09:00  INFO 39952 --- [entrusting-backend] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
+2026-01-30T09:57:45.882+09:00  INFO 39952 --- [entrusting-backend] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-30T09:57:46.303+09:00  INFO 39952 --- [entrusting-backend] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-30T09:57:46.364+09:00  INFO 39952 --- [entrusting-backend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-30T09:57:46.831+09:00  INFO 39952 --- [entrusting-backend] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1736c1e4
+2026-01-30T09:57:46.834+09:00  INFO 39952 --- [entrusting-backend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-30T09:57:46.917+09:00  WARN 39952 --- [entrusting-backend] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-30T09:57:48.696+09:00  INFO 39952 --- [entrusting-backend] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-30T09:57:49.137+09:00  INFO 39952 --- [entrusting-backend] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-30T09:57:50.055+09:00  INFO 39952 --- [entrusting-backend] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-01-30T09:57:51.416+09:00  WARN 39952 --- [entrusting-backend] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-01-30T09:57:51.459+09:00  WARN 39952 --- [entrusting-backend] [main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 10cc7ef1-3ac6-475c-87ca-311d2d2eea37
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-01-30T09:57:52.189+09:00  INFO 39952 --- [entrusting-backend] [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@707b0b9b, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@43ac1fa0, org.springframework.security.web.context.SecurityContextHolderFilter@25e95d04, org.springframework.security.web.header.HeaderWriterFilter@6005cfe5, org.springframework.web.filter.CorsFilter@2ba7828b, org.springframework.security.web.authentication.logout.LogoutFilter@16b1dee7, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@46b376bb, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@64a9719a, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3e6945c6, org.springframework.security.web.access.ExceptionTranslationFilter@62048ab, org.springframework.security.web.access.intercept.AuthorizationFilter@2162e4a]
+2026-01-30T09:57:52.624+09:00  INFO 39952 --- [entrusting-backend] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8085 (http) with context path ''
+2026-01-30T09:57:52.656+09:00  INFO 39952 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : Started BackendApplication in 10.732 seconds (process running for 11.486)
+2026-01-30T10:23:00.661+09:00  INFO 45072 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : Starting BackendApplication using Java 21.0.9 with PID 45072 (C:\ContinueProject\homepage-project\entrusting-client\backend\target\backend-0.0.1-SNAPSHOT.jar started by ez in C:\ContinueProject\homepage-project\entrusting-client\backend)
+2026-01-30T10:23:00.666+09:00 DEBUG 45072 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : Running with Spring Boot v3.2.1, Spring v6.1.2
+2026-01-30T10:23:00.667+09:00  INFO 45072 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : No active profile set, falling back to 1 default profile: "default"
+2026-01-30T10:23:01.839+09:00  INFO 45072 --- [entrusting-backend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-30T10:23:01.950+09:00  INFO 45072 --- [entrusting-backend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 93 ms. Found 4 JPA repository interfaces.
+2026-01-30T10:23:02.949+09:00  INFO 45072 --- [entrusting-backend] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8085 (http)
+2026-01-30T10:23:02.973+09:00  INFO 45072 --- [entrusting-backend] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-30T10:23:02.974+09:00  INFO 45072 --- [entrusting-backend] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2026-01-30T10:23:03.035+09:00  INFO 45072 --- [entrusting-backend] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-30T10:23:03.036+09:00  INFO 45072 --- [entrusting-backend] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2241 ms
+2026-01-30T10:23:03.309+09:00  INFO 45072 --- [entrusting-backend] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-30T10:23:03.476+09:00  INFO 45072 --- [entrusting-backend] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
+2026-01-30T10:23:03.586+09:00  INFO 45072 --- [entrusting-backend] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-30T10:23:04.520+09:00  INFO 45072 --- [entrusting-backend] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-30T10:23:04.617+09:00  INFO 45072 --- [entrusting-backend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-30T10:23:05.258+09:00  INFO 45072 --- [entrusting-backend] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@738a815c
+2026-01-30T10:23:05.263+09:00  INFO 45072 --- [entrusting-backend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-30T10:23:05.416+09:00  WARN 45072 --- [entrusting-backend] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-30T10:23:07.967+09:00  INFO 45072 --- [entrusting-backend] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-30T10:23:08.326+09:00  INFO 45072 --- [entrusting-backend] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-30T10:23:09.767+09:00  INFO 45072 --- [entrusting-backend] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-01-30T10:23:11.241+09:00  WARN 45072 --- [entrusting-backend] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-01-30T10:23:11.304+09:00  WARN 45072 --- [entrusting-backend] [main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 1750f639-5b70-4412-be2a-c5787480981a
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-01-30T10:23:12.433+09:00  INFO 45072 --- [entrusting-backend] [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@43ac1fa0, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2ba7828b, org.springframework.security.web.context.SecurityContextHolderFilter@6b5dc4bb, org.springframework.security.web.header.HeaderWriterFilter@37635407, org.springframework.web.filter.CorsFilter@3e6945c6, org.springframework.security.web.authentication.logout.LogoutFilter@690337df, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@64a9719a, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@bc70176, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@16e6a643, org.springframework.security.web.access.ExceptionTranslationFilter@173039b5, org.springframework.security.web.access.intercept.AuthorizationFilter@595626b8]
+2026-01-30T10:23:13.074+09:00  INFO 45072 --- [entrusting-backend] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8085 (http) with context path ''
+2026-01-30T10:23:13.158+09:00  INFO 45072 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : Started BackendApplication in 13.268 seconds (process running for 14.295)
+2026-01-30T10:31:41.564+09:00  INFO 43844 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : Starting BackendApplication using Java 21.0.9 with PID 43844 (C:\ContinueProject\homepage-project\entrusting-client\backend\target\backend-0.0.1-SNAPSHOT.jar started by ez in C:\ContinueProject\homepage-project\entrusting-client\backend)
+2026-01-30T10:31:41.565+09:00 DEBUG 43844 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : Running with Spring Boot v3.2.1, Spring v6.1.2
+2026-01-30T10:31:41.566+09:00  INFO 43844 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : No active profile set, falling back to 1 default profile: "default"
+2026-01-30T10:31:42.947+09:00  INFO 43844 --- [entrusting-backend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-30T10:31:43.095+09:00  INFO 43844 --- [entrusting-backend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 122 ms. Found 4 JPA repository interfaces.
+2026-01-30T10:31:44.210+09:00  INFO 43844 --- [entrusting-backend] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8085 (http)
+2026-01-30T10:31:44.227+09:00  INFO 43844 --- [entrusting-backend] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-30T10:31:44.228+09:00  INFO 43844 --- [entrusting-backend] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2026-01-30T10:31:44.281+09:00  INFO 43844 --- [entrusting-backend] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-30T10:31:44.282+09:00  INFO 43844 --- [entrusting-backend] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2613 ms
+2026-01-30T10:31:44.760+09:00  INFO 43844 --- [entrusting-backend] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-30T10:31:44.918+09:00  INFO 43844 --- [entrusting-backend] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
+2026-01-30T10:31:44.978+09:00  INFO 43844 --- [entrusting-backend] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-30T10:31:45.722+09:00  INFO 43844 --- [entrusting-backend] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-30T10:31:45.843+09:00  INFO 43844 --- [entrusting-backend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-30T10:31:46.319+09:00  INFO 43844 --- [entrusting-backend] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@64dfb31d
+2026-01-30T10:31:46.323+09:00  INFO 43844 --- [entrusting-backend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-30T10:31:46.453+09:00  WARN 43844 --- [entrusting-backend] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-30T10:31:48.627+09:00  INFO 43844 --- [entrusting-backend] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-30T10:31:48.873+09:00  INFO 43844 --- [entrusting-backend] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-30T10:31:50.143+09:00  INFO 43844 --- [entrusting-backend] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-01-30T10:31:51.993+09:00  WARN 43844 --- [entrusting-backend] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-01-30T10:31:52.051+09:00  WARN 43844 --- [entrusting-backend] [main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 13224ee3-598b-4953-bddf-ca3b8f57cfad
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-01-30T10:31:52.852+09:00  INFO 43844 --- [entrusting-backend] [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@690337df, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@f62ae87, org.springframework.security.web.context.SecurityContextHolderFilter@626967a0, org.springframework.security.web.header.HeaderWriterFilter@4f55da9b, org.springframework.web.filter.CorsFilter@50be5d6f, org.springframework.security.web.authentication.logout.LogoutFilter@1512a767, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5080c40e, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@75fb04ee, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@48e0e779, org.springframework.security.web.access.ExceptionTranslationFilter@5bd11ad6, org.springframework.security.web.access.intercept.AuthorizationFilter@5cdb7b]
+2026-01-30T10:31:53.519+09:00  INFO 43844 --- [entrusting-backend] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8085 (http) with context path ''
+2026-01-30T10:31:53.573+09:00  INFO 43844 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : Started BackendApplication in 12.835 seconds (process running for 14.073)
+2026-01-30T10:34:28.159+09:00  INFO 38368 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : Starting BackendApplication using Java 21.0.9 with PID 38368 (C:\ContinueProject\homepage-project\entrusting-client\backend\target\backend-0.0.1-SNAPSHOT.jar started by ez in C:\ContinueProject\homepage-project\entrusting-client\backend)
+2026-01-30T10:34:28.161+09:00 DEBUG 38368 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : Running with Spring Boot v3.2.1, Spring v6.1.2
+2026-01-30T10:34:28.163+09:00  INFO 38368 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : No active profile set, falling back to 1 default profile: "default"
+2026-01-30T10:34:29.262+09:00  INFO 38368 --- [entrusting-backend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-30T10:34:29.353+09:00  INFO 38368 --- [entrusting-backend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 76 ms. Found 4 JPA repository interfaces.
+2026-01-30T10:34:30.218+09:00  INFO 38368 --- [entrusting-backend] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8085 (http)
+2026-01-30T10:34:30.229+09:00  INFO 38368 --- [entrusting-backend] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-30T10:34:30.229+09:00  INFO 38368 --- [entrusting-backend] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2026-01-30T10:34:30.262+09:00  INFO 38368 --- [entrusting-backend] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-30T10:34:30.263+09:00  INFO 38368 --- [entrusting-backend] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2023 ms
+2026-01-30T10:34:30.458+09:00  INFO 38368 --- [entrusting-backend] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-30T10:34:30.552+09:00  INFO 38368 --- [entrusting-backend] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
+2026-01-30T10:34:30.586+09:00  INFO 38368 --- [entrusting-backend] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-30T10:34:30.906+09:00  INFO 38368 --- [entrusting-backend] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-30T10:34:30.954+09:00  INFO 38368 --- [entrusting-backend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-30T10:34:31.255+09:00  INFO 38368 --- [entrusting-backend] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4fd7b79
+2026-01-30T10:34:31.259+09:00  INFO 38368 --- [entrusting-backend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-30T10:34:31.334+09:00  WARN 38368 --- [entrusting-backend] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-30T10:34:32.690+09:00  INFO 38368 --- [entrusting-backend] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-30T10:34:32.801+09:00  INFO 38368 --- [entrusting-backend] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-30T10:34:33.802+09:00  INFO 38368 --- [entrusting-backend] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-01-30T10:34:34.880+09:00  WARN 38368 --- [entrusting-backend] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-01-30T10:34:34.922+09:00  WARN 38368 --- [entrusting-backend] [main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 1eaa925b-22cf-408e-b8f2-67a347394cde
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-01-30T10:34:35.554+09:00  INFO 38368 --- [entrusting-backend] [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@2162e4a, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@595626b8, org.springframework.security.web.context.SecurityContextHolderFilter@6005cfe5, org.springframework.security.web.header.HeaderWriterFilter@6b0796d4, org.springframework.web.filter.CorsFilter@1928930, org.springframework.security.web.authentication.logout.LogoutFilter@207bf6d8, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@33822750, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@25e95d04, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@707b0b9b, org.springframework.security.web.access.ExceptionTranslationFilter@1000303a, org.springframework.security.web.access.intercept.AuthorizationFilter@4fc28b23]
+2026-01-30T10:34:36.025+09:00  INFO 38368 --- [entrusting-backend] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8085 (http) with context path ''
+2026-01-30T10:34:36.094+09:00  INFO 38368 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : Started BackendApplication in 8.584 seconds (process running for 9.329)
+2026-01-30T10:52:38.402+09:00  INFO 39788 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : Starting BackendApplication using Java 21.0.9 with PID 39788 (C:\ContinueProject\homepage-project\entrusting-client\backend\target\backend-0.0.1-SNAPSHOT.jar started by ez in C:\ContinueProject\homepage-project\entrusting-client\backend)
+2026-01-30T10:52:38.405+09:00 DEBUG 39788 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : Running with Spring Boot v3.2.1, Spring v6.1.2
+2026-01-30T10:52:38.406+09:00  INFO 39788 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : No active profile set, falling back to 1 default profile: "default"
+2026-01-30T10:52:39.537+09:00  INFO 39788 --- [entrusting-backend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-30T10:52:39.619+09:00  INFO 39788 --- [entrusting-backend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 74 ms. Found 4 JPA repository interfaces.
+2026-01-30T10:52:40.719+09:00  INFO 39788 --- [entrusting-backend] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8085 (http)
+2026-01-30T10:52:40.741+09:00  INFO 39788 --- [entrusting-backend] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-30T10:52:40.741+09:00  INFO 39788 --- [entrusting-backend] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2026-01-30T10:52:40.783+09:00  INFO 39788 --- [entrusting-backend] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-30T10:52:40.783+09:00  INFO 39788 --- [entrusting-backend] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2280 ms
+2026-01-30T10:52:41.082+09:00  INFO 39788 --- [entrusting-backend] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-30T10:52:41.206+09:00  INFO 39788 --- [entrusting-backend] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
+2026-01-30T10:52:41.264+09:00  INFO 39788 --- [entrusting-backend] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-30T10:52:41.812+09:00  INFO 39788 --- [entrusting-backend] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-30T10:52:41.902+09:00  INFO 39788 --- [entrusting-backend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-30T10:52:42.327+09:00  INFO 39788 --- [entrusting-backend] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@738a815c
+2026-01-30T10:52:42.333+09:00  INFO 39788 --- [entrusting-backend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-30T10:52:42.411+09:00  WARN 39788 --- [entrusting-backend] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-30T10:52:43.918+09:00  INFO 39788 --- [entrusting-backend] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-30T10:52:44.155+09:00  INFO 39788 --- [entrusting-backend] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-30T10:52:45.066+09:00  INFO 39788 --- [entrusting-backend] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-01-30T10:52:46.184+09:00  WARN 39788 --- [entrusting-backend] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-01-30T10:52:46.225+09:00  WARN 39788 --- [entrusting-backend] [main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 276ac8f2-fe09-45f8-a926-402a00db9d22
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-01-30T10:52:46.967+09:00  INFO 39788 --- [entrusting-backend] [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@43ac1fa0, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2ba7828b, org.springframework.security.web.context.SecurityContextHolderFilter@6b5dc4bb, org.springframework.security.web.header.HeaderWriterFilter@37635407, org.springframework.web.filter.CorsFilter@3e6945c6, org.springframework.security.web.authentication.logout.LogoutFilter@690337df, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@64a9719a, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@bc70176, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@16e6a643, org.springframework.security.web.access.ExceptionTranslationFilter@173039b5, org.springframework.security.web.access.intercept.AuthorizationFilter@595626b8]
+2026-01-30T10:52:47.385+09:00  INFO 39788 --- [entrusting-backend] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8085 (http) with context path ''
+2026-01-30T10:52:47.430+09:00  INFO 39788 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : Started BackendApplication in 9.759 seconds (process running for 10.462)
+2026-01-30T10:54:30.120+09:00  INFO 39788 --- [entrusting-backend] [http-nio-8085-exec-7] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-30T10:54:30.121+09:00  INFO 39788 --- [entrusting-backend] [http-nio-8085-exec-7] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-01-30T10:54:30.124+09:00  INFO 39788 --- [entrusting-backend] [http-nio-8085-exec-7] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2026-01-30T12:55:18.548+09:00  INFO 43760 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : Starting BackendApplication using Java 21.0.9 with PID 43760 (C:\ContinueProject\homepage-project\entrusting-client\backend\target\backend-0.0.1-SNAPSHOT.jar started by ez in C:\ContinueProject\homepage-project\entrusting-client\backend)
+2026-01-30T12:55:18.550+09:00 DEBUG 43760 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : Running with Spring Boot v3.2.1, Spring v6.1.2
+2026-01-30T12:55:18.552+09:00  INFO 43760 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : No active profile set, falling back to 1 default profile: "default"
+2026-01-30T12:55:19.814+09:00  INFO 43760 --- [entrusting-backend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-30T12:55:19.943+09:00  INFO 43760 --- [entrusting-backend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 114 ms. Found 4 JPA repository interfaces.
+2026-01-30T12:55:21.164+09:00  INFO 43760 --- [entrusting-backend] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8085 (http)
+2026-01-30T12:55:21.188+09:00  INFO 43760 --- [entrusting-backend] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-30T12:55:21.189+09:00  INFO 43760 --- [entrusting-backend] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2026-01-30T12:55:21.262+09:00  INFO 43760 --- [entrusting-backend] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-30T12:55:21.263+09:00  INFO 43760 --- [entrusting-backend] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2596 ms
+2026-01-30T12:55:21.754+09:00  INFO 43760 --- [entrusting-backend] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-30T12:55:21.884+09:00  INFO 43760 --- [entrusting-backend] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
+2026-01-30T12:55:21.942+09:00  INFO 43760 --- [entrusting-backend] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-30T12:55:22.553+09:00  INFO 43760 --- [entrusting-backend] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-30T12:55:22.649+09:00  INFO 43760 --- [entrusting-backend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-30T12:55:23.085+09:00  INFO 43760 --- [entrusting-backend] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5103eea2
+2026-01-30T12:55:23.089+09:00  INFO 43760 --- [entrusting-backend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-30T12:55:23.243+09:00  WARN 43760 --- [entrusting-backend] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-30T12:55:24.809+09:00  INFO 43760 --- [entrusting-backend] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-30T12:55:25.003+09:00  INFO 43760 --- [entrusting-backend] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-30T12:55:25.888+09:00  INFO 43760 --- [entrusting-backend] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-01-30T12:55:27.194+09:00  WARN 43760 --- [entrusting-backend] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-01-30T12:55:27.239+09:00  WARN 43760 --- [entrusting-backend] [main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 1a2d3d7d-94e7-4041-8815-2ad6f7a5821e
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-01-30T12:55:27.886+09:00  INFO 43760 --- [entrusting-backend] [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@595626b8, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1928930, org.springframework.security.web.context.SecurityContextHolderFilter@37635407, org.springframework.security.web.header.HeaderWriterFilter@62048ab, org.springframework.web.filter.CorsFilter@707b0b9b, org.springframework.security.web.authentication.logout.LogoutFilter@5cdb7b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@25e95d04, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6b5dc4bb, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@43ac1fa0, org.springframework.security.web.access.ExceptionTranslationFilter@46763680, org.springframework.security.web.access.intercept.AuthorizationFilter@1b58788a]
+2026-01-30T12:55:28.290+09:00  INFO 43760 --- [entrusting-backend] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8085 (http) with context path ''
+2026-01-30T12:55:28.327+09:00  INFO 43760 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : Started BackendApplication in 10.491 seconds (process running for 11.345)
+2026-01-30T12:56:15.253+09:00  INFO 43760 --- [entrusting-backend] [http-nio-8085-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-30T12:56:15.254+09:00  INFO 43760 --- [entrusting-backend] [http-nio-8085-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-01-30T12:56:15.256+09:00  INFO 43760 --- [entrusting-backend] [http-nio-8085-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-01-30T12:59:19.104+09:00  INFO 7456 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : Starting BackendApplication using Java 21.0.9 with PID 7456 (C:\ContinueProject\homepage-project\entrusting-client\backend\target\backend-0.0.1-SNAPSHOT.jar started by ez in C:\ContinueProject\homepage-project\entrusting-client\backend)
+2026-01-30T12:59:19.108+09:00 DEBUG 7456 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : Running with Spring Boot v3.2.1, Spring v6.1.2
+2026-01-30T12:59:19.109+09:00  INFO 7456 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : No active profile set, falling back to 1 default profile: "default"
+2026-01-30T12:59:20.226+09:00  INFO 7456 --- [entrusting-backend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-30T12:59:20.354+09:00  INFO 7456 --- [entrusting-backend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 111 ms. Found 4 JPA repository interfaces.
+2026-01-30T12:59:21.534+09:00  INFO 7456 --- [entrusting-backend] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8085 (http)
+2026-01-30T12:59:21.558+09:00  INFO 7456 --- [entrusting-backend] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-30T12:59:21.559+09:00  INFO 7456 --- [entrusting-backend] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2026-01-30T12:59:21.629+09:00  INFO 7456 --- [entrusting-backend] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-30T12:59:21.631+09:00  INFO 7456 --- [entrusting-backend] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2429 ms
+2026-01-30T12:59:22.002+09:00  INFO 7456 --- [entrusting-backend] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-30T12:59:22.144+09:00  INFO 7456 --- [entrusting-backend] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
+2026-01-30T12:59:22.218+09:00  INFO 7456 --- [entrusting-backend] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-30T12:59:22.740+09:00  INFO 7456 --- [entrusting-backend] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-30T12:59:22.792+09:00  INFO 7456 --- [entrusting-backend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-30T12:59:23.134+09:00  INFO 7456 --- [entrusting-backend] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@184751f3
+2026-01-30T12:59:23.136+09:00  INFO 7456 --- [entrusting-backend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-30T12:59:23.229+09:00  WARN 7456 --- [entrusting-backend] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-30T12:59:24.686+09:00  INFO 7456 --- [entrusting-backend] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-30T12:59:24.874+09:00  INFO 7456 --- [entrusting-backend] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-30T12:59:25.735+09:00  INFO 7456 --- [entrusting-backend] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-01-30T12:59:26.758+09:00  WARN 7456 --- [entrusting-backend] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-01-30T12:59:26.802+09:00  WARN 7456 --- [entrusting-backend] [main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: c8fdf3f1-877b-4177-8371-0e3b99ce50ad
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-01-30T12:59:27.420+09:00  INFO 7456 --- [entrusting-backend] [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@19f72e12, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1ad4ff2a, org.springframework.security.web.context.SecurityContextHolderFilter@60ee1a29, org.springframework.security.web.header.HeaderWriterFilter@737e4a7b, org.springframework.web.filter.CorsFilter@625ae6d, org.springframework.security.web.authentication.logout.LogoutFilter@27d6ff8c, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5bd11ad6, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5ffaac1f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@207bf6d8, org.springframework.security.web.access.ExceptionTranslationFilter@74fbee59, org.springframework.security.web.access.intercept.AuthorizationFilter@39b752f4]
+2026-01-30T12:59:27.968+09:00  INFO 7456 --- [entrusting-backend] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8085 (http) with context path ''
+2026-01-30T12:59:28.039+09:00  INFO 7456 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : Started BackendApplication in 9.785 seconds (process running for 10.554)
+2026-01-30T13:00:43.338+09:00  INFO 7456 --- [entrusting-backend] [http-nio-8085-exec-4] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-30T13:00:43.338+09:00  INFO 7456 --- [entrusting-backend] [http-nio-8085-exec-4] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-01-30T13:00:43.340+09:00  INFO 7456 --- [entrusting-backend] [http-nio-8085-exec-4] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-01-30T13:03:14.703+09:00  INFO 45324 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : Starting BackendApplication using Java 21.0.9 with PID 45324 (C:\ContinueProject\homepage-project\entrusting-client\backend\target\backend-0.0.1-SNAPSHOT.jar started by ez in C:\ContinueProject\homepage-project\entrusting-client\backend)
+2026-01-30T13:03:14.706+09:00 DEBUG 45324 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : Running with Spring Boot v3.2.1, Spring v6.1.2
+2026-01-30T13:03:14.707+09:00  INFO 45324 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : No active profile set, falling back to 1 default profile: "default"
+2026-01-30T13:03:15.726+09:00  INFO 45324 --- [entrusting-backend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-30T13:03:15.797+09:00  INFO 45324 --- [entrusting-backend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 58 ms. Found 4 JPA repository interfaces.
+2026-01-30T13:03:16.678+09:00  INFO 45324 --- [entrusting-backend] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8085 (http)
+2026-01-30T13:03:16.691+09:00  INFO 45324 --- [entrusting-backend] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-30T13:03:16.692+09:00  INFO 45324 --- [entrusting-backend] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2026-01-30T13:03:16.734+09:00  INFO 45324 --- [entrusting-backend] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-30T13:03:16.734+09:00  INFO 45324 --- [entrusting-backend] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1939 ms
+2026-01-30T13:03:16.991+09:00  INFO 45324 --- [entrusting-backend] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-30T13:03:17.096+09:00  INFO 45324 --- [entrusting-backend] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
+2026-01-30T13:03:17.138+09:00  INFO 45324 --- [entrusting-backend] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-30T13:03:17.486+09:00  INFO 45324 --- [entrusting-backend] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-30T13:03:17.529+09:00  INFO 45324 --- [entrusting-backend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-30T13:03:17.800+09:00  INFO 45324 --- [entrusting-backend] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@738a815c
+2026-01-30T13:03:17.803+09:00  INFO 45324 --- [entrusting-backend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-30T13:03:17.860+09:00  WARN 45324 --- [entrusting-backend] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-30T13:03:18.990+09:00  INFO 45324 --- [entrusting-backend] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-30T13:03:19.127+09:00  INFO 45324 --- [entrusting-backend] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-30T13:03:19.998+09:00  INFO 45324 --- [entrusting-backend] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-01-30T13:03:21.366+09:00  WARN 45324 --- [entrusting-backend] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-01-30T13:03:21.410+09:00  WARN 45324 --- [entrusting-backend] [main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 6e691ddb-5176-414b-aa19-7f140d862ea7
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-01-30T13:03:22.137+09:00  INFO 45324 --- [entrusting-backend] [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@707b0b9b, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@43ac1fa0, org.springframework.security.web.context.SecurityContextHolderFilter@25e95d04, org.springframework.security.web.header.HeaderWriterFilter@6005cfe5, org.springframework.web.filter.CorsFilter@2ba7828b, org.springframework.security.web.authentication.logout.LogoutFilter@16b1dee7, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@46b376bb, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@64a9719a, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3e6945c6, org.springframework.security.web.access.ExceptionTranslationFilter@62048ab, org.springframework.security.web.access.intercept.AuthorizationFilter@2162e4a]
+2026-01-30T13:03:22.720+09:00  INFO 45324 --- [entrusting-backend] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8085 (http) with context path ''
+2026-01-30T13:03:22.777+09:00  INFO 45324 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : Started BackendApplication in 8.884 seconds (process running for 9.649)
+2026-01-30T13:03:40.548+09:00  INFO 45324 --- [entrusting-backend] [http-nio-8085-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-30T13:03:40.549+09:00  INFO 45324 --- [entrusting-backend] [http-nio-8085-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-01-30T13:03:40.549+09:00  INFO 45324 --- [entrusting-backend] [http-nio-8085-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-01-30T13:07:31.456+09:00  INFO 45740 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : Starting BackendApplication using Java 21.0.9 with PID 45740 (C:\ContinueProject\homepage-project\entrusting-client\backend\target\backend-0.0.1-SNAPSHOT.jar started by ez in C:\ContinueProject\homepage-project\entrusting-client\backend)
+2026-01-30T13:07:31.459+09:00 DEBUG 45740 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : Running with Spring Boot v3.2.1, Spring v6.1.2
+2026-01-30T13:07:31.460+09:00  INFO 45740 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : No active profile set, falling back to 1 default profile: "default"
+2026-01-30T13:07:32.493+09:00  INFO 45740 --- [entrusting-backend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-30T13:07:32.576+09:00  INFO 45740 --- [entrusting-backend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 72 ms. Found 4 JPA repository interfaces.
+2026-01-30T13:07:33.409+09:00  INFO 45740 --- [entrusting-backend] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8085 (http)
+2026-01-30T13:07:33.431+09:00  INFO 45740 --- [entrusting-backend] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-30T13:07:33.433+09:00  INFO 45740 --- [entrusting-backend] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2026-01-30T13:07:33.481+09:00  INFO 45740 --- [entrusting-backend] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-30T13:07:33.482+09:00  INFO 45740 --- [entrusting-backend] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1929 ms
+2026-01-30T13:07:33.747+09:00  INFO 45740 --- [entrusting-backend] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-30T13:07:33.843+09:00  INFO 45740 --- [entrusting-backend] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
+2026-01-30T13:07:33.883+09:00  INFO 45740 --- [entrusting-backend] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-30T13:07:34.263+09:00  INFO 45740 --- [entrusting-backend] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-30T13:07:34.323+09:00  INFO 45740 --- [entrusting-backend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-30T13:07:34.691+09:00  INFO 45740 --- [entrusting-backend] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4438b862
+2026-01-30T13:07:34.701+09:00  INFO 45740 --- [entrusting-backend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-30T13:07:34.799+09:00  WARN 45740 --- [entrusting-backend] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-30T13:07:36.659+09:00  INFO 45740 --- [entrusting-backend] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-30T13:07:36.794+09:00  INFO 45740 --- [entrusting-backend] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-30T13:07:37.730+09:00  INFO 45740 --- [entrusting-backend] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-01-30T13:07:38.679+09:00  WARN 45740 --- [entrusting-backend] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-01-30T13:07:38.700+09:00  WARN 45740 --- [entrusting-backend] [main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 3f05ed7d-a59b-4041-910b-b3d9bb0bc75e
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-01-30T13:07:39.211+09:00  INFO 45740 --- [entrusting-backend] [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@48e0e779, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@38ad8c75, org.springframework.security.web.context.SecurityContextHolderFilter@75fb04ee, org.springframework.security.web.header.HeaderWriterFilter@626967a0, org.springframework.web.filter.CorsFilter@22a10b71, org.springframework.security.web.authentication.logout.LogoutFilter@399ef33f, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1000303a, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@46763680, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@d67f6f, org.springframework.security.web.access.ExceptionTranslationFilter@3bad0efd, org.springframework.security.web.access.intercept.AuthorizationFilter@690337df]
+2026-01-30T13:07:39.721+09:00  INFO 45740 --- [entrusting-backend] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8085 (http) with context path ''
+2026-01-30T13:07:39.771+09:00  INFO 45740 --- [entrusting-backend] [main] c.entrusting.backend.BackendApplication  : Started BackendApplication in 9.056 seconds (process running for 9.729)
+2026-01-30T13:09:30.602+09:00  INFO 45740 --- [entrusting-backend] [http-nio-8085-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-30T13:09:30.604+09:00  INFO 45740 --- [entrusting-backend] [http-nio-8085-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-01-30T13:09:30.605+09:00  INFO 45740 --- [entrusting-backend] [http-nio-8085-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms

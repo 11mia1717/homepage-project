@@ -59,26 +59,39 @@ public class UserService {
         );
         
         // [COMPLIANCE] 약관 동의 정보 설정
-        TermsAgreementDto terms = request.getTermsAgreement();
-        if (terms != null && terms.getAgreements() != null) {
-            newUser.setTermsAgreed(terms.getAgreements().getOrDefault("terms", false));
-            newUser.setPrivacyAgreed(terms.getAgreements().getOrDefault("privacy", false));
-            newUser.setUniqueIdAgreed(terms.getAgreements().getOrDefault("uniqueId", false));
-            newUser.setCreditInfoAgreed(terms.getAgreements().getOrDefault("creditInfo", false));
-            newUser.setCarrierAuthAgreed(terms.getAgreements().getOrDefault("carrierAuth", false));
+        if (request.getTermsAgreement() != null) {
+            java.util.Map<String, Boolean> agreements = request.getTermsAgreement().getAgreements();
+            java.util.Map<String, Boolean> channels = request.getTermsAgreement().getMarketingChannels();
             
-            // [COMPLIANCE] 금융권 추가 필수 약관 매핑
-            newUser.setSsapProvisionAgreed(terms.getAgreements().getOrDefault("ssapProvision", false));
-            newUser.setElectronicFinanceAgreed(terms.getAgreements().getOrDefault("electronicFinance", false));
-            newUser.setMonitoringAgreed(terms.getAgreements().getOrDefault("monitoring", false));
+            // Required Agreements
+            newUser.setTermsAgreed(agreements.getOrDefault("terms", false));
+            newUser.setPrivacyAgreed(agreements.getOrDefault("privacy", false));
+            newUser.setUniqueIdAgreed(agreements.getOrDefault("uniqueId", false));
+            newUser.setCreditInfoAgreed(agreements.getOrDefault("creditInfo", false));
+            newUser.setCarrierAuthAgreed(agreements.getOrDefault("carrierAuth", false));
+            newUser.setElectronicFinanceAgreed(agreements.getOrDefault("electronicFinance", false));
+            newUser.setMonitoringAgreed(agreements.getOrDefault("monitoring", false));
             
-            // [COMPLIANCE] 선택 약관 매핑
-            newUser.setMarketingPersonalAgreed(terms.getAgreements().getOrDefault("marketingPersonal", false));
-            newUser.setMarketingAgreed(terms.getAgreements().getOrDefault("marketing", false));
+            // Optional Agreements (New)
+            // SSAP is now OPTIONAL
+            newUser.setSsapProvisionAgreed(agreements.getOrDefault("ssapProvision", false));
+            newUser.setThirdPartyProvisionAgreed(agreements.getOrDefault("thirdPartyProvision", false));
             
-            // 마케팅 채널 설정
-            if (terms.getMarketingChannels() != null) {
-                newUser.setMarketingSms(terms.getMarketingChannels().getOrDefault("sms", false));
+            // Marketing (Optional)
+            boolean marketing = agreements.getOrDefault("marketing", false);
+            newUser.setMarketingAgreed(marketing);
+            
+            // Personal Marketing (Optional)
+            boolean marketingPersonal = agreements.getOrDefault("marketingPersonal", false);
+            newUser.setMarketingPersonalAgreed(marketingPersonal);
+
+            if (channels != null) {
+                newUser.setMarketingSms(channels.getOrDefault("sms", false));
+                newUser.setMarketingEmail(channels.getOrDefault("email", false));
+                newUser.setMarketingPush(channels.getOrDefault("push", false));
+            } else if (marketing) {
+                // If marketing agreed but no specific channels, default to SMS
+                newUser.setMarketingSms(true);
             }
             
             newUser.setTermsAgreedAt(java.time.LocalDateTime.now());

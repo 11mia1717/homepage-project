@@ -54,7 +54,10 @@ public class User {
     private Boolean carrierAuthAgreed = false; // 본인확인서비스
     
     @Column(name = "ssap_provision_agreed")
-    private Boolean ssapProvisionAgreed = false; // SSAP 정보 제공 동의
+    private Boolean ssapProvisionAgreed = false; // SSAP 정보 제공 동의 (제휴 TM 센터)
+
+    @Column(name = "third_party_provision_agreed")
+    private Boolean thirdPartyProvisionAgreed = false; // 제3자 정보 제공 동의
     
     @Column(name = "electronic_finance_agreed")
     private Boolean electronicFinanceAgreed = false; // 전자금융거래 기본약관
@@ -270,6 +273,12 @@ public class User {
     }
     public void setSsapProvisionAgreed(Boolean ssapProvisionAgreed) {
         this.ssapProvisionAgreed = ssapProvisionAgreed;
+    }
+    public Boolean getThirdPartyProvisionAgreed() {
+        return thirdPartyProvisionAgreed;
+    }
+    public void setThirdPartyProvisionAgreed(Boolean thirdPartyProvisionAgreed) {
+        this.thirdPartyProvisionAgreed = thirdPartyProvisionAgreed;
     }
     public Boolean getElectronicFinanceAgreed() {
         return electronicFinanceAgreed;

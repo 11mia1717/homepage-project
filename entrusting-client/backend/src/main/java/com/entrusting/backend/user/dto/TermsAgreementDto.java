@@ -19,11 +19,12 @@ public class TermsAgreementDto {
         boolean uniqueId = agreements.getOrDefault("uniqueId", false);
         boolean creditInfo = agreements.getOrDefault("creditInfo", false);
         boolean carrierAuth = agreements.getOrDefault("carrierAuth", false);
-        boolean ssapProvision = agreements.getOrDefault("ssapProvision", false);
+        // ssapProvision is now OPTIONAL
+        // boolean ssapProvision = agreements.getOrDefault("ssapProvision", false);
         boolean electronicFinance = agreements.getOrDefault("electronicFinance", false);
         boolean monitoring = agreements.getOrDefault("monitoring", false);
 
-        if (!age || !terms || !privacy || !uniqueId || !creditInfo || !carrierAuth || !ssapProvision || !electronicFinance || !monitoring) {
+        if (!age || !terms || !privacy || !uniqueId || !creditInfo || !carrierAuth || !electronicFinance || !monitoring) {
             System.err.println("[ENTRUSTING-DEBUG] Validation FAILED - Missing fields:");
             if (!age) System.err.println(" - age is false/missing");
             if (!terms) System.err.println(" - terms is false/missing");
@@ -31,7 +32,7 @@ public class TermsAgreementDto {
             if (!uniqueId) System.err.println(" - uniqueId is false/missing");
             if (!creditInfo) System.err.println(" - creditInfo is false/missing");
             if (!carrierAuth) System.err.println(" - carrierAuth is false/missing");
-            if (!ssapProvision) System.err.println(" - ssapProvision is false/missing");
+            // if (!ssapProvision) System.err.println(" - ssapProvision is false/missing");
             if (!electronicFinance) System.err.println(" - electronicFinance is false/missing");
             if (!monitoring) System.err.println(" - monitoring is false/missing");
             return false;
